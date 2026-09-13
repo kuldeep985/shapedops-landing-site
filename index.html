@@ -1,0 +1,660 @@
+<meta charset="utf-8" />
+<title>ShapedOps Early Access</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #1e1e1e;
+    --bg-deep: #171712;
+    --surface: rgba(34, 36, 28, 0.55);
+    --surface-hover: rgba(40, 43, 32, 0.68);
+    --border: rgba(240, 240, 232, 0.10);
+    --border-warm: rgba(200, 255, 130, 0.16);
+    --text: #f2f1ea;
+    --text-muted: #aba99c;
+    --text-faint: #706e62;
+    --accent: #a8ff00;
+    --accent-soft: #c7ff66;
+    --accent-dim: #6b8f00;
+    --amber: #ffd9a0;
+    --font-display: "Space Grotesk", sans-serif;
+    --font-body: "Inter", sans-serif;
+    --font-mono: "JetBrains Mono", monospace;
+    --glass-blur: blur(24px);
+    --ease-bloom: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    margin: 0;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+  }
+
+  ::selection { background: rgba(168,255,0,0.28); color: #10130a; }
+  a { color: inherit; }
+  img { max-width: 100%; display: block; }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+
+  h1, h2, h3 { text-wrap: balance; font-family: var(--font-display); }
+
+  /* ---------- ambient garden light ---------- */
+  .light-field { position: fixed; inset: 0; z-index: -2; overflow: hidden; pointer-events: none; }
+  .glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.5;
+  }
+  .glow-orb.a { width: 620px; height: 620px; top: -180px; left: -120px; background: radial-gradient(circle, rgba(168,255,0,0.22), transparent 70%); animation: driftA 34s ease-in-out infinite; }
+  .glow-orb.b { width: 520px; height: 520px; top: 20%; right: -160px; background: radial-gradient(circle, rgba(255,217,160,0.10), transparent 70%); animation: driftB 40s ease-in-out infinite; }
+  .glow-orb.c { width: 700px; height: 700px; bottom: -260px; left: 30%; background: radial-gradient(circle, rgba(168,255,0,0.12), transparent 70%); animation: driftC 46s ease-in-out infinite; }
+
+  @keyframes driftA { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(60px,50px) scale(1.12); } }
+  @keyframes driftB { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-50px,60px) scale(0.92); } }
+  @keyframes driftC { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-40px,-50px) scale(1.08); } }
+
+  #motes { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0.7; }
+
+  /* ---------- header ---------- */
+  header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 28px; max-width: 1080px; margin: 0 auto;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand img { width: 28px; height: 28px; }
+  .brand-word { font-family: var(--font-display); font-weight: 700; font-size: 17px; letter-spacing: 0.01em; }
+  .brand-word em { font-style: normal; color: var(--accent); }
+
+  .hdr-seats {
+    display: flex; align-items: center; gap: 8px;
+    font-family: var(--font-body); font-size: 13px; color: var(--text-muted);
+    border: 1px solid var(--border); padding: 7px 14px 7px 12px; border-radius: 30px;
+    background: var(--surface); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+  }
+  .bud-dot {
+    width: 7px; height: 7px; border-radius: 50%; background: var(--accent);
+    box-shadow: 0 0 10px var(--accent); animation: breathe 2.6s ease-in-out infinite;
+  }
+  @keyframes breathe { 0%,100% { opacity: 0.55; transform: scale(0.85); } 50% { opacity: 1; transform: scale(1.05); } }
+
+  .nav-cta {
+    font-family: var(--font-display); font-weight: 600; font-size: 13px;
+    background: transparent; border: 1px solid var(--border-warm); color: var(--text);
+    padding: 9px 18px; border-radius: 30px; text-decoration: none;
+    transition: border-color 0.35s ease, background 0.35s ease, transform 0.3s var(--ease-bloom);
+  }
+  .nav-cta:hover { border-color: var(--accent); background: rgba(168,255,0,0.06); transform: translateY(-1px); }
+
+  /* ---------- reveal (bloom) ---------- */
+  .bloom { opacity: 0; transform: translateY(28px) scale(0.965); transition: opacity 1.1s var(--ease-bloom), transform 1.1s var(--ease-bloom); }
+  .bloom.visible { opacity: 1; transform: translateY(0) scale(1); }
+  .bloom-delay-1.visible { transition-delay: 0.12s; }
+  .bloom-delay-2.visible { transition-delay: 0.24s; }
+
+  /* ---------- hero ---------- */
+  .hero { padding: 68px 0 30px; }
+  .hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 50px; align-items: center; }
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 9px;
+    font-family: var(--font-body); font-weight: 600; font-size: 12.5px; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--accent-soft); margin-bottom: 24px;
+  }
+  .eyebrow::before { content: ""; width: 20px; height: 1px; background: linear-gradient(90deg, var(--accent), transparent); }
+
+  h1 {
+    font-weight: 700; font-size: clamp(40px, 5.4vw, 66px); line-height: 1.05;
+    letter-spacing: -0.01em; margin: 0 0 24px;
+  }
+  h1 em {
+    font-style: normal;
+    background: linear-gradient(105deg, var(--accent) 10%, var(--accent-soft) 60%, var(--amber) 130%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+
+  .lead { font-size: 18px; line-height: 1.65; color: var(--text-muted); max-width: 46ch; margin: 0 0 34px; }
+
+  .cta-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+
+  .btn-solid {
+    position: relative; display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--font-display); font-weight: 600; font-size: 15px; color: #12160a;
+    background: linear-gradient(135deg, var(--accent-soft), var(--accent));
+    border: none; padding: 15px 26px; border-radius: 14px; cursor: pointer; text-decoration: none;
+    transition: transform 0.4s var(--ease-bloom), box-shadow 0.5s var(--ease-bloom), filter 0.3s ease;
+  }
+  .btn-solid:hover { transform: translateY(-3px); box-shadow: 0 14px 40px -10px rgba(168,255,0,0.5); filter: brightness(1.04); }
+  .btn-solid:active { transform: translateY(-1px) scale(0.98); transition-duration: 0.15s; }
+
+  .hero-note { font-size: 13px; color: var(--text-faint); margin: 22px 0 0; display: flex; align-items: center; gap: 7px; }
+
+  /* ---------- hero visual: breathing halo ---------- */
+  .hero-visual { position: relative; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; }
+  .halo {
+    position: absolute; border-radius: 50%;
+    background: radial-gradient(circle, rgba(168,255,0,0.20), transparent 68%);
+    filter: blur(30px);
+    animation: halobreathe 5.5s ease-in-out infinite;
+  }
+  .halo.h1r { width: 78%; height: 78%; }
+  .halo.h2r { width: 52%; height: 52%; background: radial-gradient(circle, rgba(255,217,160,0.14), transparent 68%); animation-delay: 0.6s; animation-duration: 6.5s; }
+  @keyframes halobreathe { 0%,100% { transform: scale(0.94); opacity: 0.7; } 50% { transform: scale(1.04); opacity: 1; } }
+
+  .hero-logo { position: relative; width: 40%; filter: drop-shadow(0 0 40px rgba(168,255,0,0.28)); animation: float 7s ease-in-out infinite; }
+  @keyframes float { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-12px) rotate(1.5deg); } }
+
+  /* ---------- pain statement ---------- */
+  .pain { padding: 34px 0 64px; text-align: center; }
+  .pain p { font-size: clamp(19px, 2.3vw, 25px); font-weight: 500; color: var(--text-muted); max-width: 60ch; margin: 0 auto; line-height: 1.55; }
+  .pain .hi { color: var(--text); }
+
+  /* ---------- features ---------- */
+  .feature-section { padding: 10px 0 30px; }
+  .section-head { text-align: center; margin-bottom: 20px; max-width: 640px; margin-left: auto; margin-right: auto; }
+  .section-head .eyebrow { justify-content: center; }
+  .section-head h2 { font-size: clamp(28px, 3.4vw, 38px); margin: 0 0 12px; }
+  .section-head p { color: var(--text-muted); font-size: 15.5px; margin: 0 0 6px; line-height: 1.6; }
+  .mockup-note { font-family: var(--font-mono); font-size: 11px; color: var(--text-faint); letter-spacing: 0.03em; }
+
+  .feature-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 46px; align-items: center;
+    padding: 46px 0;
+  }
+  .feature-row.rev .f-text { order: 2; }
+  .feature-row.rev .f-visual { order: 1; }
+
+  .f-text h3 { font-size: 23px; margin: 0 0 13px; }
+  .f-text p { color: var(--text-muted); font-size: 15.5px; line-height: 1.65; margin: 0; max-width: 42ch; }
+
+  .glass-panel {
+    background: var(--surface);
+    backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    padding: 28px;
+    min-height: 220px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    transition: border-color 0.5s ease, transform 0.5s var(--ease-bloom), box-shadow 0.5s ease;
+    overflow: hidden;
+  }
+  .glass-panel::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 30% 20%, rgba(168,255,0,0.07), transparent 55%);
+    pointer-events: none;
+  }
+  .glass-panel:hover { border-color: var(--border-warm); transform: translateY(-4px); box-shadow: 0 26px 60px -24px rgba(0,0,0,0.55); }
+
+  /* ---- mockup 1: pipeline board ---- */
+  .mock-board { display: flex; gap: 10px; width: 100%; position: relative; z-index: 1; }
+  .mock-col { flex: 1; background: rgba(255,255,255,0.025); border: 1px solid var(--border); border-radius: 12px; padding: 10px; display: flex; flex-direction: column; gap: 8px; min-height: 140px; }
+  .mock-col-lbl { font-family: var(--font-mono); font-size: 9px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px; display: flex; align-items: center; gap: 5px; }
+  .mock-col-lbl .d { width: 5px; height: 5px; border-radius: 50%; background: var(--chrome, #999); }
+  .mock-col:first-child .mock-col-lbl .d { background: var(--accent); box-shadow: 0 0 5px var(--accent); }
+  .mock-card { height: 30px; border-radius: 7px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); }
+  .mock-card.moving {
+    position: relative;
+    animation: cardMove 5s var(--ease-bloom) infinite;
+    border-color: rgba(168,255,0,0.4);
+    background: rgba(168,255,0,0.07);
+  }
+  @keyframes cardMove {
+    0%, 14% { transform: translate(0,0); opacity: 1; }
+    40% { transform: translate(112px,-6px) scale(1.03); opacity: 1; box-shadow: 0 10px 24px -8px rgba(168,255,0,0.4); }
+    55%, 100% { transform: translate(112px,-6px) scale(1); opacity: 1; }
+  }
+
+  /* ---- mockup 2: whatsapp bubble ---- */
+  .mock-chat { position: relative; z-index: 1; width: 100%; max-width: 260px; display: flex; flex-direction: column; gap: 10px; }
+  .mock-bubble {
+    align-self: flex-end; max-width: 82%; background: rgba(168,255,0,0.12); border: 1px solid var(--border-warm);
+    border-radius: 14px 14px 3px 14px; padding: 10px 13px; font-size: 12.5px; color: var(--text);
+    opacity: 0; animation: bubbleIn 5s var(--ease-bloom) infinite;
+  }
+  .mock-bubble.b2 { animation-delay: 1.6s; align-self: flex-end; }
+  @keyframes bubbleIn { 0%,20% { opacity: 0; transform: translateY(8px) scale(0.94); } 34%,100% { opacity: 1; transform: translateY(0) scale(1); } }
+  .mock-check { color: var(--accent-soft); font-size: 10px; margin-left: 5px; }
+  .mock-typing { display: flex; gap: 4px; align-self: flex-end; padding: 8px 12px; }
+  .mock-typing span { width: 5px; height: 5px; border-radius: 50%; background: var(--text-faint); animation: typingDot 1.2s ease-in-out infinite; }
+  .mock-typing span:nth-child(2) { animation-delay: 0.15s; } .mock-typing span:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes typingDot { 0%,60%,100% { opacity: 0.3; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
+
+  /* ---- mockup 3: milestone bars ---- */
+  .mock-milestones { width: 100%; position: relative; z-index: 1; display: flex; flex-direction: column; gap: 22px; }
+  .mock-mrow .mock-mlbl { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; display: flex; justify-content: space-between; }
+  .mock-mlbl span:last-child { font-family: var(--font-mono); color: var(--accent-soft); }
+  .mock-track { height: 8px; border-radius: 6px; background: rgba(255,255,255,0.06); overflow: hidden; }
+  .mock-fill { height: 100%; border-radius: 6px; background: linear-gradient(90deg, var(--accent-dim), var(--accent)); width: 0; animation: fillGrow 3.4s var(--ease-bloom) forwards; animation-play-state: paused; }
+  .mock-fill.f1 { animation-delay: 0.1s; }
+  .mock-fill.f2 { animation-delay: 0.5s; }
+  @keyframes fillGrow { to { width: var(--w); } }
+
+  /* ---- mockup 4: analytics chart ---- */
+  .mock-chart { width: 100%; position: relative; z-index: 1; }
+  .mock-chart-num { font-family: var(--font-mono); font-size: 26px; color: var(--text); margin-bottom: 14px; font-variant-numeric: tabular-nums; }
+  .mock-chart-num small { font-size: 12px; color: var(--accent-soft); font-weight: 600; margin-left: 6px; }
+  .mock-bars { display: flex; align-items: flex-end; gap: 9px; height: 90px; }
+  .mock-bar { flex: 1; border-radius: 5px 5px 2px 2px; background: linear-gradient(180deg, var(--accent-soft), var(--accent-dim)); height: 0; animation: barGrow 2.6s var(--ease-bloom) forwards; animation-play-state: paused; opacity: 0.85; }
+  .mock-bar.last { background: linear-gradient(180deg, var(--accent-soft), var(--accent)); opacity: 1; }
+  @keyframes barGrow { to { height: var(--h); } }
+
+  /* ---- mockup 5: workflow morph ---- */
+  .mock-morph { width: 100%; position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .mock-morph-label {
+    font-family: var(--font-mono); font-size: 13px; padding: 10px 18px; border-radius: 10px;
+    border: 1px solid var(--border); background: rgba(255,255,255,0.03); position: relative; min-width: 170px; text-align: center;
+  }
+  .mock-morph-label .a, .mock-morph-label .b { grid-area: 1 / 1; transition: opacity 1.4s var(--ease-bloom); }
+  .mock-morph-label { display: grid; }
+  .mock-morph-label .b { opacity: 0; color: var(--accent-soft); animation: morphSwap 5s ease-in-out infinite; }
+  .mock-morph-label .a { animation: morphSwapOut 5s ease-in-out infinite; }
+  @keyframes morphSwap { 0%,45% { opacity: 0; } 60%,100% { opacity: 1; } }
+  @keyframes morphSwapOut { 0%,45% { opacity: 1; } 60%,100% { opacity: 0; } }
+  .mock-morph-arrow { font-family: var(--font-mono); font-size: 10px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.08em; }
+
+  /* trigger animation-play-state when revealed */
+  .bloom.visible .mock-fill, .bloom.visible .mock-bar { animation-play-state: running; }
+
+  /* ---------- CTA: garden invitation ---------- */
+  .invite-section { padding: 40px 0 96px; }
+  .invite {
+    background: linear-gradient(165deg, rgba(168,255,0,0.05), transparent 55%), var(--bg-deep);
+    border: 1px solid var(--border-warm);
+    border-radius: 28px;
+    padding: 56px 52px;
+    position: relative;
+    overflow: hidden;
+  }
+  .invite::before {
+    content: ""; position: absolute; width: 500px; height: 500px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(168,255,0,0.10), transparent 70%);
+    top: -220px; right: -140px; filter: blur(10px); pointer-events: none;
+  }
+  .invite-top { position: relative; z-index: 1; text-align: center; max-width: 560px; margin: 0 auto 36px; }
+  .invite-eyebrow { font-family: var(--font-body); font-weight: 600; font-size: 12.5px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--accent-soft); margin-bottom: 16px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .invite h2 { font-size: clamp(28px, 3.6vw, 38px); margin: 0 0 14px; }
+  .invite-sub { color: var(--text-muted); font-size: 16px; line-height: 1.65; margin: 0 0 6px; }
+  .invite-seats { font-size: 13px; color: var(--text-faint); margin-top: 16px; }
+  .invite-seats strong { color: var(--accent-soft); font-weight: 600; }
+
+  .tabs { display: flex; gap: 6px; justify-content: center; margin-bottom: 30px; position: relative; z-index: 1; }
+  .tab {
+    font-family: var(--font-display); font-weight: 600; font-size: 13.5px; color: var(--text-muted);
+    background: transparent; border: 1px solid var(--border); padding: 9px 20px; border-radius: 30px;
+    cursor: pointer; transition: all 0.35s var(--ease-bloom);
+  }
+  .tab.active { color: #12160a; background: var(--accent-soft); border-color: transparent; }
+  .tab:not(.active):hover { border-color: var(--border-warm); color: var(--text); }
+
+  .contact-panel { position: relative; z-index: 1; max-width: 560px; margin: 0 auto; }
+  .panel-body { display: none; }
+  .panel-body.active { display: block; animation: fadeUp 0.6s var(--ease-bloom); }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; min-width: 0; }
+  .field { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+  .field.full { grid-column: 1 / -1; }
+  .field label { font-size: 12.5px; color: var(--text-muted); font-weight: 500; }
+  .field input, .field textarea, .field select {
+    width: 100%; min-width: 0; max-width: 100%;
+    font-family: var(--font-body); font-size: 14.5px; color: var(--text);
+    background: rgba(255,255,255,0.035); border: 1px solid var(--border); border-radius: 11px;
+    padding: 11px 14px; transition: border-color 0.3s ease, box-shadow 0.3s ease; outline: none;
+  }
+  .field textarea { resize: vertical; min-height: 70px; font-family: var(--font-body); }
+  .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--accent-dim); box-shadow: 0 0 0 4px rgba(168,255,0,0.10); }
+  .hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+
+  .submit-row { margin-top: 22px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .submit-row .btn-solid { width: 100%; justify-content: center; }
+  .form-status { font-size: 13px; color: var(--text-muted); min-height: 18px; margin: 0; text-align: center; }
+  .form-status.ok { color: var(--accent-soft); }
+  .form-status.err { color: #ff9f7a; }
+
+  .invite-note { font-size: 12.5px; color: var(--text-faint); text-align: center; margin-top: 4px; }
+
+  footer { text-align: center; padding: 30px 0 50px; }
+  .foot-row { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  footer .brand { justify-content: center; }
+  footer p { font-size: 12px; color: var(--text-faint); margin: 0; }
+  .powered-by { font-size: 12px; color: var(--text-faint); text-decoration: none; transition: color 0.3s ease; }
+  .powered-by:hover { color: var(--accent-soft); }
+  .powered-by strong { color: var(--text-muted); font-weight: 600; }
+  .powered-by:hover strong { color: var(--accent-soft); }
+
+  @media (max-width: 760px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 30px; }
+    .hero-visual { order: -1; max-width: 200px; margin: 0 auto; }
+    .feature-row, .feature-row.rev { grid-template-columns: 1fr; }
+    .feature-row.rev .f-text, .feature-row.rev .f-visual { order: unset; }
+    .invite { padding: 38px 22px; }
+    .form-grid { grid-template-columns: 1fr; }
+    header { padding: 16px 18px; }
+    .brand-word { font-size: 15px; }
+    .hdr-seats { display: none; }
+    .nav-cta { padding: 8px 14px; font-size: 12px; }
+  }
+
+  @media (max-width: 400px) {
+    .brand-word { font-size: 13.5px; }
+    .nav-cta { padding: 7px 12px; font-size: 11px; }
+  }
+</style>
+
+<div class="light-field">
+  <div class="glow-orb a"></div>
+  <div class="glow-orb b"></div>
+  <div class="glow-orb c"></div>
+</div>
+<canvas id="motes" aria-hidden="true"></canvas>
+
+<header>
+  <div class="brand">
+    <img src="shapedops-icon.png" alt="ShapedOps" />
+    <div class="brand-word">SHAPED<em>OPS</em></div>
+  </div>
+  <div style="display:flex; align-items:center; gap:14px;">
+    <span class="hdr-seats"><span class="bud-dot"></span><span>18 of 20 spots left</span></span>
+    <a class="nav-cta" href="#access">Request early access</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="bloom visible">
+      <div class="eyebrow">Early access — a small first cohort</div>
+      <h1>Your business,<br><em>running itself.</em></h1>
+      <p class="lead">ShapedOps replaces the leads spreadsheet, the follow-up guesswork, and the &ldquo;did they pay yet&rdquo; with one system — built around how your business actually works.</p>
+      <div class="cta-row">
+        <a class="btn-solid" href="#access">Request early access →</a>
+      </div>
+      <p class="hero-note">🌱 Opening to a limited number of businesses — first come, first served.</p>
+    </div>
+    <div class="hero-visual bloom visible bloom-delay-1">
+      <div class="halo h1r"></div>
+      <div class="halo h2r"></div>
+      <img class="hero-logo" src="shapedops-icon.png" alt="ShapedOps mark" />
+    </div>
+  </div>
+</section>
+
+<section class="pain">
+  <div class="wrap">
+    <p class="bloom">Leads go cold. Clients end up chasing <span class="hi">you</span> for updates. Payments sit in &ldquo;let me check.&rdquo; And somewhere in there, you&rsquo;re doing the job of five people.</p>
+  </div>
+</section>
+
+<section class="feature-section">
+  <div class="wrap">
+    <div class="section-head bloom">
+      <div class="eyebrow">What grows once you plant it</div>
+      <h2>Everything your business needs to run itself</h2>
+      <p>Not a generic CRM. A system shaped around your pipeline, your clients, and your workflow.</p>
+      <p class="mockup-note">↓ animated mockups below — illustrative, built to match the real product's layout and colors, not screen recordings</p>
+    </div>
+
+    <div class="feature-row bloom">
+      <div class="f-text">
+        <h3>A pipeline that moves itself</h3>
+        <p>Every deal, every stage, every client — tracked automatically from first contact to closed. Nothing falls through because nothing has to be remembered.</p>
+      </div>
+      <div class="f-visual">
+        <div class="glass-panel">
+          <div class="mock-board">
+            <div class="mock-col"><div class="mock-col-lbl"><span class="d"></span>Lead In</div><div class="mock-card"></div><div class="mock-card"></div></div>
+            <div class="mock-col"><div class="mock-col-lbl"><span class="d"></span>Proposal</div><div class="mock-card moving"></div></div>
+            <div class="mock-col"><div class="mock-col-lbl"><span class="d"></span>Delivered</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feature-row rev bloom">
+      <div class="f-text">
+        <h3>WhatsApp automation, built in</h3>
+        <p>The moment a deal moves, your client already has a message — written, sent, done. Payment reminders, delivery updates, follow-ups. All automatic.</p>
+      </div>
+      <div class="f-visual">
+        <div class="glass-panel">
+          <div class="mock-chat">
+            <div class="mock-typing"><span></span><span></span><span></span></div>
+            <div class="mock-bubble">Your proposal's ready to review ✓</div>
+            <div class="mock-bubble b2">Payment received — thank you! <span class="mock-check">✓✓</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feature-row bloom">
+      <div class="f-text">
+        <h3>Payments and milestones, chased for you</h3>
+        <p>Deposits, milestones, and invoices tracked automatically — so money that used to sit in limbo actually moves.</p>
+      </div>
+      <div class="f-visual">
+        <div class="glass-panel">
+          <div class="mock-milestones">
+            <div class="mock-mrow">
+              <div class="mock-mlbl"><span>50% deposit</span><span>Paid</span></div>
+              <div class="mock-track"><div class="mock-fill f1" style="--w:100%"></div></div>
+            </div>
+            <div class="mock-mrow">
+              <div class="mock-mlbl"><span>50% before handoff</span><span>45%</span></div>
+              <div class="mock-track"><div class="mock-fill f2" style="--w:45%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feature-row rev bloom">
+      <div class="f-text">
+        <h3>Real numbers, always on</h3>
+        <p>Revenue, conversion rate, pipeline value — visible in real time, not buried in a spreadsheet you update once a month.</p>
+      </div>
+      <div class="f-visual">
+        <div class="glass-panel">
+          <div class="mock-chart">
+            <div class="mock-chart-num">Revenue <small>↑ trending up</small></div>
+            <div class="mock-bars">
+              <div class="mock-bar" style="--h:40%"></div>
+              <div class="mock-bar" style="--h:65%"></div>
+              <div class="mock-bar" style="--h:30%"></div>
+              <div class="mock-bar" style="--h:80%"></div>
+              <div class="mock-bar last" style="--h:100%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="feature-row bloom">
+      <div class="f-text">
+        <h3>Built around your workflow, not a template</h3>
+        <p>Stage names, automations, and rules shaped to how your business actually operates — not the other way around.</p>
+      </div>
+      <div class="f-visual">
+        <div class="glass-panel">
+          <div class="mock-morph">
+            <div class="mock-morph-label"><span class="a">Discovery call</span><span class="b">Proposal accepted</span></div>
+            <div class="mock-morph-arrow">renamed to fit your process</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="invite-section" id="access">
+  <div class="wrap">
+    <div class="invite bloom">
+      <div class="invite-top">
+        <div class="invite-eyebrow">🌿 Come grow with us</div>
+        <h2>Let's get your business shaped</h2>
+        <p class="invite-sub">Apply in under two minutes. We read every application ourselves and reply within 48 hours with next steps — no sales call required to get started.</p>
+        <p class="invite-seats"><strong>18 of 20</strong> early access spots left this season</p>
+      </div>
+
+      <div class="tabs">
+        <button class="tab active" data-tab="early" onclick="selectTab('early')">Early access</button>
+        <button class="tab" data-tab="quote" onclick="selectTab('quote')">Get a quote</button>
+      </div>
+
+      <div class="contact-panel">
+        <div class="panel-body active" data-panel="early">
+          <form id="early-access-form">
+            <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <div class="form-grid">
+              <div class="field"><label>Your name</label><input type="text" name="name" required></div>
+              <div class="field"><label>Business name</label><input type="text" name="businessName" required></div>
+              <div class="field"><label>WhatsApp number</label><input type="tel" name="whatsapp" required></div>
+              <div class="field"><label>Email</label><input type="email" name="email" required></div>
+              <div class="field full"><label>What does your business do?</label><textarea name="about" placeholder="A line or two on what you run day to day"></textarea></div>
+            </div>
+            <div class="submit-row">
+              <button class="btn-solid" type="submit">Claim my spot →</button>
+              <p class="form-status" role="status" aria-live="polite"></p>
+            </div>
+          </form>
+        </div>
+
+        <div class="panel-body" data-panel="quote">
+          <form id="quote-form">
+            <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <div class="form-grid">
+              <div class="field"><label>Your name</label><input type="text" name="name" required></div>
+              <div class="field"><label>Business name</label><input type="text" name="businessName" required></div>
+              <div class="field"><label>Email</label><input type="email" name="email" required></div>
+              <div class="field">
+                <label>What are you looking for</label>
+                <select name="projectType">
+                  <option>Custom ShapedOps setup for my business</option>
+                  <option>Custom software / dashboard build</option>
+                  <option>Not sure yet</option>
+                </select>
+              </div>
+              <div class="field full"><label>Tell us about the project</label><textarea name="details" placeholder="What you're trying to build, and rough timeline if you have one"></textarea></div>
+            </div>
+            <div class="submit-row">
+              <button class="btn-solid" type="submit">Request quotation →</button>
+              <p class="form-status" role="status" aria-live="polite"></p>
+            </div>
+          </form>
+        </div>
+      </div>
+      <p class="invite-note">No obligation to sign anything · No credit card · We'll never share your details</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-row">
+    <div class="brand"><img src="shapedops-icon.png" alt="ShapedOps" width="24" height="24"><div class="brand-word">SHAPED<em>OPS</em></div></div>
+    <p>&copy; 2026 ShapedOps by Ashlyticss. All rights reserved.</p>
+    <a class="powered-by" href="https://ashlyticss.com" target="_blank" rel="noopener noreferrer">Powered by <strong>Ashlyticss</strong></a>
+  </div>
+</footer>
+
+<script>
+  // ---- tabs ----
+  function selectTab(name) {
+    document.querySelectorAll(".tab").forEach((t) => t.classList.toggle("active", t.dataset.tab === name));
+    document.querySelectorAll(".panel-body").forEach((p) => p.classList.toggle("active", p.dataset.panel === name));
+  }
+
+  // ---- scroll bloom reveal ----
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("visible"); });
+  }, { threshold: 0.18, rootMargin: "0px 0px -60px 0px" });
+  document.querySelectorAll(".bloom:not(.visible)").forEach((el) => io.observe(el));
+
+  // ---- lead form wiring (real endpoint, matches production) ----
+  const LEADS_ENDPOINT = "https://shapedops.ashlyticss.com/api/leads";
+  function wireLeadForm(formId, kind) {
+    const form = document.getElementById(formId);
+    if (!form) return;
+    const status = form.querySelector(".form-status");
+    const submitBtn = form.querySelector('button[type="submit"]');
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form).entries());
+      data.kind = kind;
+      submitBtn.disabled = true;
+      const originalLabel = submitBtn.textContent;
+      submitBtn.textContent = "Sending…";
+      status.textContent = "";
+      status.className = "form-status";
+      try {
+        const res = await fetch(LEADS_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+        if (!res.ok) throw new Error("request failed");
+        form.reset();
+        status.textContent = kind === "early_access" ? "You're on the list — we'll be in touch." : "Got it — we'll follow up shortly.";
+        status.classList.add("ok");
+      } catch (err) {
+        status.textContent = "Something went wrong. Please try again, or email hello@ashlyticss.com directly.";
+        status.classList.add("err");
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalLabel;
+      }
+    });
+  }
+  wireLeadForm("early-access-form", "early_access");
+  wireLeadForm("quote-form", "quote");
+
+  // ---- soft drifting motes (organic, not a rigid grid) ----
+  (function () {
+    const canvas = document.getElementById("motes");
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!canvas || reduced) return;
+    const ctx = canvas.getContext("2d");
+    let w, h, motes;
+    function resize() { w = canvas.width = innerWidth; h = canvas.height = Math.min(innerHeight * 1.2, 1000); }
+    function init() {
+      const count = Math.min(28, Math.floor((w * h) / 60000));
+      motes = Array.from({ length: count }, () => ({
+        x: Math.random() * w, y: Math.random() * h,
+        r: 1 + Math.random() * 2.2,
+        vx: (Math.random() - 0.5) * 0.12, vy: -0.05 - Math.random() * 0.1,
+        o: 0.15 + Math.random() * 0.35,
+        drift: Math.random() * Math.PI * 2,
+      }));
+    }
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      motes.forEach((m) => {
+        m.drift += 0.004;
+        m.x += m.vx + Math.sin(m.drift) * 0.15;
+        m.y += m.vy;
+        if (m.y < -10) { m.y = h + 10; m.x = Math.random() * w; }
+        if (m.x < -10) m.x = w + 10; if (m.x > w + 10) m.x = -10;
+        ctx.beginPath();
+        ctx.arc(m.x, m.y, m.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(199,255,102,${m.o})`;
+        ctx.fill();
+      });
+      requestAnimationFrame(draw);
+    }
+    resize(); init(); draw();
+    addEventListener("resize", () => { resize(); init(); });
+  })();
+</script>
