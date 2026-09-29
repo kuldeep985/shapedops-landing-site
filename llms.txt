@@ -1,15 +1,15 @@
 # ShapedOps
 
-> ShapedOps is an order-to-cash system for manufacturers, foundries, machine shops, fabricators and trading businesses in India. It tracks every order from enquiry to payment through configurable stages, generates quotations, agreements, invoices and receipts on the business's letterhead at the right stage, sends WhatsApp updates to clients automatically, and gives every client a tracking link. It is built and run by Ashlyticss in Ahmedabad, Gujarat.
+> ShapedOps is an order-to-cash system for manufacturers, foundries, machine shops, fabricators and trading businesses in India. It tracks every order from enquiry to payment through configurable stages, generates quotations, agreements, invoices and receipts on the business's letterhead at the right stage, sends WhatsApp updates to clients at every stage, and gives every client a tracking link. It is built and run by Ashlyticss in Ahmedabad, Gujarat.
 
 ## What it does
 
 - Order stages from enquiry to payment. The manufacturing template is: Enquiry → Quote sent → PO received → In production → QC & dispatch → Invoiced → Payment collected. A logistics template covers Booking requested → Quote sent → Booking confirmed → In transit → Customs clearance → Delivered → Payment collected. Stage names are configured per business during setup.
 - Documents generated at the chosen stage, on the business's letterhead: quotation, agreement, invoice, payment receipt, completion certificate, plus NDA and retainer agreements. Documents are filed against the order and downloadable by the client.
-- Automatic WhatsApp messages: order confirmation, a stage update whenever the order moves, and payment reminders at 30, 60 and 90 days overdue. Click-to-chat WhatsApp links are included.
-- Client tracking portal: a link per order showing current stage, documents and invoices, with online payment. No app or login needed for the client.
+- WhatsApp messages from editable templates: order confirmation, a stage update whenever the order moves, and payment reminders at 30, 60 and 90 days overdue. They send automatically once a WhatsApp Business provider is connected; without one, each message is pre-written as a click-to-chat link and sent with one tap.
+- Client tracking portal: a link per order showing current stage, documents and invoices, with online payment through Razorpay. No app or login needed for the client.
 - Daily briefing of what moved yesterday and this week.
-- Excel import with duplicate detection.
+- Import from Excel (.xlsx, .xls) or CSV, with possible duplicates (same email or phone) flagged and skipped.
 - Team logins, plus sales partner and freelancer tracking.
 - Analytics: pipeline value, closed revenue, conversion rate, six months of revenue.
 - Custom fields (for example heat number, material grade, drawing revision), branding, and data export for owners.
@@ -31,6 +31,10 @@ Priced as an implementation, not a per-seat subscription: a one-time implementat
 
 - [Homepage](https://www.shapedops.com/): how an order moves, documents, client portal, features, industries, pricing approach, FAQ, and the early-access and quote forms
 - [For manufacturers & foundries](https://www.shapedops.com/manufacturers): the manufacturing template stage by stage, the documents and custom fields, who it's for, and manufacturing-specific FAQ
+- [For logistics & freight](https://www.shapedops.com/logistics): the logistics template (booking requested to payment collected), what shippers see, and logistics FAQ
+- [WhatsApp order updates](https://www.shapedops.com/whatsapp-order-updates): the default message templates, automatic vs click-to-chat sending, and the tracking link
+- [Payment reminders](https://www.shapedops.com/payment-reminders): the 30/60/90-day overdue reminder schedule, Razorpay payment links and receipts
+- [Moving off Excel](https://www.shapedops.com/excel-order-tracking): importing an Excel or CSV order sheet, duplicate handling, and what changes after the import
 
 ## Contact
 
