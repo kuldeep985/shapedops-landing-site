@@ -131,11 +131,23 @@
   // value changed, so scrolling never forces a layout between writes.
   var scenes = [];
 
-  // header gets its solid background once the page has scrolled
+  // header gets its solid background once the page has scrolled, and a thin
+  // line along its bottom edge shows how far down the page you are
   if (header) {
+    var bar = document.createElement("div");
+    bar.className = "scroll-progress";
+    bar.setAttribute("aria-hidden", "true");
+    header.appendChild(bar);
     scenes.push({
-      measure: function () { return scrollY > 8 ? 1 : 0; },
-      apply: function (v) { header.classList.toggle("scrolled", v === 1); }
+      measure: function () {
+        if (scrollY <= 8) return 0;
+        var max = document.documentElement.scrollHeight - innerHeight;
+        return Math.max(0.0005, q4(clamp(scrollY / Math.max(1, max), 0, 1)));
+      },
+      apply: function (v) {
+        header.classList.toggle("scrolled", v > 0);
+        bar.style.transform = "scaleX(" + v.toFixed(4) + ")";
+      }
     });
   }
 
