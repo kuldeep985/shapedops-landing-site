@@ -1,557 +1,238 @@
 <!DOCTYPE html>
 <html lang="en">
-<meta charset="utf-8" />
-<title>ShapedOps Early Access</title>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="description" content="ShapedOps is a customized CRM and business operations platform built for manufacturers, foundries, and trading businesses in India — replacing Excel, WhatsApp, and manual tracking with one system.">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ShapedOps — Order-to-Cash System for Manufacturers, Foundries &amp; Traders in India</title>
+<meta name="description" content="ShapedOps moves every order from enquiry to payment on one line — quotations, agreements, invoices and receipts generated at each stage, WhatsApp updates sent automatically, and a tracking link for every client. Built for manufacturers, foundries and traders in India.">
 <link rel="canonical" href="https://www.shapedops.com/">
-<meta property="og:title" content="ShapedOps — CRM &amp; Operations Platform for Manufacturers">
-<meta property="og:description" content="A customized CRM and business operations platform built for manufacturers, foundries, and trading businesses — order tracking, dispatch management, and automated client updates in one place.">
-<meta property="og:image" content="https://shapedops.com/shapedops-og-image.jpg">
-<meta property="og:url" content="https://shapedops.com/">
+<meta name="theme-color" content="#0c0d0a">
+<meta property="og:site_name" content="ShapedOps">
+<meta property="og:title" content="ShapedOps — Every order, enquiry to payment, on one line">
+<meta property="og:description" content="Order-to-cash system for manufacturers, foundries and traders: documents generated at every stage, WhatsApp updates sent automatically, a tracking link for every client.">
+<meta property="og:image" content="https://www.shapedops.com/shapedops-og-image.jpg">
+<meta property="og:url" content="https://www.shapedops.com/">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="ShapedOps — CRM &amp; Operations Platform for Manufacturers">
-<meta name="twitter:description" content="Replace Excel, WhatsApp, and manual tracking with one system built for your business.">
-<meta name="twitter:image" content="https://shapedops.com/shapedops-og-image.jpg">
+<meta name="twitter:title" content="ShapedOps — Every order, enquiry to payment, on one line">
+<meta name="twitter:description" content="Documents generated at every stage, WhatsApp updates sent automatically, a tracking link for every client. Built for manufacturers, foundries and traders in India.">
+<meta name="twitter:image" content="https://www.shapedops.com/shapedops-og-image.jpg">
 <link rel="icon" href="/shapedops-icon.png" type="image/png">
+<link rel="apple-touch-icon" href="/shapedops-icon.png">
+
+<script>document.documentElement.classList.add("js");setTimeout(function(){if(!window.__so)document.documentElement.classList.remove("js")},4000);</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="/assets/css/site.css">
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "ShapedOps",
-  "applicationCategory": "BusinessApplication",
-  "operatingSystem": "Web",
-  "description": "A customized CRM and business operations platform for manufacturers, foundries, and trading businesses — order tracking, dispatch management, document automation, and client communication in one system.",
-  "offers": {
-    "@type": "Offer",
-    "priceCurrency": "INR",
-    "price": "0",
-    "description": "Custom pricing based on business requirements — contact for a personalized quote."
-  },
-  "creator": {
-    "@type": "Organization",
-    "name": "Ashlyticss",
-    "url": "https://ashlyticss.com"
-  },
-  "audience": {
-    "@type": "Audience",
-    "audienceType": "Manufacturing businesses, foundries, trading companies"
-  }
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.ashlyticss.com/#organization",
+      "name": "Ashlyticss",
+      "url": "https://www.ashlyticss.com",
+      "logo": "https://www.shapedops.com/shapedops-icon.png",
+      "email": "ashlyticss@gmail.com",
+      "telephone": "+91-90998-67128",
+      "address": { "@type": "PostalAddress", "addressLocality": "Ahmedabad", "addressRegion": "Gujarat", "addressCountry": "IN" },
+      "sameAs": ["https://www.linkedin.com/company/ashlyticss/", "https://www.instagram.com/ashlytics.co"]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://www.shapedops.com/#software",
+      "name": "ShapedOps",
+      "url": "https://www.shapedops.com/",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "description": "Order-to-cash system for manufacturers, foundries and trading businesses in India. Tracks every order from enquiry to payment through configurable stages, generates quotations, agreements, invoices and receipts at the right stage, sends WhatsApp updates to clients automatically, and gives every client a tracking link.",
+      "featureList": [
+        "Configurable order stages (manufacturing and logistics templates)",
+        "Automatic quotation, agreement, invoice, receipt and completion certificate PDFs on your letterhead",
+        "Automatic WhatsApp order confirmations, stage updates and payment reminders",
+        "Client tracking portal with documents and online invoice payment",
+        "Payment reminders at 30, 60 and 90 days overdue",
+        "Excel import with duplicate detection",
+        "Team logins, sales partner and freelancer tracking",
+        "Pipeline and revenue analytics, custom fields, branding and data export"
+      ],
+      "audience": { "@type": "BusinessAudience", "audienceType": "Manufacturers, foundries, machine shops, fabricators, traders, exporters and logistics businesses in India" },
+      "creator": { "@id": "https://www.ashlyticss.com/#organization" }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://www.shapedops.com/#faq",
+      "mainEntity": [
+        { "@type": "Question", "name": "We run everything on Excel, registers and WhatsApp today. Is that a problem?", "acceptedAnswer": { "@type": "Answer", "text": "No — that is exactly who ShapedOps is built for. During setup we import the Excel sheets you already keep and shape the stages around how your orders move today, so your team does not have to change how it works first." } },
+        { "@type": "Question", "name": "Is ShapedOps a CRM?", "acceptedAnswer": { "@type": "Answer", "text": "It covers what a CRM does — enquiries, follow-ups and a pipeline — but it is built around the order: production, dispatch, documents, invoices and payment collection. Think of it as an order-to-cash system shaped to your stages." } },
+        { "@type": "Question", "name": "Do our clients need to install anything?", "acceptedAnswer": { "@type": "Answer", "text": "No. Updates reach them on WhatsApp, and their order tracking link opens in any browser — no app and no login." } },
+        { "@type": "Question", "name": "Will documents carry our letterhead?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Your logo, company details and colours are set up once, and every quotation, agreement, invoice and receipt is generated with them." } },
+        { "@type": "Question", "name": "Which WhatsApp and payment providers do you support?", "acceptedAnswer": { "@type": "Answer", "text": "We connect the WhatsApp Business provider and payment gateway you already use as part of implementation. Every account also gets WhatsApp click-to-chat links out of the box." } },
+        { "@type": "Question", "name": "How is ShapedOps priced?", "acceptedAnswer": { "@type": "Answer", "text": "As an implementation, not a per-seat subscription: a one-time implementation fee plus a monthly maintenance fee, scoped to your locations, team and modules. You get a written proposal within 2–3 business days of a discovery call." } },
+        { "@type": "Question", "name": "Do you work with businesses outside Gujarat?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. We are based in Ahmedabad, and ShapedOps works for manufacturing and trading businesses anywhere in India." } },
+        { "@type": "Question", "name": "Can we take our data out?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Owners can export their data from settings at any time." } }
+      ]
+    }
+  ]
 }
 </script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 
-<style>
-  :root {
-    --bg: #1e1e1e;
-    --bg-deep: #171712;
-    --surface: rgba(34, 36, 28, 0.55);
-    --surface-hover: rgba(40, 43, 32, 0.68);
-    --border: rgba(240, 240, 232, 0.10);
-    --border-warm: rgba(200, 255, 130, 0.16);
-    --text: #f2f1ea;
-    --text-muted: #aba99c;
-    --text-faint: #706e62;
-    --accent: #a8ff00;
-    --accent-soft: #c7ff66;
-    --accent-dim: #6b8f00;
-    --amber: #ffd9a0;
-    --font-display: "Space Grotesk", sans-serif;
-    --font-body: "Inter", sans-serif;
-    --font-mono: "JetBrains Mono", monospace;
-    --glass-blur: blur(24px);
-    --ease-bloom: cubic-bezier(0.16, 1, 0.3, 1);
-  }
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.min.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+} }
+</script>
+<script type="module" src="/assets/js/line3d.js"></script>
+<script defer src="/assets/js/site.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
 
-  * { box-sizing: border-box; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--font-body);
-    margin: 0;
-    position: relative;
-    overflow-x: hidden;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
-  }
-
-  ::selection { background: rgba(168,255,0,0.28); color: #10130a; }
-  a { color: inherit; }
-  img { max-width: 100%; display: block; }
-
-  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
-
-  h1, h2, h3 { text-wrap: balance; font-family: var(--font-display); }
-
-  /* ---------- ambient garden light ---------- */
-  .light-field { position: fixed; inset: 0; z-index: -2; overflow: hidden; pointer-events: none; }
-  .glow-orb {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(90px);
-    opacity: 0.5;
-  }
-  .glow-orb.a { width: 620px; height: 620px; top: -180px; left: -120px; background: radial-gradient(circle, rgba(168,255,0,0.22), transparent 70%); animation: driftA 34s ease-in-out infinite; }
-  .glow-orb.b { width: 520px; height: 520px; top: 20%; right: -160px; background: radial-gradient(circle, rgba(255,217,160,0.10), transparent 70%); animation: driftB 40s ease-in-out infinite; }
-  .glow-orb.c { width: 700px; height: 700px; bottom: -260px; left: 30%; background: radial-gradient(circle, rgba(168,255,0,0.12), transparent 70%); animation: driftC 46s ease-in-out infinite; }
-
-  @keyframes driftA { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(60px,50px) scale(1.12); } }
-  @keyframes driftB { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-50px,60px) scale(0.92); } }
-  @keyframes driftC { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-40px,-50px) scale(1.08); } }
-
-  #motes { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0.7; }
-
-  /* ---------- header ---------- */
-  header {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 22px 28px; max-width: 1080px; margin: 0 auto;
-  }
-  .brand { display: flex; align-items: center; gap: 10px; }
-  .brand img { width: 28px; height: 28px; }
-  .brand-word { font-family: var(--font-display); font-weight: 700; font-size: 17px; letter-spacing: 0.01em; }
-  .brand-word em { font-style: normal; color: var(--accent); }
-
-  .hdr-seats {
-    display: flex; align-items: center; gap: 8px;
-    font-family: var(--font-body); font-size: 13px; color: var(--text-muted);
-    border: 1px solid var(--border); padding: 7px 14px 7px 12px; border-radius: 30px;
-    background: var(--surface); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
-  }
-  .bud-dot {
-    width: 7px; height: 7px; border-radius: 50%; background: var(--accent);
-    box-shadow: 0 0 10px var(--accent); animation: breathe 2.6s ease-in-out infinite;
-  }
-  @keyframes breathe { 0%,100% { opacity: 0.55; transform: scale(0.85); } 50% { opacity: 1; transform: scale(1.05); } }
-
-  .nav-cta {
-    font-family: var(--font-display); font-weight: 600; font-size: 13px;
-    background: transparent; border: 1px solid var(--border-warm); color: var(--text);
-    padding: 9px 18px; border-radius: 30px; text-decoration: none;
-    transition: border-color 0.35s ease, background 0.35s ease, transform 0.3s var(--ease-bloom);
-  }
-  .nav-cta:hover { border-color: var(--accent); background: rgba(168,255,0,0.06); transform: translateY(-1px); }
-
-  /* ---------- reveal (bloom) ---------- */
-  .bloom { opacity: 0; transform: translateY(28px) scale(0.965); transition: opacity 1.1s var(--ease-bloom), transform 1.1s var(--ease-bloom); }
-  .bloom.visible { opacity: 1; transform: translateY(0) scale(1); }
-  .bloom-delay-1.visible { transition-delay: 0.12s; }
-  .bloom-delay-2.visible { transition-delay: 0.24s; }
-
-  /* ---------- hero ---------- */
-  .hero { padding: 68px 0 30px; }
-  .hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 50px; align-items: center; }
-
-  .eyebrow {
-    display: inline-flex; align-items: center; gap: 9px;
-    font-family: var(--font-body); font-weight: 600; font-size: 12.5px; letter-spacing: 0.06em;
-    text-transform: uppercase; color: var(--accent-soft); margin-bottom: 24px;
-  }
-  .eyebrow::before { content: ""; width: 20px; height: 1px; background: linear-gradient(90deg, var(--accent), transparent); }
-
-  h1 {
-    font-weight: 700; font-size: clamp(40px, 5.4vw, 66px); line-height: 1.05;
-    letter-spacing: -0.01em; margin: 0 0 24px;
-  }
-  h1 em {
-    font-style: normal;
-    background: linear-gradient(105deg, var(--accent) 10%, var(--accent-soft) 60%, var(--amber) 130%);
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-  }
-
-  .lead { font-size: 18px; line-height: 1.65; color: var(--text-muted); max-width: 46ch; margin: 0 0 34px; }
-
-  .cta-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
-
-  .btn-solid {
-    position: relative; display: inline-flex; align-items: center; gap: 10px;
-    font-family: var(--font-display); font-weight: 600; font-size: 15px; color: #12160a;
-    background: linear-gradient(135deg, var(--accent-soft), var(--accent));
-    border: none; padding: 15px 26px; border-radius: 14px; cursor: pointer; text-decoration: none;
-    transition: transform 0.4s var(--ease-bloom), box-shadow 0.5s var(--ease-bloom), filter 0.3s ease;
-  }
-  .btn-solid:hover { transform: translateY(-3px); box-shadow: 0 14px 40px -10px rgba(168,255,0,0.5); filter: brightness(1.04); }
-  .btn-solid:active { transform: translateY(-1px) scale(0.98); transition-duration: 0.15s; }
-
-  .hero-note { font-size: 13px; color: var(--text-faint); margin: 22px 0 0; display: flex; align-items: center; gap: 7px; }
-
-  /* ---------- hero visual: breathing halo ---------- */
-  .hero-visual { position: relative; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; }
-  .halo {
-    position: absolute; border-radius: 50%;
-    background: radial-gradient(circle, rgba(168,255,0,0.20), transparent 68%);
-    filter: blur(30px);
-    animation: halobreathe 5.5s ease-in-out infinite;
-  }
-  .halo.h1r { width: 78%; height: 78%; }
-  .halo.h2r { width: 52%; height: 52%; background: radial-gradient(circle, rgba(255,217,160,0.14), transparent 68%); animation-delay: 0.6s; animation-duration: 6.5s; }
-  @keyframes halobreathe { 0%,100% { transform: scale(0.94); opacity: 0.7; } 50% { transform: scale(1.04); opacity: 1; } }
-
-  .hero-logo { position: relative; width: 40%; filter: drop-shadow(0 0 40px rgba(168,255,0,0.28)); animation: float 7s ease-in-out infinite; }
-  @keyframes float { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-12px) rotate(1.5deg); } }
-
-  /* ---------- pain statement ---------- */
-  .pain { padding: 34px 0 64px; text-align: center; }
-  .pain p { font-size: clamp(19px, 2.3vw, 25px); font-weight: 500; color: var(--text-muted); max-width: 60ch; margin: 0 auto; line-height: 1.55; }
-  .pain .hi { color: var(--text); }
-
-  /* ---------- features ---------- */
-  .feature-section { padding: 10px 0 30px; }
-  .section-head { text-align: center; margin-bottom: 20px; max-width: 640px; margin-left: auto; margin-right: auto; }
-  .section-head .eyebrow { justify-content: center; }
-  .section-head h2 { font-size: clamp(28px, 3.4vw, 38px); margin: 0 0 12px; }
-  .section-head p { color: var(--text-muted); font-size: 15.5px; margin: 0 0 6px; line-height: 1.6; }
-  .mockup-note { font-family: var(--font-mono); font-size: 11px; color: var(--text-faint); letter-spacing: 0.03em; }
-
-  .feature-row {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 46px; align-items: center;
-    padding: 46px 0;
-  }
-  .feature-row.rev .f-text { order: 2; }
-  .feature-row.rev .f-visual { order: 1; }
-
-  .f-text h3 { font-size: 23px; margin: 0 0 13px; }
-  .f-text p { color: var(--text-muted); font-size: 15.5px; line-height: 1.65; margin: 0; max-width: 42ch; }
-
-  .glass-panel {
-    background: var(--surface);
-    backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
-    border: 1px solid var(--border);
-    border-radius: 22px;
-    padding: 28px;
-    min-height: 220px;
-    display: flex; align-items: center; justify-content: center;
-    position: relative;
-    transition: border-color 0.5s ease, transform 0.5s var(--ease-bloom), box-shadow 0.5s ease;
-    overflow: hidden;
-  }
-  .glass-panel::before {
-    content: "";
-    position: absolute; inset: 0;
-    background: radial-gradient(circle at 30% 20%, rgba(168,255,0,0.07), transparent 55%);
-    pointer-events: none;
-  }
-  .glass-panel:hover { border-color: var(--border-warm); transform: translateY(-4px); box-shadow: 0 26px 60px -24px rgba(0,0,0,0.55); }
-
-  /* ---- mockup 1: pipeline board ---- */
-  .mock-board { display: flex; gap: 10px; width: 100%; position: relative; z-index: 1; }
-  .mock-col { flex: 1; background: rgba(255,255,255,0.025); border: 1px solid var(--border); border-radius: 12px; padding: 10px; display: flex; flex-direction: column; gap: 8px; min-height: 140px; }
-  .mock-col-lbl { font-family: var(--font-mono); font-size: 9px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px; display: flex; align-items: center; gap: 5px; }
-  .mock-col-lbl .d { width: 5px; height: 5px; border-radius: 50%; background: var(--chrome, #999); }
-  .mock-col:first-child .mock-col-lbl .d { background: var(--accent); box-shadow: 0 0 5px var(--accent); }
-  .mock-card { height: 30px; border-radius: 7px; background: rgba(255,255,255,0.05); border: 1px solid var(--border); }
-  .mock-card.moving {
-    position: relative;
-    animation: cardMove 5s var(--ease-bloom) infinite;
-    border-color: rgba(168,255,0,0.4);
-    background: rgba(168,255,0,0.07);
-  }
-  @keyframes cardMove {
-    0%, 14% { transform: translate(0,0); opacity: 1; }
-    40% { transform: translate(112px,-6px) scale(1.03); opacity: 1; box-shadow: 0 10px 24px -8px rgba(168,255,0,0.4); }
-    55%, 100% { transform: translate(112px,-6px) scale(1); opacity: 1; }
-  }
-
-  /* ---- mockup 2: whatsapp bubble ---- */
-  .mock-chat { position: relative; z-index: 1; width: 100%; max-width: 260px; display: flex; flex-direction: column; gap: 10px; }
-  .mock-bubble {
-    align-self: flex-end; max-width: 82%; background: rgba(168,255,0,0.12); border: 1px solid var(--border-warm);
-    border-radius: 14px 14px 3px 14px; padding: 10px 13px; font-size: 12.5px; color: var(--text);
-    opacity: 0; animation: bubbleIn 5s var(--ease-bloom) infinite;
-  }
-  .mock-bubble.b2 { animation-delay: 1.6s; align-self: flex-end; }
-  @keyframes bubbleIn { 0%,20% { opacity: 0; transform: translateY(8px) scale(0.94); } 34%,100% { opacity: 1; transform: translateY(0) scale(1); } }
-  .mock-check { color: var(--accent-soft); font-size: 10px; margin-left: 5px; }
-  .mock-typing { display: flex; gap: 4px; align-self: flex-end; padding: 8px 12px; }
-  .mock-typing span { width: 5px; height: 5px; border-radius: 50%; background: var(--text-faint); animation: typingDot 1.2s ease-in-out infinite; }
-  .mock-typing span:nth-child(2) { animation-delay: 0.15s; } .mock-typing span:nth-child(3) { animation-delay: 0.3s; }
-  @keyframes typingDot { 0%,60%,100% { opacity: 0.3; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
-
-  /* ---- mockup 3: milestone bars ---- */
-  .mock-milestones { width: 100%; position: relative; z-index: 1; display: flex; flex-direction: column; gap: 22px; }
-  .mock-mrow .mock-mlbl { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; display: flex; justify-content: space-between; }
-  .mock-mlbl span:last-child { font-family: var(--font-mono); color: var(--accent-soft); }
-  .mock-track { height: 8px; border-radius: 6px; background: rgba(255,255,255,0.06); overflow: hidden; }
-  .mock-fill { height: 100%; border-radius: 6px; background: linear-gradient(90deg, var(--accent-dim), var(--accent)); width: 0; animation: fillGrow 3.4s var(--ease-bloom) forwards; animation-play-state: paused; }
-  .mock-fill.f1 { animation-delay: 0.1s; }
-  .mock-fill.f2 { animation-delay: 0.5s; }
-  @keyframes fillGrow { to { width: var(--w); } }
-
-  /* ---- mockup 4: analytics chart ---- */
-  .mock-chart { width: 100%; position: relative; z-index: 1; }
-  .mock-chart-num { font-family: var(--font-mono); font-size: 26px; color: var(--text); margin-bottom: 14px; font-variant-numeric: tabular-nums; }
-  .mock-chart-num small { font-size: 12px; color: var(--accent-soft); font-weight: 600; margin-left: 6px; }
-  .mock-bars { display: flex; align-items: flex-end; gap: 9px; height: 90px; }
-  .mock-bar { flex: 1; border-radius: 5px 5px 2px 2px; background: linear-gradient(180deg, var(--accent-soft), var(--accent-dim)); height: 0; animation: barGrow 2.6s var(--ease-bloom) forwards; animation-play-state: paused; opacity: 0.85; }
-  .mock-bar.last { background: linear-gradient(180deg, var(--accent-soft), var(--accent)); opacity: 1; }
-  @keyframes barGrow { to { height: var(--h); } }
-
-  /* ---- mockup 5: workflow morph ---- */
-  .mock-morph { width: 100%; position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 14px; }
-  .mock-morph-label {
-    font-family: var(--font-mono); font-size: 13px; padding: 10px 18px; border-radius: 10px;
-    border: 1px solid var(--border); background: rgba(255,255,255,0.03); position: relative; min-width: 170px; text-align: center;
-  }
-  .mock-morph-label .a, .mock-morph-label .b { grid-area: 1 / 1; transition: opacity 1.4s var(--ease-bloom); }
-  .mock-morph-label { display: grid; }
-  .mock-morph-label .b { opacity: 0; color: var(--accent-soft); animation: morphSwap 5s ease-in-out infinite; }
-  .mock-morph-label .a { animation: morphSwapOut 5s ease-in-out infinite; }
-  @keyframes morphSwap { 0%,45% { opacity: 0; } 60%,100% { opacity: 1; } }
-  @keyframes morphSwapOut { 0%,45% { opacity: 1; } 60%,100% { opacity: 0; } }
-  .mock-morph-arrow { font-family: var(--font-mono); font-size: 10px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.08em; }
-
-  /* trigger animation-play-state when revealed */
-  .bloom.visible .mock-fill, .bloom.visible .mock-bar { animation-play-state: running; }
-
-  /* ---------- CTA: garden invitation ---------- */
-  .invite-section { padding: 40px 0 96px; }
-  .invite {
-    background: linear-gradient(165deg, rgba(168,255,0,0.05), transparent 55%), var(--bg-deep);
-    border: 1px solid var(--border-warm);
-    border-radius: 28px;
-    padding: 56px 52px;
-    position: relative;
-    overflow: hidden;
-  }
-  .invite::before {
-    content: ""; position: absolute; width: 500px; height: 500px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(168,255,0,0.10), transparent 70%);
-    top: -220px; right: -140px; filter: blur(10px); pointer-events: none;
-  }
-  .invite-top { position: relative; z-index: 1; text-align: center; max-width: 560px; margin: 0 auto 36px; }
-  .invite-eyebrow { font-family: var(--font-body); font-weight: 600; font-size: 12.5px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--accent-soft); margin-bottom: 16px; display: flex; align-items: center; justify-content: center; gap: 8px; }
-  .invite h2 { font-size: clamp(28px, 3.6vw, 38px); margin: 0 0 14px; }
-  .invite-sub { color: var(--text-muted); font-size: 16px; line-height: 1.65; margin: 0 0 6px; }
-  .invite-seats { font-size: 13px; color: var(--text-faint); margin-top: 16px; }
-  .invite-seats strong { color: var(--accent-soft); font-weight: 600; }
-
-  .tabs { display: flex; gap: 6px; justify-content: center; margin-bottom: 30px; position: relative; z-index: 1; }
-  .tab {
-    font-family: var(--font-display); font-weight: 600; font-size: 13.5px; color: var(--text-muted);
-    background: transparent; border: 1px solid var(--border); padding: 9px 20px; border-radius: 30px;
-    cursor: pointer; transition: all 0.35s var(--ease-bloom);
-  }
-  .tab.active { color: #12160a; background: var(--accent-soft); border-color: transparent; }
-  .tab:not(.active):hover { border-color: var(--border-warm); color: var(--text); }
-
-  .contact-panel { position: relative; z-index: 1; max-width: 560px; margin: 0 auto; }
-  .panel-body { display: none; }
-  .panel-body.active { display: block; animation: fadeUp 0.6s var(--ease-bloom); }
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; min-width: 0; }
-  .field { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
-  .field.full { grid-column: 1 / -1; }
-  .field label { font-size: 12.5px; color: var(--text-muted); font-weight: 500; }
-  .field input, .field textarea, .field select {
-    width: 100%; min-width: 0; max-width: 100%;
-    font-family: var(--font-body); font-size: 14.5px; color: var(--text);
-    background: rgba(255,255,255,0.035); border: 1px solid var(--border); border-radius: 11px;
-    padding: 11px 14px; transition: border-color 0.3s ease, box-shadow 0.3s ease; outline: none;
-  }
-  .field textarea { resize: vertical; min-height: 70px; font-family: var(--font-body); }
-  .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--accent-dim); box-shadow: 0 0 0 4px rgba(168,255,0,0.10); }
-  .hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
-
-  .submit-row { margin-top: 22px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
-  .submit-row .btn-solid { width: 100%; justify-content: center; }
-  .form-status { font-size: 13px; color: var(--text-muted); min-height: 18px; margin: 0; text-align: center; }
-  .form-status.ok { color: var(--accent-soft); }
-  .form-status.err { color: #ff9f7a; }
-
-  .invite-note { font-size: 12.5px; color: var(--text-faint); text-align: center; margin-top: 4px; }
-
-  footer { text-align: center; padding: 30px 0 50px; }
-  .foot-row { display: flex; flex-direction: column; align-items: center; gap: 14px; }
-  footer .brand { justify-content: center; }
-  footer p { font-size: 12px; color: var(--text-faint); margin: 0; }
-  .powered-by { font-size: 12px; color: var(--text-faint); text-decoration: none; transition: color 0.3s ease; }
-  .powered-by:hover { color: var(--accent-soft); }
-  .powered-by strong { color: var(--text-muted); font-weight: 600; }
-  .powered-by:hover strong { color: var(--accent-soft); }
-
-  .foot-contact { display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; }
-  .foot-contact-item {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-family: var(--font-body); font-size: 12.5px; color: var(--text-muted);
-    text-decoration: none; transition: color 0.3s ease;
-  }
-  .foot-contact-item:hover { color: var(--accent-soft); }
-  .foot-contact-item svg { flex-shrink: 0; }
-  .foot-location { font-size: 12px; color: var(--text-faint); }
-
-  @media (max-width: 760px) {
-    .hero-grid { grid-template-columns: 1fr; gap: 30px; }
-    .hero-visual { order: -1; max-width: 200px; margin: 0 auto; }
-    .feature-row, .feature-row.rev { grid-template-columns: 1fr; }
-    .feature-row.rev .f-text, .feature-row.rev .f-visual { order: unset; }
-    .invite { padding: 38px 22px; }
-    .form-grid { grid-template-columns: 1fr; }
-    header { padding: 16px 18px; }
-    .brand-word { font-size: 15px; }
-    .hdr-seats { display: none; }
-    .nav-cta { padding: 8px 14px; font-size: 12px; }
-  }
-
-  @media (max-width: 400px) {
-    .brand-word { font-size: 13.5px; }
-    .nav-cta { padding: 7px 12px; font-size: 11px; }
-  }
-</style>
-
-<div class="light-field">
-  <div class="glow-orb a"></div>
-  <div class="glow-orb b"></div>
-  <div class="glow-orb c"></div>
-</div>
-<canvas id="motes" aria-hidden="true"></canvas>
-
-<header>
-  <div class="brand">
-    <img src="shapedops-icon.png" alt="ShapedOps" />
-    <div class="brand-word">SHAPED<em>OPS</em></div>
-  </div>
-  <div style="display:flex; align-items:center; gap:14px;">
-    <span class="hdr-seats"><span class="bud-dot"></span><span>18 of 20 spots left</span></span>
-    <a class="nav-cta" href="#access">Request early access</a>
+<header class="site-header" id="top">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="ShapedOps home">
+      <img src="/shapedops-icon.png" alt="" width="30" height="30">
+      <span class="brand-word">SHAPED<b>OPS</b></span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#flow">How it works</a>
+      <a href="#documents">Documents</a>
+      <a href="#clients" class="nav-hide-md">Client portal</a>
+      <a href="#industries">Industries</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq" class="nav-hide-md">FAQ</a>
+      <a class="btn btn-sm" href="#access">Book a discovery call <span class="arr" aria-hidden="true">→</span></a>
+    </nav>
+    <button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span><span></span></button>
   </div>
 </header>
+<nav class="mobile-menu" id="mobile-menu" aria-label="Mobile">
+  <a href="#flow">How it works</a>
+  <a href="#documents">Documents</a>
+  <a href="#clients">Client portal</a>
+  <a href="#industries">Industries</a>
+  <a href="#pricing">Pricing</a>
+  <a href="#faq">FAQ</a>
+  <a class="btn" href="#access">Book a discovery call <span class="arr" aria-hidden="true">→</span></a>
+</nav>
 
-<section class="hero">
-  <div class="wrap hero-grid">
-    <div class="bloom visible">
-      <div class="eyebrow">Early access — a small first cohort</div>
-      <h1>Your business,<br><em>running itself.</em></h1>
-      <p class="lead">ShapedOps replaces the leads spreadsheet, the follow-up guesswork, and the &ldquo;did they pay yet&rdquo; with one system — built around how your business actually works.</p>
-      <div class="cta-row">
-        <a class="btn-solid" href="#access">Request early access →</a>
+<main id="main">
+
+<!-- ============================================================ HERO -->
+<section class="hero" aria-labelledby="hero-title">
+  <canvas class="hero-canvas" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="hero-copy">
+      <p class="kicker">Order-to-cash for manufacturers, foundries &amp; traders</p>
+      <h1 id="hero-title" class="split">Every order, enquiry to payment, on <span class="mark">one&nbsp;line.</span></h1>
+      <p class="lede reveal d1">ShapedOps moves each order through your real stages — quote, PO, production, dispatch, invoice, payment — and sends the documents and WhatsApp updates at every step. Set up around how your business already runs.</p>
+      <div class="hero-ctas reveal d2">
+        <a class="btn" href="#access">Book a discovery call <span class="arr" aria-hidden="true">→</span></a>
+        <a class="btn btn-ghost" href="#flow">See an order move</a>
       </div>
-      <p class="hero-note">🌱 Opening to a limited number of businesses — first come, first served.</p>
+      <div class="hero-meta reveal d3">
+        <span>Built in Ahmedabad by Ashlyticss</span>
+        <span>Early access · small first cohort</span>
+        <span>Proposal in 2–3 business days</span>
+      </div>
     </div>
-    <div class="hero-visual bloom visible bloom-delay-1">
-      <div class="halo h1r"></div>
-      <div class="halo h2r"></div>
-      <img class="hero-logo" src="shapedops-icon.png" alt="ShapedOps mark" />
+  </div>
+  <div class="hero-legend">
+    <div class="wrap">
+      <ol aria-label="Order stages on the line">
+        <li data-station="0"><b>01</b>Enquiry</li>
+        <li data-station="1"><b>02</b>Quote sent <span class="doc-flag">+ PDF</span></li>
+        <li data-station="2"><b>03</b>PO received <span class="doc-flag">+ PDF</span></li>
+        <li data-station="3"><b>04</b>In production</li>
+        <li data-station="4"><b>05</b>QC &amp; dispatch</li>
+        <li data-station="5"><b>06</b>Invoiced <span class="doc-flag">+ PDF</span></li>
+        <li data-station="6"><b>07</b>Payment collected <span class="doc-flag">+ PDF</span></li>
+      </ol>
     </div>
   </div>
 </section>
 
-<section class="pain">
-  <div class="wrap">
-    <p class="bloom">Leads go cold. Clients end up chasing <span class="hi">you</span> for updates. Payments sit in &ldquo;let me check.&rdquo; And somewhere in there, you&rsquo;re doing the job of five people.</p>
-  </div>
-</section>
-
-<section class="intro-copy">
-  <div class="wrap">
-    <div class="section-head bloom">
-      <div class="eyebrow">What is ShapedOps?</div>
-      <p>ShapedOps is a CRM and business operations platform built specifically for manufacturers, foundries, and trading businesses in India. If your team is still tracking orders across Excel, WhatsApp, and physical registers, ShapedOps replaces that with one system — order and dispatch tracking, automatic client updates, and document generation, customized to how your business actually works.</p>
-      <p style="margin-top:14px"><a href="/manufacturers" style="color:var(--accent-soft); font-family:var(--font-mono); font-size:13px; text-decoration:none; border-bottom:1px solid var(--border-warm)">See how ShapedOps works for manufacturers &amp; foundries →</a></p>
-    </div>
-  </div>
-</section>
-
-<section class="feature-section">
-  <div class="wrap">
-    <div class="section-head bloom">
-      <div class="eyebrow">What grows once you plant it</div>
-      <h2>Everything your business needs to run itself</h2>
-      <p>Not a generic CRM. A system shaped around your pipeline, your clients, and your workflow.</p>
-      <p class="mockup-note">↓ animated mockups below — illustrative, built to match the real product's layout and colors, not screen recordings</p>
-    </div>
-
-    <div class="feature-row bloom">
-      <div class="f-text">
-        <h3>A pipeline that moves itself</h3>
-        <p>Every deal, every stage, every client — tracked automatically from first contact to closed. Nothing falls through because nothing has to be remembered.</p>
-      </div>
-      <div class="f-visual">
-        <div class="glass-panel">
-          <div class="mock-board">
-            <div class="mock-col"><div class="mock-col-lbl"><span class="d"></span>Lead In</div><div class="mock-card"></div><div class="mock-card"></div></div>
-            <div class="mock-col"><div class="mock-col-lbl"><span class="d"></span>Proposal</div><div class="mock-card moving"></div></div>
-            <div class="mock-col"><div class="mock-col-lbl"><span class="d"></span>Delivered</div></div>
+<!-- ======================================================= 01 TODAY -->
+<section class="scatter" id="today" aria-labelledby="today-title">
+  <div class="scatter-stick">
+    <div class="wrap">
+      <div class="sec-label"><span class="n">01</span><span class="rule"></span><span class="tag">Where orders live today</span></div>
+      <div class="scatter-grid">
+        <div class="scatter-copy">
+          <div class="state before">
+            <p class="kicker">Today</p>
+            <h2 id="today-title">Right now, one order lives in <span class="soft">six places.</span></h2>
+            <p class="lede">The register has the quantity. Excel has the rate. The dispatch date is somewhere in a WhatsApp group, and the payment status is in someone's head. So when a buyer asks where their order is, someone calls the shop floor.</p>
+          </div>
+          <div class="state after">
+            <p class="kicker">With ShapedOps</p>
+            <h2>One order. One line. <span class="soft">Everyone sees the same thing.</span></h2>
+            <p class="lede">Quantity, rate, stage, documents, dispatch and payment sit on one record your team updates once. Your client sees their part on a tracking link. Nobody has to call anybody to find out.</p>
           </div>
         </div>
-      </div>
-    </div>
 
-    <div class="feature-row rev bloom">
-      <div class="f-text">
-        <h3>WhatsApp automation, built in</h3>
-        <p>The moment a deal moves, your client already has a message — written, sent, done. Payment reminders, delivery updates, follow-ups. All automatic.</p>
-      </div>
-      <div class="f-visual">
-        <div class="glass-panel">
-          <div class="mock-chat">
-            <div class="mock-typing"><span></span><span></span><span></span></div>
-            <div class="mock-bubble">Your proposal's ready to review ✓</div>
-            <div class="mock-bubble b2">Payment received — thank you! <span class="mock-check">✓✓</span></div>
+        <div class="scatter-stage" aria-hidden="true">
+          <div class="piece p-register" data-from="-215,-40,60,16,24,-11" data-to="-8,-12,-40,0,0,-3">
+            <div class="rh">ORDER REGISTER — SEPT</div>
+            <div>12/9 Patel Castings — flange DN100 × 400</div>
+            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;adv. 50% recd?</div>
+            <div>14/9 Shree Ambica — bush <s>200</s> 250</div>
+            <div>16/9 Patel — disp. date? <em>call</em></div>
+            <div>18/9 Mehta Traders — coupling × 120</div>
+            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rate as per last?</div>
           </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="feature-row bloom">
-      <div class="f-text">
-        <h3>Payments and milestones, chased for you</h3>
-        <p>Deposits, milestones, and invoices tracked automatically — so money that used to sit in limbo actually moves.</p>
-      </div>
-      <div class="f-visual">
-        <div class="glass-panel">
-          <div class="mock-milestones">
-            <div class="mock-mrow">
-              <div class="mock-mlbl"><span>50% deposit</span><span>Paid</span></div>
-              <div class="mock-track"><div class="mock-fill f1" style="--w:100%"></div></div>
-            </div>
-            <div class="mock-mrow">
-              <div class="mock-mlbl"><span>50% before handoff</span><span>45%</span></div>
-              <div class="mock-track"><div class="mock-fill f2" style="--w:45%"></div></div>
-            </div>
+          <div class="piece p-excel" data-from="170,-175,-50,10,-20,5" data-to="6,-6,-30,0,0,2">
+            <div class="xl-bar"><span>orders_FINAL_v3 (2).xlsx</span><span>Sheet1</span></div>
+            <table>
+              <tr><th>Party</th><th>Item</th><th>Qty</th><th>Status</th></tr>
+              <tr><td>Patel Castings</td><td>Flange DN100</td><td>400</td><td class="yel">in prodn?</td></tr>
+              <tr><td>Shree Ambica</td><td>Bush 40mm</td><td>250</td><td class="red">payment??</td></tr>
+              <tr><td>Mehta Traders</td><td>Coupling</td><td>120</td><td>dispatched</td></tr>
+              <tr><td>Patel Castings</td><td>Flange DN80</td><td>—</td><td>quote sent</td></tr>
+            </table>
           </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="feature-row rev bloom">
-      <div class="f-text">
-        <h3>Real numbers, always on</h3>
-        <p>Revenue, conversion rate, pipeline value — visible in real time, not buried in a spreadsheet you update once a month.</p>
-      </div>
-      <div class="f-visual">
-        <div class="glass-panel">
-          <div class="mock-chart">
-            <div class="mock-chart-num">Revenue <small>↑ trending up</small></div>
-            <div class="mock-bars">
-              <div class="mock-bar" style="--h:40%"></div>
-              <div class="mock-bar" style="--h:65%"></div>
-              <div class="mock-bar" style="--h:30%"></div>
-              <div class="mock-bar" style="--h:80%"></div>
-              <div class="mock-bar last" style="--h:100%"></div>
+          <div class="piece p-wa" data-from="215,120,90,-8,-26,7" data-to="-4,4,-20,0,0,-1">
+            <div class="wa-head"><div class="wa-av">DU</div><div><div class="wa-name">Dispatch — Unit 2</div><div class="wa-sub">Rakesh, Suresh, Anita +11</div></div></div>
+            <div class="wa-body">
+              <div class="m"><i style="color:#53bdeb">Rakesh</i>Patel ka maal kab jayega?<span class="t">10:42</span></div>
+              <div class="m"><i style="color:#e9a23b">Suresh</i>kal subah, truck confirm nahi hua<span class="t">10:51</span></div>
+              <div class="m me">bill bana diya?<span class="t">11:03</span></div>
+              <div class="m"><i style="color:#53bdeb">Rakesh</i>pata nahi, accounts se pucho<span class="t">11:05</span></div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
+          <div class="piece p-note" data-from="-250,200,130,8,16,9" data-to="4,10,-10,0,0,3">Call Mehulbhai — balance payment!! <br>(Friday)</div>
+          <div class="piece p-slip" data-from="-10,235,-30,22,0,-17" data-to="-6,2,0,0,0,-2">
+            <div>PATEL CASTINGS</div><hr>
+            <div class="row"><span>advance</span><span>1,64,000</span></div>
+            <div class="row"><span>balance</span><span>?</span></div>
+            <div class="row"><span>chq</span><span>pending?</span></div><hr>
+            <div>ask accounts</div>
+          </div>
 
-    <div class="feature-row bloom">
-      <div class="f-text">
-        <h3>Built around your workflow, not a template</h3>
-        <p>Stage names, automations, and rules shaped to how your business actually operates — not the other way around.</p>
-      </div>
-      <div class="f-visual">
-        <div class="glass-panel">
-          <div class="mock-morph">
-            <div class="mock-morph-label"><span class="a">Discovery call</span><span class="b">Proposal accepted</span></div>
-            <div class="mock-morph-arrow">renamed to fit your process</div>
+          <div class="piece p-order" data-from="0,120,220,34,0,0" data-to="0,0,80,0,0,0" data-card>
+            <div class="order-top">
+              <div>
+                <div class="order-id">ORD-2041 · sample order</div>
+                <div class="order-client">Patel Castings Pvt. Ltd.</div>
+                <div class="order-item">CI Flange DN100, machined × 400 nos</div>
+              </div>
+              <span class="stage-pill">In production</span>
+            </div>
+            <div class="order-rail"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i></div>
+            <div class="order-facts">
+              <div><span>Quotation</span><b class="ok">Generated</b></div>
+              <div><span>Agreement</span><b class="ok">Generated</b></div>
+              <div><span>Advance</span><b>₹1,64,000 in</b></div>
+              <div><span>Client updates</span><b>3 sent</b></div>
+              <div><span>Dispatch target</span><b>26 Sep</b></div>
+              <div><span>Tracking link</span><b class="ok">Live</b></div>
+            </div>
           </div>
         </div>
       </div>
@@ -559,183 +240,576 @@
   </div>
 </section>
 
-<section class="invite-section" id="access">
+<!-- ======================================================== 02 FLOW -->
+<section class="section" id="flow" aria-labelledby="flow-title">
   <div class="wrap">
-    <div class="invite bloom">
-      <div class="invite-top">
-        <div class="invite-eyebrow">🌿 Come grow with us</div>
-        <h2>Let's get your business shaped</h2>
-        <p class="invite-sub">Apply in under two minutes. We read every application ourselves and reply within 48 hours with next steps — no sales call required to get started.</p>
-        <p class="invite-seats"><strong>18 of 20</strong> early access spots left this season</p>
+    <div class="sec-label"><span class="n">02</span><span class="rule"></span><span class="tag">How an order moves</span></div>
+    <div class="section-head">
+      <h2 id="flow-title" class="split">Watch one order go from enquiry to <span class="mark">paid.</span></h2>
+      <p class="lede reveal">This is the manufacturing stage template ShapedOps starts from. Scroll to move the order — every document and WhatsApp message on the right is generated by the system, not typed by your team.</p>
+    </div>
+
+    <div class="flow-grid">
+      <ol class="flow-steps">
+        <li class="flow-step active" data-step="0">
+          <span class="num">01</span>
+          <div>
+            <h3>Enquiry</h3>
+            <p>A buyer asks for a rate. Log it in seconds — or bring it in with the rest of your Excel sheet. It gets an owner and a place on the board.</p>
+            <div class="auto"><span>Owner assigned</span><span>On the board</span></div>
+          </div>
+        </li>
+        <li class="flow-step" data-step="1">
+          <span class="num">02</span>
+          <div>
+            <h3>Quote sent</h3>
+            <p>Move it to Quote sent and the quotation PDF is generated on your letterhead, with your terms. The client gets a WhatsApp update.</p>
+            <div class="auto"><span>Quotation PDF</span><span>WhatsApp update</span></div>
+          </div>
+        </li>
+        <li class="flow-step" data-step="2">
+          <span class="num">03</span>
+          <div>
+            <h3>PO received</h3>
+            <p>The PO comes in. The agreement is generated, and the client gets an order confirmation on WhatsApp — before anyone remembers to send one.</p>
+            <div class="auto"><span>Agreement PDF</span><span>Order confirmation</span></div>
+          </div>
+        </li>
+        <li class="flow-step" data-step="3">
+          <span class="num">04</span>
+          <div>
+            <h3>In production</h3>
+            <p>The shop floor works from the same record. The client has a tracking link, so “where's my order?” answers itself.</p>
+            <div class="auto"><span>Tracking link</span><span>WhatsApp update</span></div>
+          </div>
+        </li>
+        <li class="flow-step" data-step="4">
+          <span class="num">05</span>
+          <div>
+            <h3>QC &amp; dispatch</h3>
+            <p>Inspection done, truck booked. The dispatch update goes out the moment the stage changes — nobody has to type it.</p>
+            <div class="auto"><span>WhatsApp update</span></div>
+          </div>
+        </li>
+        <li class="flow-step" data-step="5">
+          <span class="num">06</span>
+          <div>
+            <h3>Invoiced</h3>
+            <p>The invoice is generated from the order — no retyping rates or quantities — with an online payment link through your gateway.</p>
+            <div class="auto"><span>Invoice PDF</span><span>Payment link</span></div>
+          </div>
+        </li>
+        <li class="flow-step" data-step="6">
+          <span class="num">07</span>
+          <div>
+            <h3>Payment collected</h3>
+            <p>Payment lands, the receipt is issued and the order closes. If it doesn't land, reminders go out at 30, 60 and 90 days overdue.</p>
+            <div class="auto"><span>Receipt PDF</span><span>30 / 60 / 90-day reminders</span></div>
+          </div>
+        </li>
+      </ol>
+
+      <div class="flow-sticky" aria-hidden="true">
+        <div class="app" id="flow-app">
+          <div class="app-bar">
+            <div class="dots"><i></i><i></i><i></i></div>
+            <div class="crumb">Pipeline / <b>ORD-2041</b></div>
+          </div>
+          <div class="app-body">
+            <div class="app-side"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+            <div class="app-main">
+              <div class="deal-head">
+                <div>
+                  <div class="deal-title">Patel Castings Pvt. Ltd.</div>
+                  <div class="deal-sub">CI Flange DN100, machined × 400 nos · Mehul Patel</div>
+                </div>
+                <div class="deal-amt">₹4,08,280<small>incl. GST · sample</small></div>
+              </div>
+              <div class="rail">
+                <div class="rail-track"><span class="seg"></span><span class="seg"></span><span class="seg"></span><span class="seg"></span><span class="seg"></span><span class="seg"></span><span class="seg"></span></div>
+                <div class="rail-labels"><span>Enquiry</span><span>Quote sent</span><span>PO received</span><span>In production</span><span>QC &amp; dispatch</span><span>Invoiced</span><span>Payment collected</span></div>
+              </div>
+              <div class="app-cols">
+                <div class="panel">
+                  <div class="panel-h"><span>Documents &amp; payments</span><span class="stage-pill" data-pill>Enquiry</span></div>
+                  <div class="panel-b" data-list="docs"></div>
+                </div>
+                <div class="panel msgs">
+                  <div class="panel-h"><span>Client updates · WhatsApp</span><span data-count>0 sent</span></div>
+                  <div class="panel-b" data-list="msgs"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="wa-toast" data-toast>
+            <div class="to"><span>WhatsApp → Mehul Patel</span><span>sent automatically</span></div>
+            <div class="bub"><span data-toast-text></span><span class="t">just now <b>✓✓</b></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================================================== 03 DOCUMENTS -->
+<section class="docs paper" id="documents" aria-labelledby="docs-title">
+  <div class="docs-stick">
+    <div class="wrap">
+      <div class="sec-label"><span class="n">03</span><span class="rule"></span><span class="tag">Documents</span></div>
+      <div class="docs-head">
+        <h2 id="docs-title">Paperwork that writes itself — <span class="soft">on your letterhead.</span></h2>
+        <p class="lede">Each stage can issue its own document. Your logo, company details and terms go in once during setup; after that the right PDF is generated at the right stage and filed against the order.</p>
       </div>
 
-      <div class="tabs">
-        <button class="tab active" data-tab="early" onclick="selectTab('early')">Early access</button>
-        <button class="tab" data-tab="quote" onclick="selectTab('quote')">Get a quote</button>
+      <div class="docs-stage" aria-hidden="true">
+        <div class="doc-sheet" data-i="0">
+          <div class="lh"><div class="co">YOUR COMPANY PVT. LTD.<small>Your address · GSTIN · phone</small></div><div class="logo"></div></div>
+          <div class="ttl">QUOTATION</div>
+          <div class="meta"><span>To: Patel Castings Pvt. Ltd.</span><span>Date: 13 Sep 2026</span><span>Attn: Mehul Patel</span><span>Valid: 15 days</span></div>
+          <table><tr><th>Item</th><th>Qty</th><th>Amount</th></tr><tr><td>CI Flange DN100, machined</td><td>400</td><td>3,28,000</td></tr><tr><td>Pattern &amp; tooling</td><td>1 lot</td><td>18,000</td></tr><tr><td>GST 18%</td><td></td><td>62,280</td></tr></table>
+          <div class="tot"><span>Total</span><span>₹4,08,280</span></div>
+          <div class="lines"><i></i><i></i><i></i></div>
+          <div class="doc-tag"><b>Quote sent</b> → generated</div>
+        </div>
+        <div class="doc-sheet" data-i="1">
+          <div class="lh"><div class="co">YOUR COMPANY PVT. LTD.<small>Your address · GSTIN · phone</small></div><div class="logo"></div></div>
+          <div class="ttl">AGREEMENT</div>
+          <div class="meta"><span>Client: Patel Castings</span><span>Ref: PO 4471</span></div>
+          <div class="lines"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="sig"><span>Authorised signatory</span></div>
+          <div class="doc-tag"><b>PO received</b> → generated</div>
+        </div>
+        <div class="doc-sheet" data-i="2">
+          <div class="lh"><div class="co">YOUR COMPANY PVT. LTD.<small>Your address · GSTIN · phone</small></div><div class="logo"></div></div>
+          <div class="ttl">INVOICE</div>
+          <div class="meta"><span>Bill to: Patel Castings</span><span>Inv: 2026/118</span><span>Due: 30 Sep 2026</span><span>PO: 4471</span></div>
+          <table><tr><th>Service provided</th><th>Amount</th></tr><tr><td>CI Flange DN100 × 400</td><td>3,46,000</td></tr><tr><td>GST 18%</td><td>62,280</td></tr></table>
+          <div class="tot"><span>Total amount payable</span><span>₹4,08,280</span></div>
+          <div class="lines"><i></i><i></i></div>
+          <div class="doc-tag"><b>Invoiced</b> → generated</div>
+        </div>
+        <div class="doc-sheet" data-i="3">
+          <div class="lh"><div class="co">YOUR COMPANY PVT. LTD.<small>Your address · GSTIN · phone</small></div><div class="logo"></div></div>
+          <div class="ttl">PAYMENT RECEIPT</div>
+          <div class="meta"><span>From: Patel Castings</span><span>Against: 2026/118</span></div>
+          <table><tr><th>Received</th><th>Amount</th></tr><tr><td>Advance</td><td>1,64,000</td></tr><tr><td>Balance</td><td>2,44,280</td></tr></table>
+          <div class="tot"><span>Amount received</span><span>₹4,08,280</span></div>
+          <div class="stamp">PAID</div>
+          <div class="doc-tag"><b>Payment collected</b> → generated</div>
+        </div>
       </div>
 
-      <div class="contact-panel">
-        <div class="panel-body active" data-panel="early">
+      <div class="docs-foot">
+        <span>Completion certificates</span>
+        <span>NDAs and retainer agreements</span>
+        <span>Filed against the order, downloadable by your client</span>
+        <span>Sample documents shown</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================================================== 04 CLIENTS -->
+<section class="section" id="clients" aria-labelledby="clients-title">
+  <div class="wrap">
+    <div class="sec-label"><span class="n">04</span><span class="rule"></span><span class="tag">Your client's side</span></div>
+    <div class="client-grid">
+      <div class="client-copy">
+        <h2 id="clients-title" class="split">Your client stops calling. <span class="soft">They already know.</span></h2>
+        <p class="lede reveal">Updates reach buyers on WhatsApp, where they already are. One tap opens their order — current stage, documents to download, invoices to pay. Nothing to install, no login to remember.</p>
+        <ul class="client-points">
+          <li class="reveal"><span>A</span><div><b>WhatsApp at every stage</b><p>Order confirmations, stage changes and payment reminders, sent from message templates you control.</p></div></li>
+          <li class="reveal d1"><span>B</span><div><b>A tracking link per order</b><p>Stage, documents and invoices in any browser, with your logo on top.</p></div></li>
+          <li class="reveal d2"><span>C</span><div><b>Pay online</b><p>Invoices carry a payment link through the gateway you already use.</p></div></li>
+        </ul>
+      </div>
+
+      <div class="phone-scene" aria-hidden="true">
+        <div>
+          <div class="phone" id="phone">
+            <div class="phone-back"></div>
+            <div class="phone-face">
+              <div class="phone-screen">
+                <div class="phone-notch"></div>
+                <div class="screen screen-wa">
+                  <div class="wa-top">
+                    <div class="av"><img src="/shapedops-icon.png" alt=""></div>
+                    <div><b>Your Company Pvt. Ltd.</b><small>Business account</small></div>
+                  </div>
+                  <div class="wa-chat">
+                    <span class="wa-day">Today</span>
+                    <div class="wa-msg">Hi Mehul, thank you for your order! We've received it and will be in touch shortly with next steps.<span class="t">09:12</span></div>
+                    <div class="wa-msg">Hi Mehul, quick update — your order/project status has moved to: In Production. Let us know if you have any questions!<span class="t">11:40</span></div>
+                    <div class="wa-msg">Hi Mehul, quick update — your order/project status has moved to: Invoiced. Let us know if you have any questions!<span class="t">16:05</span></div>
+                    <div class="wa-msg">Track your order, download documents and pay online: <a>open order status</a><span class="t">16:06</span></div>
+                  </div>
+                  <div class="wa-input"><span></span><i></i></div>
+                </div>
+                <div class="screen screen-portal">
+                  <div class="portal-top"><span class="lg"></span><div><b>Your Company Pvt. Ltd.</b><small>Order status · Patel Castings</small></div></div>
+                  <div class="portal-body">
+                    <div class="pcard"><h4>Current stage</h4><div class="pstage">Invoiced</div><div class="psteps"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div></div>
+                    <div class="pcard"><h4>Documents</h4>
+                      <div class="pdoc">Quotation<span>Download</span></div>
+                      <div class="pdoc">Agreement<span>Download</span></div>
+                      <div class="pdoc">Invoice 2026/118<span>Download</span></div>
+                    </div>
+                    <div class="pcard"><h4>Invoice</h4><div class="pinv"><span>Due 30 Sep 2026</span><b>₹4,08,280</b></div><button class="ppay" tabindex="-1">Pay now</button></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="phone-shadow"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================= 05 SPECS -->
+<section class="section" id="features" aria-labelledby="specs-title">
+  <div class="wrap">
+    <div class="sec-label"><span class="n">05</span><span class="rule"></span><span class="tag">Around the order</span></div>
+    <div class="section-head">
+      <h2 id="specs-title" class="split">Everything around the order, <span class="soft">handled too.</span></h2>
+      <p class="lede reveal">The back-office work that usually lives in someone's notebook — collections, the morning check-in, onboarding old data, who brought which deal in.</p>
+    </div>
+
+    <div class="specs">
+      <div class="spec">
+        <span class="n">01</span>
+        <div class="reveal"><h3>Payments chased on a schedule</h3><p>Invoices your clients can pay online, and a WhatsApp reminder at 30, 60 and 90 days overdue — one per milestone, never a daily nag.</p></div>
+        <div class="spec-vis" data-inview aria-hidden="true">
+          <div class="remind">
+            <div class="remind-line"></div>
+            <div class="remind-pts">
+              <div class="remind-pt" style="left:4%"><i></i><b>Due</b><small>invoice + link</small></div>
+              <div class="remind-pt" style="left:36%"><i></i><b>+30 days</b><small>reminder 1</small></div>
+              <div class="remind-pt" style="left:66%"><i></i><b>+60 days</b><small>reminder 2</small></div>
+              <div class="remind-pt" style="left:95%"><i></i><b>+90 days</b><small>reminder 3</small></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec">
+        <span class="n">02</span>
+        <div class="reveal"><h3>A briefing before the first call</h3><p>Open ShapedOps and see what moved yesterday and this week — new enquiries, orders won, payments in — before the phone starts ringing.</p></div>
+        <div class="spec-vis" aria-hidden="true">
+          <div class="brief reveal">
+            <div class="brief-h">Good to see you, Rakesh. Here's where things stand.</div>
+            <div class="brief-tabs"><span class="on">Yesterday</span><span>This week</span></div>
+            <div class="brief-grid">
+              <div><small>New enquiries</small><b>6</b></div>
+              <div><small>Stages moved</small><b>11</b></div>
+              <div><small>Payments in</small><b>₹2.4L</b></div>
+            </div>
+            <p class="illus-note">Sample data</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec">
+        <span class="n">03</span>
+        <div class="reveal"><h3>Bring your Excel with you</h3><p>Import the parties and orders you already keep in sheets. Possible duplicates are flagged before anything is saved, so you start clean.</p></div>
+        <div class="spec-vis" data-inview aria-hidden="true">
+          <div class="import">
+            <div class="import-sheet"><div class="h"></div><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="import-arrow">→</div>
+            <div class="import-table"><i></i><i></i><i class="dup"></i><i></i><i></i><i></i></div>
+            <div class="import-note">6 rows parsed · <b>1 possible duplicate</b> flagged for review</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec">
+        <span class="n">04</span>
+        <div class="reveal"><h3>Team, sales partners and freelancers</h3><p>Staff get their own logins. Sales partners and freelancers are tracked against the deals they bring in, with their agreements generated for them too.</p></div>
+        <div class="spec-vis" aria-hidden="true">
+          <div class="people reveal">
+            <span class="person"><i>R</i><b>Rakesh</b><small>owner</small></span>
+            <span class="person"><i>S</i><b>Suresh</b><small>staff</small></span>
+            <span class="person"><i>A</i><b>Anita</b><small>staff</small></span>
+            <span class="person partner"><i>V</i><b>Vikram</b><small>sales partner</small></span>
+            <span class="person partner"><i>D</i><b>Deep</b><small>freelancer</small></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec">
+        <span class="n">05</span>
+        <div class="reveal"><h3>Numbers that stay current</h3><p>Pipeline value, closed revenue, conversion rate and six months of revenue — calculated from the orders themselves, not rebuilt in a spreadsheet at month-end.</p></div>
+        <div class="spec-vis" data-inview aria-hidden="true">
+          <div class="chart">
+            <div class="chart-kpis"><div><small>Pipeline</small><b>₹38.6L</b></div><div><small>Closed</small><b>₹21.2L</b></div><div><small>Conversion</small><b>34%</b></div></div>
+            <div class="chart-bars"><i style="--h:38%"></i><i style="--h:52%"></i><i style="--h:44%"></i><i style="--h:63%"></i><i style="--h:71%"></i><i style="--h:88%"></i></div>
+            <div class="chart-x"><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span></div>
+            <p class="illus-note">Illustrative data</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec">
+        <span class="n">06</span>
+        <div class="reveal"><h3>Yours to shape — and to take with you</h3><p>Custom fields for whatever your business tracks, your branding on everything clients see, and a full data export whenever you want it.</p></div>
+        <div class="spec-vis" aria-hidden="true">
+          <div class="brief reveal" style="max-width:420px">
+            <div class="brief-h">Custom fields</div>
+            <div class="chips" style="margin-bottom:14px">
+              <span class="chip">Heat no.</span><span class="chip">Material grade</span><span class="chip">Drawing rev.</span><span class="chip">Transporter</span>
+            </div>
+            <div class="order-facts" style="grid-template-columns:1fr">
+              <div><span>Branding</span><b class="ok">Logo &amp; colours set</b></div>
+              <div><span>Data export</span><b>Available to owners</b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================================================== 06 INDUSTRIES -->
+<section class="section" id="industries" aria-labelledby="ind-title" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-label"><span class="n">06</span><span class="rule"></span><span class="tag">Industries &amp; stages</span></div>
+    <div class="section-head">
+      <h2 id="ind-title" class="split">Starts from a template. <span class="soft">Ends up sounding like you.</span></h2>
+      <p class="lede reveal">ShapedOps ships with stage templates for the way different businesses move an order. During setup we rename stages, choose which documents each one issues, and add the fields you track.</p>
+    </div>
+
+    <div class="ind-tabs" role="tablist" aria-label="Stage templates">
+      <button class="ind-tab" role="tab" id="tab-mfg" aria-controls="panel-mfg" aria-selected="true">Manufacturing</button>
+      <button class="ind-tab" role="tab" id="tab-log" aria-controls="panel-log" aria-selected="false" tabindex="-1">Logistics &amp; freight</button>
+    </div>
+
+    <div class="track-panel" role="tabpanel" id="panel-mfg" aria-labelledby="tab-mfg">
+      <div class="track">
+        <div class="stn"><span class="dot">01</span><b>Enquiry</b><small>—</small></div>
+        <div class="stn doc"><span class="dot">02</span><b>Quote sent</b><small>+ quotation</small></div>
+        <div class="stn doc"><span class="dot">03</span><b>PO received</b><small>+ agreement</small></div>
+        <div class="stn"><span class="dot">04</span><b>In production</b><small>—</small></div>
+        <div class="stn"><span class="dot">05</span><b>QC &amp; dispatch</b><small>—</small></div>
+        <div class="stn doc"><span class="dot">06</span><b>Invoiced</b><small>+ invoice</small></div>
+        <div class="stn doc"><span class="dot">07</span><b>Payment collected</b><small>+ receipt · closes order</small></div>
+      </div>
+    </div>
+    <div class="track-panel" role="tabpanel" id="panel-log" aria-labelledby="tab-log" hidden>
+      <div class="track">
+        <div class="stn"><span class="dot">01</span><b>Booking requested</b><small>—</small></div>
+        <div class="stn doc"><span class="dot">02</span><b>Quote sent</b><small>+ quotation</small></div>
+        <div class="stn doc"><span class="dot">03</span><b>Booking confirmed</b><small>+ agreement</small></div>
+        <div class="stn"><span class="dot">04</span><b>In transit</b><small>—</small></div>
+        <div class="stn"><span class="dot">05</span><b>Customs clearance</b><small>—</small></div>
+        <div class="stn doc"><span class="dot">06</span><b>Delivered</b><small>+ invoice</small></div>
+        <div class="stn doc"><span class="dot">07</span><b>Payment collected</b><small>+ receipt · closes order</small></div>
+      </div>
+    </div>
+
+    <div class="ind-foot">
+      <div>
+        <p class="mono" style="color:var(--faint);margin-bottom:14px">Built for</p>
+        <div class="chips">
+          <span class="chip">Foundries &amp; castings</span><span class="chip">Machine shops</span><span class="chip">Fabricators</span>
+          <span class="chip">Component manufacturers</span><span class="chip">Traders &amp; exporters</span><span class="chip">Freight &amp; logistics</span>
+        </div>
+      </div>
+      <div>
+        <p class="body-muted" style="margin-bottom:18px">Stage names, colours, which documents fire at which stage, and custom fields are all configured with you during setup — the template is only where we start.</p>
+        <a class="link-arrow" href="/manufacturers">ShapedOps for manufacturers &amp; foundries <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================ 07 IMPLEMENTATION -->
+<section class="section" id="pricing" aria-labelledby="impl-title" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-label"><span class="n">07</span><span class="rule"></span><span class="tag">Getting started &amp; pricing</span></div>
+    <div class="section-head">
+      <h2 id="impl-title" class="split">Implemented with you, <span class="soft">not handed over as a login.</span></h2>
+      <p class="lede reveal">We set ShapedOps up around your process with you — your stages, your letterhead, your data — and stay on to keep it running.</p>
+    </div>
+
+    <div class="steps4">
+      <div class="step4 reveal"><span class="n">01</span><h3>Discovery call</h3><p>We walk through how an order moves in your business today — the stages, the documents, and who does what.</p></div>
+      <div class="step4 reveal d1"><span class="n">02</span><h3>Proposal in 2–3 business days</h3><p>A written scope and a fixed quote, based on your locations, your team and the modules you need.</p></div>
+      <div class="step4 reveal d2"><span class="n">03</span><h3>Setup around your process</h3><p>Stages, letterhead, WhatsApp and payment gateway connected, and your existing Excel data imported.</p></div>
+      <div class="step4 reveal d3"><span class="n">04</span><h3>Go live</h3><p>Your team is walked through it, and maintenance keeps it running as you add people, locations and modules.</p></div>
+    </div>
+
+    <div class="pricing reveal">
+      <div>
+        <p class="kicker">Pricing</p>
+        <h3>Priced like an implementation — not a per-seat subscription.</h3>
+        <p class="body-muted" style="max-width:48ch;margin-bottom:28px">A one-time implementation fee and a monthly maintenance fee, scoped to your business. You get the fit of custom software without starting from scratch — and a fixed quote before you commit to anything.</p>
+        <a class="btn" href="#access" data-open-tab="quote">Get a quote <span class="arr" aria-hidden="true">→</span></a>
+      </div>
+      <ul>
+        <li><span><b>Quoted after a discovery call</b> — written proposal in 2–3 business days</span></li>
+        <li><span><b>Scoped to you</b> — locations, team size and the modules you need</span></li>
+        <li><span><b>Add modules as you grow</b> — extra locations, partner tracking, WhatsApp automation</span></li>
+        <li><span><b>Ongoing maintenance</b> and support in the monthly fee</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================== 08 WHO -->
+<section class="section" aria-labelledby="who-title" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-label"><span class="n">08</span><span class="rule"></span><span class="tag">Who builds it</span></div>
+    <div class="founder">
+      <div>
+        <h2 id="who-title" class="split">Built by a small team in <span class="soft">Ahmedabad.</span></h2>
+      </div>
+      <div class="reveal">
+        <blockquote>ShapedOps is built and run by <em>Ashlyticss</em>, a data analytics studio in Ahmedabad. The people who build the product are the people who set it up with you — and during early access we read every application ourselves.</blockquote>
+        <div class="order-facts" style="grid-template-columns:1fr 1fr;margin-top:36px;font-size:14px">
+          <div><span>Company</span><b>Ashlyticss</b></div>
+          <div><span>Founder</span><b>Kuldeep Thakkar</b></div>
+          <div><span>Based in</span><b>Ahmedabad, Gujarat</b></div>
+          <div><span>Works with</span><b>Businesses across India</b></div>
+        </div>
+        <p style="margin-top:28px"><a class="link-arrow" href="https://www.ashlyticss.com" target="_blank" rel="noopener">About Ashlyticss <span aria-hidden="true">↗</span></a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================== 09 FAQ -->
+<section class="section" id="faq" aria-labelledby="faq-title" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-label"><span class="n">09</span><span class="rule"></span><span class="tag">Questions</span></div>
+    <div class="section-head">
+      <h2 id="faq-title" class="split">Questions owners ask us.</h2>
+      <p class="lede reveal">Something not covered here? Message us on WhatsApp at +91 90998 67128.</p>
+    </div>
+    <div class="faq">
+      <details><summary>We run everything on Excel, registers and WhatsApp today. Is that a problem?<span class="pm" aria-hidden="true"></span></summary><div class="ans">No — that's exactly who ShapedOps is built for. During setup we import the Excel sheets you already keep and shape the stages around how your orders move today, so your team doesn't have to change how it works first.</div></details>
+      <details><summary>Is ShapedOps a CRM?<span class="pm" aria-hidden="true"></span></summary><div class="ans">It covers what a CRM does — enquiries, follow-ups and a pipeline — but it's built around the order: production, dispatch, documents, invoices and payment collection. Think of it as an order-to-cash system shaped to your stages.</div></details>
+      <details><summary>Do our clients need to install anything?<span class="pm" aria-hidden="true"></span></summary><div class="ans">No. Updates reach them on WhatsApp, and their order tracking link opens in any browser — no app and no login.</div></details>
+      <details><summary>Will documents carry our letterhead?<span class="pm" aria-hidden="true"></span></summary><div class="ans">Yes. Your logo, company details and colours are set up once, and every quotation, agreement, invoice and receipt is generated with them.</div></details>
+      <details><summary>Which WhatsApp and payment providers do you support?<span class="pm" aria-hidden="true"></span></summary><div class="ans">We connect the WhatsApp Business provider and payment gateway you already use as part of implementation. Every account also gets WhatsApp click-to-chat links out of the box.</div></details>
+      <details><summary>How is ShapedOps priced?<span class="pm" aria-hidden="true"></span></summary><div class="ans">As an implementation, not a per-seat subscription: a one-time implementation fee plus a monthly maintenance fee, scoped to your locations, team and modules. You get a written proposal within 2–3 business days of a discovery call.</div></details>
+      <details><summary>Do you work with businesses outside Gujarat?<span class="pm" aria-hidden="true"></span></summary><div class="ans">Yes. We're based in Ahmedabad, and ShapedOps works for manufacturing and trading businesses anywhere in India.</div></details>
+      <details><summary>Can we take our data out?<span class="pm" aria-hidden="true"></span></summary><div class="ans">Yes. Owners can export their data from settings at any time.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================== 10 CTA -->
+<section class="section" id="access" aria-labelledby="cta-title" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-label"><span class="n">10</span><span class="rule"></span><span class="tag">Start</span></div>
+    <div class="cta-grid">
+      <div>
+        <h2 id="cta-title" class="split">Tell us how your orders <span class="mark">run today.</span></h2>
+        <p class="lede reveal" style="margin-top:22px">Apply for early access or ask for a quote. We read every application ourselves and reply within 48 hours with next steps.</p>
+        <div class="cta-side reveal d1">
+          <a href="https://wa.me/919099867128" target="_blank" rel="noopener noreferrer"><span>WhatsApp</span><span>+91 90998 67128</span></a>
+          <a href="mailto:ashlyticss@gmail.com"><span>Email</span><span>ashlyticss@gmail.com</span></a>
+          <a href="https://www.linkedin.com/company/ashlyticss/" target="_blank" rel="noopener noreferrer"><span>LinkedIn</span><span>Ashlyticss ↗</span></a>
+        </div>
+      </div>
+
+      <div class="form-card reveal">
+        <div class="form-tabs" role="tablist" aria-label="Enquiry type">
+          <button class="form-tab" role="tab" id="ftab-early" aria-controls="fpanel-early" aria-selected="true" data-tab="early">Early access</button>
+          <button class="form-tab" role="tab" id="ftab-quote" aria-controls="fpanel-quote" aria-selected="false" tabindex="-1" data-tab="quote">Get a quote</button>
+        </div>
+
+        <div class="form-panel" role="tabpanel" id="fpanel-early" aria-labelledby="ftab-early" data-panel="early">
+          <p class="form-intro">For manufacturing and trading businesses who want to be in the first cohort.</p>
           <form id="early-access-form">
             <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
-            <div class="form-grid">
-              <div class="field"><label>Your name</label><input type="text" name="name" required></div>
-              <div class="field"><label>Business name</label><input type="text" name="businessName" required></div>
-              <div class="field"><label>WhatsApp number</label><input type="tel" name="whatsapp" required></div>
-              <div class="field"><label>Email</label><input type="email" name="email" required></div>
-              <div class="field full"><label>What does your business do?</label><textarea name="about" placeholder="A line or two on what you run day to day"></textarea></div>
+            <div class="fgrid">
+              <div class="field"><label for="ea-name">Your name</label><input id="ea-name" type="text" name="name" autocomplete="name" required></div>
+              <div class="field"><label for="ea-biz">Business name</label><input id="ea-biz" type="text" name="businessName" autocomplete="organization" required></div>
+              <div class="field"><label for="ea-wa">WhatsApp number</label><input id="ea-wa" type="tel" name="whatsapp" autocomplete="tel" required></div>
+              <div class="field"><label for="ea-email">Email</label><input id="ea-email" type="email" name="email" autocomplete="email" required></div>
+              <div class="field full"><label for="ea-about">What does your business do?</label><textarea id="ea-about" name="about" placeholder="What you make or trade, and roughly how many orders a month"></textarea></div>
             </div>
-            <div class="submit-row">
-              <button class="btn-solid" type="submit">Claim my spot →</button>
+            <div class="form-actions">
+              <button class="btn" type="submit">Request early access <span class="arr" aria-hidden="true">→</span></button>
               <p class="form-status" role="status" aria-live="polite"></p>
             </div>
           </form>
         </div>
 
-        <div class="panel-body" data-panel="quote">
+        <div class="form-panel" role="tabpanel" id="fpanel-quote" aria-labelledby="ftab-quote" data-panel="quote" hidden>
+          <p class="form-intro">Tell us what you need and we'll set up a discovery call.</p>
           <form id="quote-form">
             <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
-            <div class="form-grid">
-              <div class="field"><label>Your name</label><input type="text" name="name" required></div>
-              <div class="field"><label>Business name</label><input type="text" name="businessName" required></div>
-              <div class="field"><label>Email</label><input type="email" name="email" required></div>
+            <div class="fgrid">
+              <div class="field"><label for="q-name">Your name</label><input id="q-name" type="text" name="name" autocomplete="name" required></div>
+              <div class="field"><label for="q-biz">Business name</label><input id="q-biz" type="text" name="businessName" autocomplete="organization" required></div>
+              <div class="field"><label for="q-email">Email</label><input id="q-email" type="email" name="email" autocomplete="email" required></div>
               <div class="field">
-                <label>What are you looking for</label>
-                <select name="projectType">
+                <label for="q-type">What you're looking for</label>
+                <select id="q-type" name="projectType">
                   <option>Custom ShapedOps setup for my business</option>
                   <option>Custom software / dashboard build</option>
                   <option>Not sure yet</option>
                 </select>
               </div>
-              <div class="field full"><label>Tell us about the project</label><textarea name="details" placeholder="What you're trying to build, and rough timeline if you have one"></textarea></div>
+              <div class="field full"><label for="q-details">Tell us about it</label><textarea id="q-details" name="details" placeholder="How orders move today, how many people are involved, and any timeline you have in mind"></textarea></div>
             </div>
-            <div class="submit-row">
-              <button class="btn-solid" type="submit">Request quotation →</button>
+            <div class="form-actions">
+              <button class="btn" type="submit">Request a quote <span class="arr" aria-hidden="true">→</span></button>
               <p class="form-status" role="status" aria-live="polite"></p>
             </div>
           </form>
         </div>
+        <p class="form-fine">No obligation · No card · We never share your details</p>
       </div>
-      <p class="invite-note">No obligation to sign anything · No credit card · We'll never share your details</p>
     </div>
   </div>
 </section>
 
-<footer>
-  <div class="wrap foot-row">
-    <div class="brand"><img src="shapedops-icon.png" alt="ShapedOps" width="24" height="24"><div class="brand-word">SHAPED<em>OPS</em></div></div>
+</main>
 
-    <div class="foot-contact">
-      <a class="foot-contact-item" href="https://wa.me/919099867128" target="_blank" rel="noopener noreferrer">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-        +91 90998 67128
-      </a>
-      <a class="foot-contact-item" href="mailto:ashlyticss@gmail.com">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        ashlyticss@gmail.com
-      </a>
-      <a class="foot-contact-item" href="https://www.linkedin.com/company/ashlyticss/" target="_blank" rel="noopener noreferrer">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-        LinkedIn
-      </a>
-      <a class="foot-contact-item" href="https://www.instagram.com/ashlytics.co" target="_blank" rel="noopener noreferrer">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-        Instagram
-      </a>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-about">
+        <a class="brand" href="/" aria-label="ShapedOps home"><img src="/shapedops-icon.png" alt="" width="30" height="30"><span class="brand-word">SHAPED<b>OPS</b></span></a>
+        <p>The order-to-cash system for manufacturers, foundries and traders. Built and run by Ashlyticss in Ahmedabad.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="#flow">How an order moves</a></li>
+          <li><a href="#documents">Documents</a></li>
+          <li><a href="#clients">Client portal</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Industries</h4>
+        <ul>
+          <li><a href="/manufacturers">Manufacturers &amp; foundries</a></li>
+          <li><a href="/manufacturers">Machine shops &amp; fabricators</a></li>
+          <li><a href="#industries">Logistics &amp; freight</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="https://wa.me/919099867128" target="_blank" rel="noopener noreferrer">WhatsApp +91 90998 67128</a></li>
+          <li><a href="mailto:ashlyticss@gmail.com">ashlyticss@gmail.com</a></li>
+          <li><a href="https://www.linkedin.com/company/ashlyticss/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+          <li><a href="https://www.instagram.com/ashlytics.co" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+        </ul>
+      </div>
     </div>
-    <p class="foot-location">Ahmedabad, Gujarat, India</p>
-
-    <p>&copy; 2026 ShapedOps by Ashlyticss. All rights reserved.</p>
-    <a class="powered-by" href="https://ashlyticss.com" target="_blank" rel="noopener noreferrer">Powered by <strong>Ashlyticss</strong></a>
+    <div class="foot-bottom">
+      <span>© 2026 ShapedOps by Ashlyticss · Ahmedabad, Gujarat, India</span>
+      <a href="https://www.ashlyticss.com" target="_blank" rel="noopener">Powered by Ashlyticss ↗</a>
+    </div>
   </div>
 </footer>
-
-<script>
-  // ---- tabs ----
-  function selectTab(name) {
-    document.querySelectorAll(".tab").forEach((t) => t.classList.toggle("active", t.dataset.tab === name));
-    document.querySelectorAll(".panel-body").forEach((p) => p.classList.toggle("active", p.dataset.panel === name));
-  }
-
-  // ---- scroll bloom reveal ----
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("visible"); });
-  }, { threshold: 0.18, rootMargin: "0px 0px -60px 0px" });
-  document.querySelectorAll(".bloom:not(.visible)").forEach((el) => io.observe(el));
-
-  // ---- lead form wiring (real endpoint, matches production) ----
-  const LEADS_ENDPOINT = "https://shapedops.ashlyticss.com/api/leads";
-  function wireLeadForm(formId, kind) {
-    const form = document.getElementById(formId);
-    if (!form) return;
-    const status = form.querySelector(".form-status");
-    const submitBtn = form.querySelector('button[type="submit"]');
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const data = Object.fromEntries(new FormData(form).entries());
-      data.kind = kind;
-      submitBtn.disabled = true;
-      const originalLabel = submitBtn.textContent;
-      submitBtn.textContent = "Sending…";
-      status.textContent = "";
-      status.className = "form-status";
-      try {
-        const res = await fetch(LEADS_ENDPOINT, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        });
-        if (!res.ok) throw new Error("request failed");
-        form.reset();
-        status.textContent = kind === "early_access" ? "You're on the list — we'll be in touch." : "Got it — we'll follow up shortly.";
-        status.classList.add("ok");
-      } catch (err) {
-        status.textContent = "Something went wrong. Please try again, or email ashlyticss@gmail.com directly.";
-        status.classList.add("err");
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = originalLabel;
-      }
-    });
-  }
-  wireLeadForm("early-access-form", "early_access");
-  wireLeadForm("quote-form", "quote");
-
-  // ---- soft drifting motes (organic, not a rigid grid) ----
-  (function () {
-    const canvas = document.getElementById("motes");
-    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!canvas || reduced) return;
-    const ctx = canvas.getContext("2d");
-    let w, h, motes;
-    function resize() { w = canvas.width = innerWidth; h = canvas.height = Math.min(innerHeight * 1.2, 1000); }
-    function init() {
-      const count = Math.min(28, Math.floor((w * h) / 60000));
-      motes = Array.from({ length: count }, () => ({
-        x: Math.random() * w, y: Math.random() * h,
-        r: 1 + Math.random() * 2.2,
-        vx: (Math.random() - 0.5) * 0.12, vy: -0.05 - Math.random() * 0.1,
-        o: 0.15 + Math.random() * 0.35,
-        drift: Math.random() * Math.PI * 2,
-      }));
-    }
-    function draw() {
-      ctx.clearRect(0, 0, w, h);
-      motes.forEach((m) => {
-        m.drift += 0.004;
-        m.x += m.vx + Math.sin(m.drift) * 0.15;
-        m.y += m.vy;
-        if (m.y < -10) { m.y = h + 10; m.x = Math.random() * w; }
-        if (m.x < -10) m.x = w + 10; if (m.x > w + 10) m.x = -10;
-        ctx.beginPath();
-        ctx.arc(m.x, m.y, m.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(199,255,102,${m.o})`;
-        ctx.fill();
-      });
-      requestAnimationFrame(draw);
-    }
-    resize(); init(); draw();
-    addEventListener("resize", () => { resize(); init(); });
-  })();
-</script>
+</body>
 </html>

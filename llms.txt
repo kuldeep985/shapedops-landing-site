@@ -1,35 +1,39 @@
 # ShapedOps
 
-> ShapedOps is a CRM and business operations platform built for manufacturers, foundries, and trading businesses in India. It replaces Excel, WhatsApp, and manual/paper tracking with one system for order and dispatch tracking, automatic client updates, and document generation.
+> ShapedOps is an order-to-cash system for manufacturers, foundries, machine shops, fabricators and trading businesses in India. It tracks every order from enquiry to payment through configurable stages, generates quotations, agreements, invoices and receipts on the business's letterhead at the right stage, sends WhatsApp updates to clients automatically, and gives every client a tracking link. It is built and run by Ashlyticss in Ahmedabad, Gujarat.
 
-## About
+## What it does
 
-ShapedOps is currently in early access, opening to a small first cohort of manufacturing and trading businesses on a first-come basis. It is built and operated by Ashlyticss (https://www.ashlyticss.com), a data analytics agency based in Ahmedabad, India.
+- Order stages from enquiry to payment. The manufacturing template is: Enquiry → Quote sent → PO received → In production → QC & dispatch → Invoiced → Payment collected. A logistics template covers Booking requested → Quote sent → Booking confirmed → In transit → Customs clearance → Delivered → Payment collected. Stage names are configured per business during setup.
+- Documents generated at the chosen stage, on the business's letterhead: quotation, agreement, invoice, payment receipt, completion certificate, plus NDA and retainer agreements. Documents are filed against the order and downloadable by the client.
+- Automatic WhatsApp messages: order confirmation, a stage update whenever the order moves, and payment reminders at 30, 60 and 90 days overdue. Click-to-chat WhatsApp links are included.
+- Client tracking portal: a link per order showing current stage, documents and invoices, with online payment. No app or login needed for the client.
+- Daily briefing of what moved yesterday and this week.
+- Excel import with duplicate detection.
+- Team logins, plus sales partner and freelancer tracking.
+- Analytics: pipeline value, closed revenue, conversion rate, six months of revenue.
+- Custom fields (for example heat number, material grade, drawing revision), branding, and data export for owners.
+
+## What it is not
+
+- Not an accounting package. The business's books can stay in their existing software.
+- It does not generate dispatch challans or e-way bills. Dispatch is tracked as a stage, and the client is notified when it moves.
 
 ## Who it's for
 
-Manufacturers, foundries, machine shops, fabricators, and trading/export businesses — primarily based in Gujarat and across India.
-
-## Key features
-
-- Automated order and dispatch pipeline tracking, from first contact to closed
-- WhatsApp-based automated client updates as orders move through stages
-- Payment and milestone tracking
-- Automatic document generation (dispatch notes, client documents)
-- Real-time business metrics (revenue, pipeline value, conversion)
-- Workflow shaped around the business's existing process rather than a fixed template
+Small and mid-size manufacturers, foundries, machine shops, fabricators, component manufacturers, traders, exporters, and freight and logistics businesses, anywhere in India.
 
 ## Pricing
 
-Custom, based on business requirements. No published self-serve pricing during early access.
+Priced as an implementation, not a per-seat subscription: a one-time implementation fee plus a monthly maintenance fee, scoped to the business's locations, team and modules. A written proposal and fixed quote follow within 2–3 business days of a discovery call. No self-serve pricing is published. ShapedOps is in early access with a small first cohort.
 
 ## Pages
 
-- [Homepage](https://www.shapedops.com/): product overview and early-access signup
-- [For Manufacturers & Foundries](https://www.shapedops.com/manufacturers): detail on order tracking, dispatch, and document generation for manufacturing and trading businesses
+- [Homepage](https://www.shapedops.com/): how an order moves, documents, client portal, features, industries, pricing approach, FAQ, and the early-access and quote forms
+- [For manufacturers & foundries](https://www.shapedops.com/manufacturers): the manufacturing template stage by stage, the documents and custom fields, who it's for, and manufacturing-specific FAQ
 
 ## Contact
 
-- Email: ashlyticss@gmail.com
 - WhatsApp: +91 90998 67128
-- Location: Ahmedabad, Gujarat, India
+- Email: ashlyticss@gmail.com
+- Company: Ashlyticss (https://www.ashlyticss.com), Ahmedabad, Gujarat, India
