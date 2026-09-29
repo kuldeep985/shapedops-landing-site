@@ -71,7 +71,8 @@ function labelTexture(i, stage, renderer) {
     ctx.fillText(String(i + 1).padStart(2, "0"), 8, 70);
     ctx.fillStyle = "rgba(168,255,0,0.5)";
     ctx.fillRect(84, 52, 60, 3);
-    ctx.font = '500 58px "IBM Plex Mono", monospace';
+    // long stage names get a smaller size so the last label stays on screen
+    ctx.font = `500 ${stage.name.length > 14 ? 46 : 58}px "IBM Plex Mono", monospace`;
     ctx.fillStyle = "#ecebe3";
     if ("letterSpacing" in ctx) ctx.letterSpacing = "3px";
     ctx.fillText(stage.name, 8, 150);
@@ -125,28 +126,38 @@ function docTexture(title, renderer) {
   }, renderer);
 }
 
-function crateTagTexture(orderNo, paid, renderer) {
-  return canvasTexture(320, 200, (ctx, w, h) => {
-    ctx.fillStyle = paid ? "#a8ff00" : "#f3f1e8";
-    ctx.fillRect(0, 0, w, h);
-    ctx.fillStyle = "#17180f";
-    ctx.font = '500 26px "IBM Plex Mono", monospace';
-    ctx.fillText(paid ? "PAID" : "ORDER", 20, 44);
-    ctx.font = '700 50px "IBM Plex Mono", monospace';
-    ctx.fillText("ORD-" + orderNo, 20, 110);
-    if (!paid) {
-      for (let b = 0; b < 26; b++) {
-        const bw = b % 3 === 0 ? 5 : 2;
-        ctx.fillRect(20 + b * 10.5, 136, bw, 44);
-      }
-    } else {
-      ctx.font = '500 28px "IBM Plex Mono", monospace';
-      ctx.fillText("RECEIPT ISSUED", 20, 170);
+function drawCrateTag(ctx, w, h, orderNo, paid) {
+  ctx.fillStyle = paid ? "#a8ff00" : "#f3f1e8";
+  ctx.fillRect(0, 0, w, h);
+  ctx.fillStyle = "#17180f";
+  ctx.font = '500 26px "IBM Plex Mono", monospace';
+  ctx.fillText(paid ? "PAID" : "ORDER", 20, 44);
+  ctx.font = '700 50px "IBM Plex Mono", monospace';
+  ctx.fillText("ORD-" + orderNo, 20, 110);
+  if (!paid) {
+    for (let b = 0; b < 26; b++) {
+      const bw = b % 3 === 0 ? 5 : 2;
+      ctx.fillRect(20 + b * 10.5, 136, bw, 44);
     }
-  }, renderer);
+  } else {
+    ctx.font = '500 28px "IBM Plex Mono", monospace';
+    ctx.fillText("RECEIPT ISSUED", 20, 170);
+  }
+}
+
+// hand control back to the browser between build steps so startup never
+// blocks scrolling or input for long
+const breathe = () => new Promise((r) => setTimeout(r, 0));
+function whenIdle() {
+  return new Promise((r) => {
+    const go = () => ("requestIdleCallback" in window ? requestIdleCallback(() => r(), { timeout: 1200 }) : setTimeout(r, 200));
+    if (document.readyState === "complete") go(); else addEventListener("load", go, { once: true });
+  });
 }
 
 async function main() {
+  // loaded async, so the page may still be parsing
+  if (document.readyState === "loading") await new Promise((r) => addEventListener("DOMContentLoaded", r, { once: true }));
   const canvas = document.querySelector(".hero-canvas");
   const hero = document.querySelector(".hero");
   if (!canvas || !hero) return;
@@ -159,30 +170,46 @@ async function main() {
     return;
   }
 
-  await fontsReady();
+  await Promise.all([fontsReady(), whenIdle()]);
+  await breathe();
 
   const small = () => innerWidth < 901;
+  const stacked = () => innerWidth < 1201;   // hero stacks copy above the line (see site.css)
   let mobile = small();
-  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, mobile ? 1.5 : 1.75));
+  // resolution starts capped and drops further if the device can't keep up (see loop)
+  let dpr = Math.min(devicePixelRatio || 1, 1.5);
+  renderer.setPixelRatio(dpr);
+  // shader error checks make the browser wait on every compile; the shaders
+  // are fixed, so skip them in production
+  renderer.debug.checkShaderErrors = false;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.05;
   renderer.setClearColor(0x000000, 0);
+  // Only static geometry casts shadows, so the shadow map is drawn once rather
+  // than every frame; moving crates get a cheap contact shadow instead.
   renderer.shadowMap.enabled = !mobile;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.shadowMap.type = THREE.PCFShadowMap;
+  renderer.shadowMap.autoUpdate = false;
 
   const scene = new THREE.Scene();
   scene.fog = new THREE.Fog(C.ink, 30, 74);
 
-  const pmrem = new THREE.PMREMGenerator(renderer);
-  scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
-  scene.environmentIntensity = 0.35;
+  // reflections from a generated room environment — skipped on phones, where
+  // building it is one of the most expensive startup steps
+  if (!mobile) {
+    const pmrem = new THREE.PMREMGenerator(renderer);
+    scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+    scene.environmentIntensity = 0.35;
+    pmrem.dispose();
+  }
+  await breathe();
 
   const camera = new THREE.PerspectiveCamera(22, 1, 1, 200);
   const target = new THREE.Vector3(1.5, 1.4, 0);
 
   // ---- lights
-  scene.add(new THREE.HemisphereLight(0xe4ead8, 0x0c0d0a, 0.45));
+  scene.add(new THREE.HemisphereLight(0xe4ead8, 0x0c0d0a, mobile ? 0.9 : 0.45));
   const key = new THREE.DirectionalLight(0xfff3e0, 2.4);
   key.position.set(9, 18, 13);
   key.castShadow = true;
@@ -209,6 +236,7 @@ async function main() {
   grid.material.opacity = 0.75;
   scene.add(grid);
 
+  await breathe();
   // ---- conveyor
   const steel = new THREE.MeshStandardMaterial({ color: C.steel, metalness: 0.65, roughness: 0.42 });
   const beltLen = LINE_END - LINE_START;
@@ -265,6 +293,7 @@ async function main() {
   legs.castShadow = true;
   scene.add(legs);
 
+  await breathe();
   // ---- stations (gantry + sensor head + label)
   const gantryMat = new THREE.MeshStandardMaterial({ color: 0x33382d, metalness: 0.6, roughness: 0.38 });
   const headMat = new THREE.MeshStandardMaterial({ color: 0x14160f, metalness: 0.5, roughness: 0.5 });
@@ -278,23 +307,30 @@ async function main() {
   const dimColor = new THREE.Color(C.limeDim);
   const limeColor = new THREE.Color(C.lime);
 
+  // Static gantry parts are instanced: one draw call per part type instead of
+  // one per station, which keeps the per-frame CPU cost low on phones.
+  const docStations = STAGES.map((_, i) => i).filter((i) => STAGES[i].doc);
+  function instanced(geo, mat, spots, castShadow = true) {
+    const im = new THREE.InstancedMesh(geo, mat, spots.length);
+    spots.forEach(([x, y, z], k) => { m4.makeTranslation(x, y, z); im.setMatrixAt(k, m4); });
+    im.castShadow = castShadow;
+    im.frustumCulled = false;
+    scene.add(im);
+    return im;
+  }
+  instanced(postGeo, gantryMat, STATION_X.flatMap((x) => [[x, 1.675, 1.62], [x, 1.675, -1.62]]));
+  instanced(barGeo, gantryMat, STATION_X.map((x) => [x, 3.36, 0]));
+  instanced(headGeo, headMat, STATION_X.map((x) => [x, 3.06, 0]));
+  instanced(printerGeo, headMat, docStations.map((i) => [STATION_X[i], 3.6, 0]));
+  instanced(new THREE.BoxGeometry(0.5, 0.03, 0.06), new THREE.MeshBasicMaterial({ color: C.lime }), docStations.map((i) => [STATION_X[i], 3.745, 0.2]), false);
+  // sensor lenses: one instanced mesh with a colour per station for the pulse
+  const lenses = instanced(lensGeo, new THREE.MeshBasicMaterial({ color: 0xffffff }), STATION_X.map((x) => [x, 2.86, 0]), false);
+  STATION_X.forEach((_, i) => lenses.setColorAt(i, dimColor));
+  const lensColor = new THREE.Color();
+
   const stations = STAGES.map((stage, i) => {
     const x = STATION_X[i];
     const g = new THREE.Group();
-    const p1 = new THREE.Mesh(postGeo, gantryMat);
-    p1.position.set(x, 1.675, 1.62);
-    const p2 = p1.clone();
-    p2.position.z = -1.62;
-    const bar = new THREE.Mesh(barGeo, gantryMat);
-    bar.position.set(x, 3.36, 0);
-    const head = new THREE.Mesh(headGeo, headMat);
-    head.position.set(x, 3.06, 0);
-    [p1, p2, bar, head].forEach((m) => { m.castShadow = true; g.add(m); });
-
-    const lensMat = new THREE.MeshBasicMaterial({ color: C.limeDim });
-    const lens = new THREE.Mesh(lensGeo, lensMat);
-    lens.position.set(x, 2.86, 0);
-    g.add(lens);
 
     const coneMat = new THREE.MeshBasicMaterial({
       color: C.lime, transparent: true, opacity: 0, blending: THREE.AdditiveBlending,
@@ -302,35 +338,32 @@ async function main() {
     });
     const cone = new THREE.Mesh(coneGeo, coneMat);
     cone.position.set(x, BELT_TOP + 0.9, 0);
+    cone.visible = false; // only drawn while a station is glowing
     g.add(cone);
 
-    if (stage.doc) {
-      const printer = new THREE.Mesh(printerGeo, headMat);
-      printer.position.set(x, 3.6, 0);
-      printer.castShadow = true;
-      g.add(printer);
-      const slot = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.03, 0.06), new THREE.MeshBasicMaterial({ color: C.lime }));
-      slot.position.set(x, 3.745, 0.2);
-      g.add(slot);
-    }
-
+    const labelTex = labelTexture(i, stage, renderer);
+    renderer.initTexture(labelTex);
     const label = new THREE.Mesh(
       labelGeo,
-      new THREE.MeshBasicMaterial({ map: labelTexture(i, stage, renderer), transparent: true, depthWrite: false, toneMapped: false })
+      new THREE.MeshBasicMaterial({ map: labelTex, transparent: true, depthWrite: false, toneMapped: false })
     );
-    label.position.set(x + 1.55, 5.0, -0.2);
+    // sits right of the gantry; issued sheets drift left, so they never cross
+    label.position.set(x + (i === STAGES.length - 1 ? 2.2 : 2.4), 5.0, -0.2);
     g.add(label);
 
     scene.add(g);
-    return { x, lens, lensMat, coneMat, label, pulse: 0 };
+    return { x, cone, coneMat, label, pulse: 0 };
   });
 
+  await breathe();
   // ---- document sheets issued at doc stations
   const docTex = {};
-  STAGES.forEach((s) => { if (s.doc && !docTex[s.doc]) docTex[s.doc] = docTexture(s.doc, renderer); });
+  for (const st of STAGES) {
+    if (st.doc && !docTex[st.doc]) { docTex[st.doc] = docTexture(st.doc, renderer); renderer.initTexture(docTex[st.doc]); await breathe(); }
+  }
   const docGeo = new THREE.PlaneGeometry(1.1, 1.556);
   const docs = Array.from({ length: 8 }, () => {
-    const mat = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, side: THREE.DoubleSide, depthWrite: false, toneMapped: false });
+    const mat = new THREE.MeshBasicMaterial({ map: docTex.QUOTATION, transparent: true, opacity: 0, side: THREE.DoubleSide, depthWrite: false, toneMapped: false });
     const mesh = new THREE.Mesh(docGeo, mat);
     mesh.visible = false;
     scene.add(mesh);
@@ -342,39 +375,55 @@ async function main() {
     d.life = lifeStart;
     d.x = STATION_X[stationIndex];
     d.mat.map = docTex[STAGES[stationIndex].doc];
-    d.mat.needsUpdate = true;
     d.mesh.visible = true;
   }
 
+  await breathe();
   // ---- orders (crates)
   const crateGeo = new RoundedBoxGeometry(1.32, 0.96, 1.32, 3, 0.07);
   const crateMat = new THREE.MeshStandardMaterial({ color: C.kraft, roughness: 0.84, metalness: 0 });
   const tapeGeo = new THREE.BoxGeometry(1.34, 0.02, 0.3);
   const tapeMat = new THREE.MeshStandardMaterial({ color: C.tape, roughness: 0.6 });
   const tagGeo = new THREE.PlaneGeometry(0.78, 0.49);
+  const blobGeo = new THREE.PlaneGeometry(2.1, 2.1);
+  const blobMat = new THREE.MeshBasicMaterial({ map: blobTexture(), transparent: true, depthWrite: false, opacity: 0.85 });
   let nextOrder = 2041;
   const crateCount = Math.ceil(beltLen / CRATE_GAP);
+  // crate body, tape and contact shadow are instanced (3 draw calls for all
+  // crates); only the tag, which has its own texture, is a mesh per crate
+  const bodies = new THREE.InstancedMesh(crateGeo, crateMat, crateCount);
+  bodies.receiveShadow = true;
+  const tapes = new THREE.InstancedMesh(tapeGeo, tapeMat, crateCount);
+  const blobs = new THREE.InstancedMesh(blobGeo, blobMat, crateCount);
+  blobs.renderOrder = -1;
+  [blobs, bodies, tapes].forEach((im) => {
+    im.frustumCulled = false;
+    im.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+    scene.add(im);
+  });
+  const blobRot = new THREE.Matrix4().makeRotationX(-Math.PI / 2);
   const crates = Array.from({ length: crateCount }, (_, i) => {
     const group = new THREE.Group();
-    const body = new THREE.Mesh(crateGeo, crateMat);
-    body.castShadow = body.receiveShadow = true;
-    const tape = new THREE.Mesh(tapeGeo, tapeMat);
-    tape.position.y = 0.485;
-    const tagMat = new THREE.MeshStandardMaterial({ roughness: 0.7 });
+    const tagCanvas = document.createElement("canvas");
+    tagCanvas.width = 320; tagCanvas.height = 200;
+    const tagTex = new THREE.CanvasTexture(tagCanvas);
+    tagTex.colorSpace = THREE.SRGBColorSpace;
+    tagTex.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
+    const tagMat = new THREE.MeshStandardMaterial({ roughness: 0.7, map: tagTex });
     const tag = new THREE.Mesh(tagGeo, tagMat);
     tag.position.set(0.12, 0.02, 0.664);
-    group.add(body, tape, tag);
+    group.add(tag);
     scene.add(group);
-    const crate = { group, tagMat, x: LINE_END - 1.2 - i * CRATE_GAP, passed: -1, order: 0 };
+    const crate = { group, tagMat, tagCtx: tagCanvas.getContext("2d"), tagTex, x: LINE_END - 1.2 - i * CRATE_GAP, passed: -1, order: 0 };
     assignOrder(crate);
     crate.passed = STATION_X.filter((sx) => sx < crate.x).length - 1;
     if (crate.passed >= 6) setTag(crate, true);
     return crate;
   });
   function setTag(crate, paid) {
-    if (crate.tagMat.map) crate.tagMat.map.dispose();
-    crate.tagMat.map = crateTagTexture(crate.order, paid, renderer);
-    crate.tagMat.needsUpdate = true;
+    // redraw the crate's own tag canvas and re-upload it — no new allocations
+    drawCrateTag(crate.tagCtx, 320, 200, crate.order, paid);
+    crate.tagTex.needsUpdate = true;
   }
   function assignOrder(crate) {
     crate.order = nextOrder++;
@@ -394,18 +443,22 @@ async function main() {
     // framed for a 16:10 viewport; back off on narrower screens so the
     // whole line (all seven stations) stays in shot
     const back = Math.pow(Math.max(1, 1.6 / camera.aspect), 0.9);
-    if (mobile) {
+    if (stacked()) {
       // canvas sits in its own band below the copy — centre the line in it
       target.set(0.5, 1.8, 0);
       basePos.set(39.5, 16, 25).multiplyScalar(back * 0.78).add(target);
       camera.fov = 23;
       camera.clearViewOffset();
     } else {
+      // on narrower laptops (1200–1600px) the copy column takes more of the
+      // width: pull the camera back a little and slide the line further right
+      const tight = Math.min(1, Math.max(0, (1600 - viewW) / 400));
+      const short = Math.min(1, Math.max(0, (900 - viewH) / 150));
       target.set(2.5, 1.4, 0);
-      basePos.set(39.5, 16, 25).multiplyScalar(back).add(target);
+      basePos.set(39.5, 16, 25).multiplyScalar(back * (1 + 0.12 * tight)).add(target);
       camera.fov = 23;
       // push the line toward the lower right, away from the headline
-      camera.setViewOffset(viewW, viewH, -viewW * 0.19, -viewH * 0.1, viewW, viewH);
+      camera.setViewOffset(viewW, viewH, -viewW * (0.19 + 0.06 * tight), -viewH * (0.1 + 0.05 * short), viewW, viewH);
     }
     camera.updateProjectionMatrix();
     const dist = basePos.distanceTo(target);
@@ -447,13 +500,17 @@ async function main() {
     slatOffset = (slatOffset + SPEED * dt) % beltLen;
     placeSlats(slatOffset);
 
-    crates.forEach((c) => {
+    crates.forEach((c, k) => {
       c.x += SPEED * dt;
       if (c.x > LINE_END - 0.6) {
         c.x = LINE_START + 0.6 + (c.x - (LINE_END - 0.6));
         assignOrder(c);
       }
-      c.group.position.set(c.x, BELT_TOP + 0.51, 0);
+      const cy = BELT_TOP + 0.51;
+      c.group.position.set(c.x, cy, 0);
+      m4.makeTranslation(c.x, cy, 0); bodies.setMatrixAt(k, m4);
+      m4.makeTranslation(c.x, cy + 0.485, 0); tapes.setMatrixAt(k, m4);
+      m4.copy(blobRot).setPosition(c.x, cy - 0.475, 0); blobs.setMatrixAt(k, m4);
       for (let si = c.passed + 1; si < STATION_X.length; si++) {
         if (c.x >= STATION_X[si]) {
           c.passed = si;
@@ -466,18 +523,25 @@ async function main() {
       }
     });
 
-    stations.forEach((s) => {
+    bodies.instanceMatrix.needsUpdate = tapes.instanceMatrix.needsUpdate = blobs.instanceMatrix.needsUpdate = true;
+
+    let lensDirty = false;
+    stations.forEach((s, i) => {
+      if (s.pulse <= 0) return;
       s.pulse = Math.max(0, s.pulse - dt * 1.3);
-      s.lensMat.color.copy(dimColor).lerp(limeColor, s.pulse);
+      lenses.setColorAt(i, lensColor.copy(dimColor).lerp(limeColor, s.pulse));
+      lensDirty = true;
       s.coneMat.opacity = s.pulse * 0.16;
+      s.cone.visible = s.pulse > 0.005;
     });
+    if (lensDirty) lenses.instanceColor.needsUpdate = true;
 
     docs.forEach((d) => {
       if (!d.active) return;
       d.life += dt;
       const t = Math.min(1, d.life / d.dur);
       const rise = 1 - Math.pow(1 - t, 3);
-      d.mesh.position.set(d.x, 3.95 + rise * 2.6, 0.2 + rise * 0.6);
+      d.mesh.position.set(d.x - rise * 1.0, 3.95 + rise * 2.6, 0.2 + rise * 0.6);
       d.mesh.quaternion.copy(camera.quaternion);
       d.mesh.rotateZ(0.05 - rise * 0.08);
       d.mesh.scale.setScalar(0.55 + rise * 0.45);
@@ -486,9 +550,13 @@ async function main() {
     });
   }
 
+  // scroll position and hero height are cached from events, so the render loop
+  // never forces a style/layout pass in the middle of a frame
+  let sy = scrollY, heroH = hero.offsetHeight || innerHeight;
+  addEventListener("scroll", () => { sy = scrollY; }, { passive: true });
+  addEventListener("resize", () => { heroH = hero.offsetHeight || innerHeight; });
   function heroScroll() {
-    const h = hero.offsetHeight || innerHeight;
-    return Math.min(1, Math.max(0, scrollY / h));
+    return Math.min(1, Math.max(0, sy / heroH));
   }
 
   function render() {
@@ -504,6 +572,22 @@ async function main() {
     issueDoc(5, 1.1);
     step(0);
   }
+  renderer.shadowMap.needsUpdate = true;
+  // compile shaders without blocking the main thread where the GPU allows it
+  // compile every shader now (including the hidden document sheets and light
+  // cones) so nothing compiles mid-animation
+  docs.forEach((d) => { d.mesh.visible = true; });
+  stations.forEach((st) => { st.cone.visible = true; });
+  try {
+    if (renderer.extensions.has("KHR_parallel_shader_compile")) await renderer.compileAsync(scene, camera);
+    else {
+      // one object at a time, yielding between, so no single compile step is long
+      for (const child of scene.children.slice()) { renderer.compile(child, camera, scene); await breathe(); }
+    }
+  } catch (e) {}
+  docs.forEach((d) => { d.mesh.visible = d.active; });
+  stations.forEach((st) => { st.cone.visible = st.pulse > 0.005; });
+  await breathe();
   render();
   canvas.classList.add("ready");
   hero.classList.add("gl-ready");
@@ -516,14 +600,56 @@ async function main() {
   let visible = true;
   new IntersectionObserver((entries) => { visible = entries[0].isIntersecting; }, { threshold: 0 }).observe(hero);
   const clock = new THREE.Clock();
+  // Phones render the line at 30fps so the page itself keeps the frame budget.
+  // Elsewhere: if frames run long, first render fewer pixels, then drop to 30fps.
+  let halfRate = mobile, skip = false;
+  let sampleSum = 0, samples = 0;
+  function adapt(dt) {
+    sampleSum += dt; samples++;
+    if (samples < 45) return;
+    const avg = sampleSum / samples;
+    sampleSum = 0; samples = 0;
+    if (avg <= 1 / 45) return;
+    if (dpr > 1) {
+      dpr = Math.max(1, +(dpr - 0.25).toFixed(2));
+      renderer.setPixelRatio(dpr);
+      layout();
+    } else if (!halfRate) {
+      halfRate = true;
+    }
+  }
+  let acc = 0;
   (function loop() {
     requestAnimationFrame(loop);
     const dt = Math.min(0.05, clock.getDelta());
     if (!visible || document.hidden) return;
-    step(dt);
+    if (halfRate) {
+      acc += dt;
+      skip = !skip;
+      if (skip) return;
+    }
+    const frameDt = halfRate ? Math.min(0.1, acc) : dt;
+    acc = 0;
+    if (!halfRate) adapt(dt);
+    step(frameDt);
     placeCamera(heroScroll());
     render();
   })();
+}
+
+function blobTexture() {
+  const c = document.createElement("canvas");
+  c.width = c.height = 64;
+  const g = c.getContext("2d");
+  const grad = g.createRadialGradient(32, 32, 4, 32, 32, 31);
+  grad.addColorStop(0, "rgba(0,0,0,0.75)");
+  grad.addColorStop(0.55, "rgba(0,0,0,0.35)");
+  grad.addColorStop(1, "rgba(0,0,0,0)");
+  g.fillStyle = grad;
+  g.fillRect(0, 0, 64, 64);
+  const t = new THREE.CanvasTexture(c);
+  t.colorSpace = THREE.SRGBColorSpace;
+  return t;
 }
 
 main().catch(() => {

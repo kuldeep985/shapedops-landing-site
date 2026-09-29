@@ -88,8 +88,9 @@
   "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
 } }
 </script>
-<script type="module" src="/assets/js/line3d.js"></script>
 <script defer src="/assets/js/site.js"></script>
+<!-- async: the 3D hero must never hold up site.js (menu, reveals, forms) -->
+<script type="module" async src="/assets/js/line3d.js"></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -241,7 +242,7 @@
 </section>
 
 <!-- ======================================================== 02 FLOW -->
-<section class="section" id="flow" aria-labelledby="flow-title">
+<section class="section defer-render" id="flow" aria-labelledby="flow-title">
   <div class="wrap">
     <div class="sec-label"><span class="n">02</span><span class="rule"></span><span class="tag">How an order moves</span></div>
     <div class="section-head">
@@ -410,7 +411,7 @@
 </section>
 
 <!-- ===================================================== 04 CLIENTS -->
-<section class="section" id="clients" aria-labelledby="clients-title">
+<section class="section defer-render" id="clients" aria-labelledby="clients-title">
   <div class="wrap">
     <div class="sec-label"><span class="n">04</span><span class="rule"></span><span class="tag">Your client's side</span></div>
     <div class="client-grid">
@@ -468,7 +469,7 @@
 </section>
 
 <!-- ======================================================= 05 SPECS -->
-<section class="section" id="features" aria-labelledby="specs-title">
+<section class="section defer-render" id="features" aria-labelledby="specs-title">
   <div class="wrap">
     <div class="sec-label"><span class="n">05</span><span class="rule"></span><span class="tag">Around the order</span></div>
     <div class="section-head">
@@ -571,7 +572,7 @@
 </section>
 
 <!-- =================================================== 06 INDUSTRIES -->
-<section class="section" id="industries" aria-labelledby="ind-title" style="padding-top:0">
+<section class="section defer-render" id="industries" aria-labelledby="ind-title" style="padding-top:0">
   <div class="wrap">
     <div class="sec-label"><span class="n">06</span><span class="rule"></span><span class="tag">Industries &amp; stages</span></div>
     <div class="section-head">
@@ -624,7 +625,7 @@
 </section>
 
 <!-- ================================================ 07 IMPLEMENTATION -->
-<section class="section" id="pricing" aria-labelledby="impl-title" style="padding-top:0">
+<section class="section defer-render" id="pricing" aria-labelledby="impl-title" style="padding-top:0">
   <div class="wrap">
     <div class="sec-label"><span class="n">07</span><span class="rule"></span><span class="tag">Getting started &amp; pricing</span></div>
     <div class="section-head">
@@ -657,7 +658,7 @@
 </section>
 
 <!-- ====================================================== 08 WHO -->
-<section class="section" aria-labelledby="who-title" style="padding-top:0">
+<section class="section defer-render" aria-labelledby="who-title" style="padding-top:0">
   <div class="wrap">
     <div class="sec-label"><span class="n">08</span><span class="rule"></span><span class="tag">Who builds it</span></div>
     <div class="founder">
@@ -679,7 +680,7 @@
 </section>
 
 <!-- ======================================================== 09 FAQ -->
-<section class="section" id="faq" aria-labelledby="faq-title" style="padding-top:0">
+<section class="section defer-render" id="faq" aria-labelledby="faq-title" style="padding-top:0">
   <div class="wrap">
     <div class="sec-label"><span class="n">09</span><span class="rule"></span><span class="tag">Questions</span></div>
     <div class="section-head">
@@ -700,7 +701,7 @@
 </section>
 
 <!-- ======================================================== 10 CTA -->
-<section class="section" id="access" aria-labelledby="cta-title" style="padding-top:0">
+<section class="section defer-render" id="access" aria-labelledby="cta-title" style="padding-top:0">
   <div class="wrap">
     <div class="sec-label"><span class="n">10</span><span class="rule"></span><span class="tag">Start</span></div>
     <div class="cta-grid">
@@ -770,7 +771,7 @@
 
 </main>
 
-<footer class="site-footer">
+<footer class="site-footer defer-render">
   <div class="wrap">
     <div class="foot-grid">
       <div class="foot-about">

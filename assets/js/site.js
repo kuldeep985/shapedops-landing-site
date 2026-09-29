@@ -17,13 +17,12 @@
   function lerp(a, b, t) { return a + (b - a) * t; }
   function easeInOut(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
   function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+  // cheap check on a section's own box (never its skipped contents)
+  function nearView(el) { var r = el.getBoundingClientRect(); return r.bottom > -innerHeight && r.top < innerHeight * 2; }
 
   /* ---------------------------------------------------------- header */
   var header = $(".site-header");
   var menuBtn = $(".menu-btn");
-  function onScrollHeader() { if (header) header.classList.toggle("scrolled", scrollY > 8); }
-  onScrollHeader();
-  addEventListener("scroll", onScrollHeader, { passive: true });
 
   function setMenu(open) {
     document.body.classList.toggle("menu-open", open);
@@ -38,6 +37,43 @@
     addEventListener("keydown", function (e) { if (e.key === "Escape") setMenu(false); });
     wide.addEventListener("change", function (e) { if (e.matches) setMenu(false); });
   }
+
+  /* ------------------------------------------- land in-page links exactly */
+  // Deferred sections (.defer-render) take their real height only when they
+  // render, which can happen mid-jump. After a hash jump, re-aim at the target
+  // until it holds still — unless the visitor has started scrolling themselves.
+  var userScrolled = false;
+  ["wheel", "touchstart", "keydown"].forEach(function (t) { addEventListener(t, function () { userScrolled = true; }, { passive: true }); });
+  function settleOn(el) {
+    var until = performance.now() + 3000;
+    userScrolled = false;
+    (function check() {
+      if (userScrolled || performance.now() > until) return;
+      var pad = parseFloat(getComputedStyle(root).scrollPaddingTop) || 0;
+      var off = el.getBoundingClientRect().top - pad;
+      if (Math.abs(off) > 2) scrollBy({ top: off, behavior: "instant" });
+      setTimeout(check, 120);
+    })();
+  }
+  function hashTarget(hash) {
+    if (!hash || hash.length < 2) return null;
+    try { return document.getElementById(decodeURIComponent(hash.slice(1))); } catch (e) { return null; }
+  }
+  addEventListener("load", function () {
+    var el = hashTarget(location.hash);
+    if (el) requestAnimationFrame(function () { settleOn(el); });
+  });
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest("a[href*='#']");
+    if (!a || a.pathname !== location.pathname || a.host !== location.host) return;
+    var el = hashTarget(a.hash);
+    if (!el) return;
+    // let the browser run its (smooth) scroll, then correct once it ends
+    var done = false;
+    function finish() { if (done) return; done = true; settleOn(el); }
+    addEventListener("scrollend", finish, { once: true });
+    setTimeout(finish, 1400);
+  });
 
   /* ------------------------------------------------- split headlines */
   function splitWords(el) {
@@ -76,9 +112,13 @@
       });
     }, { threshold: 0.15, rootMargin: "0px 0px -8% 0px" });
     revealTargets.forEach(function (el) { io.observe(el); });
-    // anything already above the fold starts on the first frame
+    // anything already above the fold starts on the first frame. Targets inside
+    // a deferred section that is off screen are skipped: measuring them would
+    // force the browser to lay out content it is deliberately skipping.
     requestAnimationFrame(function () {
       revealTargets.forEach(function (el) {
+        var sec = el.closest(".defer-render");
+        if (sec && !nearView(sec)) return;
         var r = el.getBoundingClientRect();
         if (r.top < innerHeight * 0.92 && r.bottom > 0) { el.classList.add("in"); io.unobserve(el); }
       });
@@ -86,52 +126,68 @@
   }
 
   /* -------------------------------------- scroll-driven scenes (rAF) */
+  // Each scene has a measure() that only reads layout and an apply() that only
+  // writes styles. A frame runs every measure first, then only the applies whose
+  // value changed, so scrolling never forces a layout between writes.
   var scenes = [];
 
-  function progressFor(section, sticky) {
-    var r = section.getBoundingClientRect();
-    var vh = innerHeight;
-    if (sticky) return clamp(-r.top / Math.max(1, r.height - vh), 0, 1);
-    return clamp((vh * 0.9 - r.top) / (r.height * 0.75 + vh * 0.2), 0, 1);
+  // header gets its solid background once the page has scrolled
+  if (header) {
+    scenes.push({
+      measure: function () { return scrollY > 8 ? 1 : 0; },
+      apply: function (v) { header.classList.toggle("scrolled", v === 1); }
+    });
   }
 
+  function stickyProgress(r) {
+    return clamp(-r.top / Math.max(1, r.height - innerHeight), 0, 1);
+  }
   // narrow screens: nothing is pinned, so play the scene while its stage
   // travels from the bottom of the viewport up to just above centre
-  function stageProgress(stage) {
-    var r = stage.getBoundingClientRect();
+  function stageProgress(r) {
     var vh = innerHeight;
     var start = vh * 0.72, end = vh * 0.3 - r.height / 2;
     return clamp((start - r.top) / Math.max(1, start - end), 0, 1);
   }
+  function q4(v) { return Math.round(v * 2000) / 2000; }
 
   // 01 — scattered artifacts collapse into one order card
   var scatter = $(".scatter");
   if (scatter) {
     var scatterStage = $(".scatter-stage", scatter);
+    var stageW = 625;
     var pieces = $$(".piece", scatterStage).map(function (el, i) {
       var f = el.dataset.from.split(",").map(Number);
       var t = el.dataset.to.split(",").map(Number);
       el.style.zIndex = el.hasAttribute("data-card") ? 20 : String(i + 1);
       return { el: el, from: f, to: t, card: el.hasAttribute("data-card") };
     });
-    scenes.push(function () {
-      var p = reduce ? 1 : (wide.matches ? progressFor(scatter, true) : stageProgress(scatterStage));
-      // on phones, pull the scattered layout in so it stays on screen
-      var fx = wide.matches ? 1 : 0.62, fy = wide.matches ? 1 : 0.85;
-      var m = easeInOut(clamp(p / 0.55, 0, 1));
-      var q = clamp((p - 0.48) / 0.26, 0, 1);
-      var c = easeOut(clamp((p - 0.45) / 0.3, 0, 1));
-      pieces.forEach(function (pc) {
-        var k = pc.card ? c : m;
-        var x = lerp(pc.from[0] * fx, pc.to[0], k), y = lerp(pc.from[1] * fy, pc.to[1], k), z = lerp(pc.from[2], pc.to[2], k);
-        var rx = lerp(pc.from[3], pc.to[3], k), ry = lerp(pc.from[4], pc.to[4], k), rz = lerp(pc.from[5], pc.to[5], k);
-        var s = 1, o = 1;
-        if (pc.card) { o = c; }
-        else { s = 1 - 0.14 * m - 0.06 * q; z -= 90 * q; o = 1 - 0.55 * q; }
-        pc.el.style.transform = "translate3d(" + x.toFixed(1) + "px," + y.toFixed(1) + "px," + z.toFixed(1) + "px) rotateX(" + rx.toFixed(2) + "deg) rotateY(" + ry.toFixed(2) + "deg) rotateZ(" + rz.toFixed(2) + "deg) scale(" + s.toFixed(3) + ")";
-        pc.el.style.opacity = o.toFixed(3);
-      });
-      scatter.classList.toggle("is-after", p > 0.55);
+    scenes.push({
+      measure: function () {
+        stageW = scatterStage.offsetWidth || stageW;
+        if (reduce) return 1;
+        return q4(wide.matches ? stickyProgress(scatter.getBoundingClientRect()) : stageProgress(scatterStage.getBoundingClientRect()));
+      },
+      apply: function (p) {
+        // pull the scattered layout in to fit the stage, so no piece starts
+        // over the copy column (desktop) or off the screen (phones)
+        var fx = wide.matches ? Math.min(1, stageW / 625) : 0.62, fy = wide.matches ? 1 : 0.85;
+        var fxLeft = wide.matches ? fx * 0.6 : fx;   // the copy column sits to the left
+        var m = easeInOut(clamp(p / 0.55, 0, 1));
+        var q = clamp((p - 0.48) / 0.26, 0, 1);
+        var c = easeOut(clamp((p - 0.45) / 0.3, 0, 1));
+        pieces.forEach(function (pc) {
+          var k = pc.card ? c : m;
+          var x = lerp(pc.from[0] * (pc.from[0] < 0 ? fxLeft : fx), pc.to[0], k), y = lerp(pc.from[1] * fy, pc.to[1], k), z = lerp(pc.from[2], pc.to[2], k);
+          var rx = lerp(pc.from[3], pc.to[3], k), ry = lerp(pc.from[4], pc.to[4], k), rz = lerp(pc.from[5], pc.to[5], k);
+          var s = 1, o = 1;
+          if (pc.card) { o = c; }
+          else { s = 1 - 0.14 * m - 0.06 * q; z -= 90 * q; o = 1 - 0.55 * q; }
+          pc.el.style.transform = "translate3d(" + x.toFixed(1) + "px," + y.toFixed(1) + "px," + z.toFixed(1) + "px) rotateX(" + rx.toFixed(2) + "deg) rotateY(" + ry.toFixed(2) + "deg) rotateZ(" + rz.toFixed(2) + "deg) scale(" + s.toFixed(3) + ")";
+          pc.el.style.opacity = o.toFixed(3);
+        });
+        scatter.classList.toggle("is-after", p > 0.55);
+      }
     });
   }
 
@@ -140,21 +196,26 @@
   if (docs) {
     var sheets = $$(".doc-sheet", docs);
     var docsStage = $(".docs-stage", docs);
-    scenes.push(function () {
-      var desktop = wide.matches;
-      var p = reduce ? 1 : (desktop ? progressFor(docs, true) : stageProgress(docsStage));
-      var spread = desktop ? [-420, -140, 140, 420] : [-68, -23, 23, 68];
-      sheets.forEach(function (el, i) {
-        var k = easeInOut(clamp((p - i * 0.07) / 0.52, 0, 1));
-        var flat = { x: -30 + i * 7, y: 70 - i * 4, z: i * 3, rx: 66, ry: 0, rz: -27 + i * 2 };
-        var fan = desktop
-          ? { x: spread[i], y: 0, z: i === 1 || i === 2 ? 36 : 0, rx: 5, ry: [16, 6, -6, -16][i], rz: [-3, -1, 1, 3][i] }
-          : { x: spread[i], y: [14, 2, 2, 14][i], z: i * 14, rx: 4, ry: 0, rz: [-9, -3, 3, 9][i] };
-        el.style.transform =
-          "translate3d(" + lerp(flat.x, fan.x, k).toFixed(1) + "px," + lerp(flat.y, fan.y, k).toFixed(1) + "px," + lerp(flat.z, fan.z, k).toFixed(1) + "px)" +
-          " rotateX(" + lerp(flat.rx, fan.rx, k).toFixed(2) + "deg) rotateY(" + lerp(flat.ry, fan.ry, k).toFixed(2) + "deg) rotateZ(" + lerp(flat.rz, fan.rz, k).toFixed(2) + "deg)";
-        el.style.setProperty("--tag", clamp((k - 0.85) / 0.15, 0, 1).toFixed(2));
-      });
+    scenes.push({
+      measure: function () {
+        if (reduce) return 1;
+        return q4(wide.matches ? stickyProgress(docs.getBoundingClientRect()) : stageProgress(docsStage.getBoundingClientRect()));
+      },
+      apply: function (p) {
+        var desktop = wide.matches;
+        var spread = desktop ? [-420, -140, 140, 420] : [-68, -23, 23, 68];
+        sheets.forEach(function (el, i) {
+          var k = easeInOut(clamp((p - i * 0.07) / 0.52, 0, 1));
+          var flat = { x: -30 + i * 7, y: 70 - i * 4, z: i * 3, rx: 66, ry: 0, rz: -27 + i * 2 };
+          var fan = desktop
+            ? { x: spread[i], y: 0, z: i === 1 || i === 2 ? 36 : 0, rx: 5, ry: [16, 6, -6, -16][i], rz: [-3, -1, 1, 3][i] }
+            : { x: spread[i], y: [14, 2, 2, 14][i], z: i * 14, rx: 4, ry: 0, rz: [-9, -3, 3, 9][i] };
+          el.style.transform =
+            "translate3d(" + lerp(flat.x, fan.x, k).toFixed(1) + "px," + lerp(flat.y, fan.y, k).toFixed(1) + "px," + lerp(flat.z, fan.z, k).toFixed(1) + "px)" +
+            " rotateX(" + lerp(flat.rx, fan.rx, k).toFixed(2) + "deg) rotateY(" + lerp(flat.ry, fan.ry, k).toFixed(2) + "deg) rotateZ(" + lerp(flat.rz, fan.rz, k).toFixed(2) + "deg)";
+          el.style.setProperty("--tag", clamp((k - 0.85) / 0.15, 0, 1).toFixed(2));
+        });
+      }
     });
   }
 
@@ -162,23 +223,37 @@
   var rail = $("[data-fill]");
   if (rail) {
     var railRows = $$(":scope > li", rail);
-    scenes.push(function () {
-      var r = rail.getBoundingClientRect();
-      var f = reduce ? 1 : clamp((innerHeight * 0.55 - r.top) / r.height, 0, 1);
-      rail.style.setProperty("--fill", f.toFixed(3));
-      railRows.forEach(function (li) {
-        li.classList.toggle("lit", li.offsetTop + 24 <= f * r.height);
-      });
+    var railH = 1, rowTops = [];
+    var railSection = rail.closest("section") || rail;
+    scenes.push({
+      measure: function () {
+        // far from the screen: settle at empty/full without touching the rows
+        if (!nearView(railSection)) return railSection.getBoundingClientRect().top > 0 ? 0 : 1;
+        var r = rail.getBoundingClientRect();
+        railH = r.height;
+        rowTops = railRows.map(function (li) { return li.offsetTop; });
+        return reduce ? 1 : q4(clamp((innerHeight * 0.55 - r.top) / r.height, 0, 1));
+      },
+      apply: function (f) {
+        rail.style.setProperty("--fill", f.toFixed(3));
+        railRows.forEach(function (li, i) { li.classList.toggle("lit", rowTops[i] + 24 <= f * railH); });
+      }
     });
   }
 
   var ticking = false;
-  function runScenes() { ticking = false; scenes.forEach(function (fn) { fn(); }); }
+  function runScenes() {
+    ticking = false;
+    var values = scenes.map(function (s) { return s.measure(); });   // reads
+    scenes.forEach(function (s, i) {                                   // writes
+      if (values[i] !== s.last) { s.last = values[i]; s.apply(values[i]); }
+    });
+  }
   function requestScenes() { if (!ticking) { ticking = true; requestAnimationFrame(runScenes); } }
   if (scenes.length) {
     runScenes();
     addEventListener("scroll", requestScenes, { passive: true });
-    addEventListener("resize", requestScenes);
+    addEventListener("resize", function () { scenes.forEach(function (s) { s.last = undefined; }); requestScenes(); });
   }
 
   /* ------------------------------------------------ 02 order flow story */
@@ -399,6 +474,7 @@
       var running = false;
       new IntersectionObserver(function (entries) {
         entries.forEach(function (e) {
+          rig.parentNode.classList.toggle("is-off", !e.isIntersecting);
           if (e.isIntersecting && !running) { running = true; run(); }
           else if (!e.isIntersecting && running) { running = false; stop(); }
         });
@@ -458,7 +534,10 @@
   if (location.hash === "#get-quote" && formTabs) {
     selectFormTab(formTabs.querySelector('[data-tab="quote"]'));
     var access = document.getElementById("access");
-    if (access) access.scrollIntoView();
+    if (access) {
+      access.scrollIntoView();
+      addEventListener("load", function () { requestAnimationFrame(function () { settleOn(access); }); });
+    }
   }
 
   /* ---------------------------------------------- lead forms (production) */

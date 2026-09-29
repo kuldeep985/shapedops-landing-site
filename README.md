@@ -31,6 +31,17 @@ Both forms ("Early access" and "Get a quote") POST JSON to `https://shapedops.as
 - If WebGL is unavailable, the hero falls back to the drafting-grid background.
 - Smooth scrolling is only turned on after load, so deep links such as `/#pricing` jump straight to the section.
 
+## Performance rules
+
+The site is tested to scroll at 60fps with no long tasks, on desktop and on a phone emulated at 4× slower CPU. Keep it that way:
+
+- `site.js` loads before the 3D module, and the module is `async`, so three.js (~700KB) never delays the menu, reveals or forms.
+- The 3D hero starts only after `load` and an idle callback. It builds in small steps, pre-compiles every shader (hidden objects included) and skips shader error checks. Static parts are instanced, the shadow map is drawn once, and crates use contact-shadow sprites. Phones render it at 30fps without reflections, and slow machines lower its resolution, then its frame rate.
+- Scroll scenes do all their layout reads, then all their style writes, once per frame, and skip frames where nothing changed. Don't read `scrollY` or layout from scroll handlers.
+- Animate only `transform` and `opacity`. Width, height, box-shadow and custom-property animations repaint every frame. Infinite animations pause while off screen.
+- Sections below the hero use `.defer-render` (`content-visibility: auto`). Don't measure elements inside an off-screen deferred section. `settleOn()` in `site.js` keeps hash links landing exactly as those sections render.
+- Up to 1200px wide the hero stacks (copy, then the 3D line), so the line never runs behind the text.
+
 ## Content rules
 
 - No invented numbers. Figures in mockups are labelled "sample" or "illustrative".
