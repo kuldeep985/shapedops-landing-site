@@ -129,295 +129,210 @@
 
 <main id="main">
 
-<!-- ============================================================ HERO -->
-<section class="hero" aria-labelledby="hero-title">
-  <canvas class="hero-canvas" aria-hidden="true"></canvas>
-  <div class="wrap">
-    <div class="hero-copy">
-      <p class="kicker">Order-to-cash for manufacturers, foundries &amp; traders</p>
-      <h1 id="hero-title" class="split">Every order, enquiry to payment, on <span class="mark">one&nbsp;line.</span></h1>
-      <p class="lede reveal d1">ShapedOps moves each order through your real stages — quote, PO, production, dispatch, invoice, payment — and sends the documents and WhatsApp updates at every step. Set up around how your business already runs.</p>
-      <div class="hero-ctas reveal d2">
-        <a class="btn" href="#access">Book a discovery call <span class="arr" aria-hidden="true">→</span></a>
-        <a class="btn btn-ghost" href="#flow">See an order move</a>
-      </div>
-      <div class="hero-meta reveal d3">
-        <span>Built in Ahmedabad by Ashlyticss</span>
-        <span>Early access · small first cohort</span>
-        <span>Proposal in 2–3 business days</span>
-      </div>
-    </div>
-  </div>
-  <div class="hero-legend">
+<!-- ======================================================== THE JOURNEY -->
+<!-- One 3D scene stays pinned behind this whole block. At the top the line runs
+     on its own; scrolling then moves the camera station by station, following
+     one order while each section explains that stage. -->
+<div class="journey" id="journey">
+  <div class="journey-stage" aria-hidden="true"><canvas class="journey-canvas"></canvas></div>
+
+  <nav class="journey-rail" aria-label="Stages of the order">
+    <a href="#today" data-rail="1"><b>00</b><span>Today</span></a>
+    <a href="#stage-1" data-rail="2"><b>01</b><span>Enquiry</span></a>
+    <a href="#stage-2" data-rail="3"><b>02</b><span>Quote sent</span></a>
+    <a href="#stage-3" data-rail="4"><b>03</b><span>PO received</span></a>
+    <a href="#stage-4" data-rail="5"><b>04</b><span>In production</span></a>
+    <a href="#stage-5" data-rail="6"><b>05</b><span>QC &amp; dispatch</span></a>
+    <a href="#stage-6" data-rail="7"><b>06</b><span>Invoiced</span></a>
+    <a href="#stage-7" data-rail="8"><b>07</b><span>Payment collected</span></a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" data-ch="0" aria-labelledby="hero-title">
     <div class="wrap">
-      <ol aria-label="Order stages on the line">
-        <li data-station="0"><b>01</b>Enquiry</li>
-        <li data-station="1"><b>02</b>Quote sent <span class="doc-flag">+ PDF</span></li>
-        <li data-station="2"><b>03</b>PO received <span class="doc-flag">+ PDF</span></li>
-        <li data-station="3"><b>04</b>In production</li>
-        <li data-station="4"><b>05</b>QC &amp; dispatch</li>
-        <li data-station="5"><b>06</b>Invoiced <span class="doc-flag">+ PDF</span></li>
-        <li data-station="6"><b>07</b>Payment collected <span class="doc-flag">+ PDF</span></li>
-      </ol>
+      <div class="hero-copy">
+        <p class="kicker">Order-to-cash for manufacturers, foundries &amp; traders</p>
+        <h1 id="hero-title" class="split">Every order, enquiry to payment, on <span class="mark">one&nbsp;line.</span></h1>
+        <p class="lede reveal d1">ShapedOps moves each order through your real stages — quote, PO, production, dispatch, invoice, payment — and sends the documents and WhatsApp updates at every step. Set up around how your business already runs.</p>
+        <div class="hero-ctas reveal d2">
+          <a class="btn" href="#access">Book a discovery call <span class="arr" aria-hidden="true">→</span></a>
+          <a class="btn btn-ghost" href="#today">Follow an order <span class="arr" aria-hidden="true">↓</span></a>
+        </div>
+        <div class="hero-meta reveal d3">
+          <span>Built in Ahmedabad by Ashlyticss</span>
+          <span>Early access · small first cohort</span>
+          <span>Proposal in 2–3 business days</span>
+        </div>
+      </div>
     </div>
-  </div>
-</section>
+    <div class="hero-legend">
+      <div class="wrap">
+        <ol aria-label="Order stages on the line">
+          <li data-station="0"><b>01</b>Enquiry</li>
+          <li data-station="1"><b>02</b>Quote sent <span class="doc-flag">+ PDF</span></li>
+          <li data-station="2"><b>03</b>PO received <span class="doc-flag">+ PDF</span></li>
+          <li data-station="3"><b>04</b>In production</li>
+          <li data-station="4"><b>05</b>QC &amp; dispatch</li>
+          <li data-station="5"><b>06</b>Invoiced <span class="doc-flag">+ PDF</span></li>
+          <li data-station="6"><b>07</b>Payment collected <span class="doc-flag">+ PDF</span></li>
+        </ol>
+      </div>
+    </div>
+  </section>
 
-<!-- ======================================================= 01 TODAY -->
-<section class="scatter" id="today" aria-labelledby="today-title">
-  <div class="scatter-stick">
+  <!-- TODAY -->
+  <section class="chapter" id="today" data-ch="1" aria-labelledby="today-title">
     <div class="wrap">
-      <div class="sec-label"><span class="n">01</span><span class="rule"></span><span class="tag">Where orders live today</span></div>
-      <div class="scatter-grid">
-        <div class="scatter-copy">
-          <div class="state before">
-            <p class="kicker">Today</p>
-            <h2 id="today-title">Right now, one order lives in <span class="soft">six places.</span></h2>
-            <p class="lede">The register has the quantity. Excel has the rate. The dispatch date is somewhere in a WhatsApp group, and the payment status is in someone's head. So when a buyer asks where their order is, someone calls the shop floor.</p>
-          </div>
-          <div class="state after">
-            <p class="kicker">With ShapedOps</p>
-            <h2>One order. One line. <span class="soft">Everyone sees the same thing.</span></h2>
-            <p class="lede">Quantity, rate, stage, documents, dispatch and payment sit on one record your team updates once. Your client sees their part on a tracking link. Nobody has to call anybody to find out.</p>
-          </div>
-        </div>
-
-        <div class="scatter-stage" aria-hidden="true">
-          <div class="piece p-register" data-from="-215,-40,60,16,24,-11" data-to="-8,-12,-40,0,0,-3">
-            <div class="rh">ORDER REGISTER — SEPT</div>
-            <div>12/9 Patel Castings — flange DN100 × 400</div>
-            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;adv. 50% recd?</div>
-            <div>14/9 Shree Ambica — bush <s>200</s> 250</div>
-            <div>16/9 Patel — disp. date? <em>call</em></div>
-            <div>18/9 Mehta Traders — coupling × 120</div>
-            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rate as per last?</div>
-          </div>
-          <div class="piece p-excel" data-from="170,-175,-50,10,-20,5" data-to="6,-6,-30,0,0,2">
-            <div class="xl-bar"><span>orders_FINAL_v3 (2).xlsx</span><span>Sheet1</span></div>
-            <table>
-              <tr><th>Party</th><th>Item</th><th>Qty</th><th>Status</th></tr>
-              <tr><td>Patel Castings</td><td>Flange DN100</td><td>400</td><td class="yel">in prodn?</td></tr>
-              <tr><td>Shree Ambica</td><td>Bush 40mm</td><td>250</td><td class="red">payment??</td></tr>
-              <tr><td>Mehta Traders</td><td>Coupling</td><td>120</td><td>dispatched</td></tr>
-              <tr><td>Patel Castings</td><td>Flange DN80</td><td>—</td><td>quote sent</td></tr>
-            </table>
-          </div>
-          <div class="piece p-wa" data-from="215,120,90,-8,-26,7" data-to="-4,4,-20,0,0,-1">
-            <div class="wa-head"><div class="wa-av">DU</div><div><div class="wa-name">Dispatch — Unit 2</div><div class="wa-sub">Rakesh, Suresh, Anita +11</div></div></div>
-            <div class="wa-body">
-              <div class="m"><i style="color:#53bdeb">Rakesh</i>Patel ka maal kab jayega?<span class="t">10:42</span></div>
-              <div class="m"><i style="color:#e9a23b">Suresh</i>kal subah, truck confirm nahi hua<span class="t">10:51</span></div>
-              <div class="m me">bill bana diya?<span class="t">11:03</span></div>
-              <div class="m"><i style="color:#53bdeb">Rakesh</i>pata nahi, accounts se pucho<span class="t">11:05</span></div>
-            </div>
-          </div>
-          <div class="piece p-note" data-from="-250,200,130,8,16,9" data-to="4,10,-10,0,0,3">Call Mehulbhai — balance payment!! <br>(Friday)</div>
-          <div class="piece p-slip" data-from="-10,235,-30,22,0,-17" data-to="-6,2,0,0,0,-2">
-            <div>PATEL CASTINGS</div><hr>
-            <div class="row"><span>advance</span><span>1,64,000</span></div>
-            <div class="row"><span>balance</span><span>?</span></div>
-            <div class="row"><span>chq</span><span>pending?</span></div><hr>
-            <div>ask accounts</div>
-          </div>
-
-          <div class="piece p-order" data-from="0,120,220,34,0,0" data-to="0,0,80,0,0,0" data-card>
-            <div class="order-top">
-              <div>
-                <div class="order-id">ORD-2041 · sample order</div>
-                <div class="order-client">Patel Castings Pvt. Ltd.</div>
-                <div class="order-item">CI Flange DN100, machined × 400 nos</div>
-              </div>
-              <span class="stage-pill">In production</span>
-            </div>
-            <div class="order-rail"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i></div>
-            <div class="order-facts">
-              <div><span>Quotation</span><b class="ok">Generated</b></div>
-              <div><span>Agreement</span><b class="ok">Generated</b></div>
-              <div><span>Advance</span><b>₹1,64,000 in</b></div>
-              <div><span>Client updates</span><b>3 sent</b></div>
-              <div><span>Dispatch target</span><b>26 Sep</b></div>
-              <div><span>Tracking link</span><b class="ok">Live</b></div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <article class="chapter-card reveal">
+        <p class="ch-kicker"><span class="n">00</span>Today</p>
+        <h2 id="today-title" class="ch-title">Right now, one order lives in <span class="soft">six places.</span></h2>
+        <p class="ch-lede">The register has the quantity. Excel has the rate. The dispatch date is somewhere in a WhatsApp group, and the payment status is in someone's head. So when a buyer asks where their order is, someone calls the shop floor.</p>
+        <p class="ch-lede ch-turn">ShapedOps puts all of it on <b>one order, on one line</b>. Keep scrolling to follow <b>ORD-2041</b> — a sample order — from enquiry to payment.</p>
+      </article>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ======================================================== 02 FLOW -->
-<section class="section defer-render" id="flow" aria-labelledby="flow-title">
-  <div class="wrap">
-    <div class="sec-label"><span class="n">02</span><span class="rule"></span><span class="tag">How an order moves</span></div>
-    <div class="section-head">
-      <h2 id="flow-title" class="split">Watch one order go from enquiry to <span class="mark">paid.</span></h2>
-      <p class="lede reveal">This is the manufacturing stage template ShapedOps starts from. Scroll to move the order — every document and WhatsApp message on the right is generated by the system, not typed by your team.</p>
-    </div>
+  <span id="flow" class="anchor" aria-hidden="true"></span>
 
-    <div class="flow-grid">
-      <ol class="flow-steps">
-        <li class="flow-step active" data-step="0">
-          <span class="num">01</span>
-          <div>
-            <h3>Enquiry</h3>
-            <p>A buyer asks for a rate. Log it in seconds — or bring it in with the rest of your Excel sheet. It gets an owner and a place on the board.</p>
-            <div class="auto"><span>Owner assigned</span><span>On the board</span></div>
-          </div>
-        </li>
-        <li class="flow-step" data-step="1">
-          <span class="num">02</span>
-          <div>
-            <h3>Quote sent</h3>
-            <p>Move it to Quote sent and the quotation PDF is generated on your letterhead, with your terms. The client gets a WhatsApp update.</p>
-            <div class="auto"><span>Quotation PDF</span><span>WhatsApp update</span></div>
-          </div>
-        </li>
-        <li class="flow-step" data-step="2">
-          <span class="num">03</span>
-          <div>
-            <h3>PO received</h3>
-            <p>The PO comes in. The agreement is generated, and the client gets an order confirmation on WhatsApp — before anyone remembers to send one.</p>
-            <div class="auto"><span>Agreement PDF</span><span>Order confirmation</span></div>
-          </div>
-        </li>
-        <li class="flow-step" data-step="3">
-          <span class="num">04</span>
-          <div>
-            <h3>In production</h3>
-            <p>The shop floor works from the same record. The client has a tracking link, so “where's my order?” answers itself.</p>
-            <div class="auto"><span>Tracking link</span><span>WhatsApp update</span></div>
-          </div>
-        </li>
-        <li class="flow-step" data-step="4">
-          <span class="num">05</span>
-          <div>
-            <h3>QC &amp; dispatch</h3>
-            <p>Inspection done, truck booked. The dispatch update goes out the moment the stage changes — nobody has to type it.</p>
-            <div class="auto"><span>WhatsApp update</span></div>
-          </div>
-        </li>
-        <li class="flow-step" data-step="5">
-          <span class="num">06</span>
-          <div>
-            <h3>Invoiced</h3>
-            <p>The invoice is generated from the order — no retyping rates or quantities — with a Razorpay payment link.</p>
-            <div class="auto"><span>Invoice PDF</span><span>Payment link</span></div>
-          </div>
-        </li>
-        <li class="flow-step" data-step="6">
-          <span class="num">07</span>
-          <div>
-            <h3>Payment collected</h3>
-            <p>Payment lands, the receipt is issued and the order closes. If it doesn't land, reminders go out at 30, 60 and 90 days overdue.</p>
-            <div class="auto"><span>Receipt PDF</span><span>30 / 60 / 90-day reminders</span></div>
-          </div>
-        </li>
-      </ol>
-
-      <div class="flow-sticky" aria-hidden="true">
-        <div class="app" id="flow-app">
-          <div class="app-bar">
-            <div class="dots"><i></i><i></i><i></i></div>
-            <div class="crumb">Pipeline / <b>ORD-2041</b></div>
-          </div>
-          <div class="app-body">
-            <div class="app-side"><i class="on"></i><i></i><i></i><i></i><i></i></div>
-            <div class="app-main">
-              <div class="deal-head">
-                <div>
-                  <div class="deal-title">Patel Castings Pvt. Ltd.</div>
-                  <div class="deal-sub">CI Flange DN100, machined × 400 nos · Mehul Patel</div>
-                </div>
-                <div class="deal-amt">₹4,08,280<small>incl. GST · sample</small></div>
-              </div>
-              <div class="rail">
-                <div class="rail-track"><span class="seg"></span><span class="seg"></span><span class="seg"></span><span class="seg"></span><span class="seg"></span><span class="seg"></span><span class="seg"></span></div>
-                <div class="rail-labels"><span>Enquiry</span><span>Quote sent</span><span>PO received</span><span>In production</span><span>QC &amp; dispatch</span><span>Invoiced</span><span>Payment collected</span></div>
-              </div>
-              <div class="app-cols">
-                <div class="panel">
-                  <div class="panel-h"><span>Documents &amp; payments</span><span class="stage-pill" data-pill>Enquiry</span></div>
-                  <div class="panel-b" data-list="docs"></div>
-                </div>
-                <div class="panel msgs">
-                  <div class="panel-h"><span>Client updates · WhatsApp</span><span data-count>0 sent</span></div>
-                  <div class="panel-b" data-list="msgs"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="wa-toast" data-toast>
-            <div class="to"><span>WhatsApp → Mehul Patel</span><span>sent automatically</span></div>
-            <div class="bub"><span data-toast-text></span><span class="t">just now <b>✓✓</b></span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- =================================================== 03 DOCUMENTS -->
-<section class="docs paper" id="documents" aria-labelledby="docs-title">
-  <div class="docs-stick">
+  <!-- 01 ENQUIRY -->
+  <section class="chapter" id="stage-1" data-ch="2" aria-labelledby="st1-title">
     <div class="wrap">
-      <div class="sec-label"><span class="n">03</span><span class="rule"></span><span class="tag">Documents</span></div>
-      <div class="docs-head">
-        <h2 id="docs-title">Paperwork that writes itself — <span class="soft">on your letterhead.</span></h2>
-        <p class="lede">Each stage can issue its own document. Your logo, company details and terms go in once during setup; after that the right PDF is generated at the right stage and filed against the order.</p>
-      </div>
-
-      <div class="docs-stage" aria-hidden="true">
-        <div class="doc-sheet" data-i="0">
-          <div class="lh"><div class="co">YOUR COMPANY PVT. LTD.<small>Your address · GSTIN · phone</small></div><div class="logo"></div></div>
-          <div class="ttl">QUOTATION</div>
-          <div class="meta"><span>To: Patel Castings Pvt. Ltd.</span><span>Date: 13 Sep 2026</span><span>Attn: Mehul Patel</span><span>Valid: 15 days</span></div>
-          <table><tr><th>Item</th><th>Qty</th><th>Amount</th></tr><tr><td>CI Flange DN100, machined</td><td>400</td><td>3,28,000</td></tr><tr><td>Pattern &amp; tooling</td><td>1 lot</td><td>18,000</td></tr><tr><td>GST 18%</td><td></td><td>62,280</td></tr></table>
-          <div class="tot"><span>Total</span><span>₹4,08,280</span></div>
-          <div class="lines"><i></i><i></i><i></i></div>
-          <div class="doc-tag"><b>Quote sent</b> → generated</div>
-        </div>
-        <div class="doc-sheet" data-i="1">
-          <div class="lh"><div class="co">YOUR COMPANY PVT. LTD.<small>Your address · GSTIN · phone</small></div><div class="logo"></div></div>
-          <div class="ttl">AGREEMENT</div>
-          <div class="meta"><span>Client: Patel Castings</span><span>Ref: PO 4471</span></div>
-          <div class="lines"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-          <div class="sig"><span>Authorised signatory</span></div>
-          <div class="doc-tag"><b>PO received</b> → generated</div>
-        </div>
-        <div class="doc-sheet" data-i="2">
-          <div class="lh"><div class="co">YOUR COMPANY PVT. LTD.<small>Your address · GSTIN · phone</small></div><div class="logo"></div></div>
-          <div class="ttl">INVOICE</div>
-          <div class="meta"><span>Bill to: Patel Castings</span><span>Inv: 2026/118</span><span>Due: 30 Sep 2026</span><span>PO: 4471</span></div>
-          <table><tr><th>Service provided</th><th>Amount</th></tr><tr><td>CI Flange DN100 × 400</td><td>3,46,000</td></tr><tr><td>GST 18%</td><td>62,280</td></tr></table>
-          <div class="tot"><span>Total amount payable</span><span>₹4,08,280</span></div>
-          <div class="lines"><i></i><i></i></div>
-          <div class="doc-tag"><b>Invoiced</b> → generated</div>
-        </div>
-        <div class="doc-sheet" data-i="3">
-          <div class="lh"><div class="co">YOUR COMPANY PVT. LTD.<small>Your address · GSTIN · phone</small></div><div class="logo"></div></div>
-          <div class="ttl">PAYMENT RECEIPT</div>
-          <div class="meta"><span>From: Patel Castings</span><span>Against: 2026/118</span></div>
-          <table><tr><th>Received</th><th>Amount</th></tr><tr><td>Advance</td><td>1,64,000</td></tr><tr><td>Balance</td><td>2,44,280</td></tr></table>
-          <div class="tot"><span>Amount received</span><span>₹4,08,280</span></div>
-          <div class="stamp">PAID</div>
-          <div class="doc-tag"><b>Payment collected</b> → generated</div>
-        </div>
-      </div>
-
-      <div class="docs-foot">
-        <span>Completion certificates</span>
-        <span>NDAs and retainer agreements</span>
-        <span>Filed against the order, downloadable by your client</span>
-        <span>Sample documents shown</span>
-      </div>
+      <article class="chapter-card reveal">
+        <p class="ch-kicker"><span class="n">01</span>Enquiry</p>
+        <h2 id="st1-title" class="ch-title">A buyer asks for a rate. <span class="soft">It lands on the line.</span></h2>
+        <p class="ch-lede">Every enquiry becomes an order on the board — with an owner, a value and a place in your pipeline. Already tracking enquiries in Excel? They come in with the import, duplicates flagged.</p>
+        <dl class="ch-rows">
+          <div><dt>Your team</dt><dd>Logs the enquiry in seconds, or imports the sheet you already keep.</dd></div>
+          <div><dt>ShapedOps</dt><dd>Gives it an owner and counts its value in your pipeline.</dd></div>
+          <div><dt>Your client</dt><dd>Nothing yet — no messages until there's something to say.</dd></div>
+        </dl>
+      </article>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ===================================================== 04 CLIENTS -->
-<section class="section defer-render" id="clients" aria-labelledby="clients-title">
+  <span id="documents" class="anchor" aria-hidden="true"></span>
+
+  <!-- 02 QUOTE SENT -->
+  <section class="chapter" id="stage-2" data-ch="3" aria-labelledby="st2-title">
+    <div class="wrap">
+      <article class="chapter-card reveal">
+        <p class="ch-kicker"><span class="n">02</span>Quote sent <span class="ch-doc">+ Quotation PDF</span></p>
+        <h2 id="st2-title" class="ch-title">The quote writes itself — <span class="soft">on your letterhead.</span></h2>
+        <p class="ch-lede">Move the order to Quote sent and the quotation is generated from the order: items, rates, GST and your terms, under your logo. Nobody retypes it into Word.</p>
+        <dl class="ch-rows">
+          <div><dt>Your team</dt><dd>Moves the order to Quote sent.</dd></div>
+          <div><dt>ShapedOps</dt><dd>Generates the quotation PDF and files it against the order.</dd></div>
+          <div><dt>Your client</dt><dd>Gets a WhatsApp update and can download the quotation from their tracking link.</dd></div>
+        </dl>
+      </article>
+    </div>
+  </section>
+
+  <!-- 03 PO RECEIVED -->
+  <section class="chapter" id="stage-3" data-ch="4" aria-labelledby="st3-title">
+    <div class="wrap">
+      <article class="chapter-card reveal">
+        <p class="ch-kicker"><span class="n">03</span>PO received <span class="ch-doc">+ Agreement PDF</span></p>
+        <h2 id="st3-title" class="ch-title">The PO comes in. <span class="soft">The paperwork is already done.</span></h2>
+        <p class="ch-lede">Record the buyer's PO against the order and the agreement is generated with it. The client gets an order confirmation on WhatsApp before anyone remembers to send one.</p>
+        <dl class="ch-rows">
+          <div><dt>Your team</dt><dd>Records the PO on the order.</dd></div>
+          <div><dt>ShapedOps</dt><dd>Generates the agreement and sends the order confirmation.</dd></div>
+          <div><dt>Your client</dt><dd>"Thank you for your order! We've received it…" — on WhatsApp.</dd></div>
+        </dl>
+      </article>
+    </div>
+  </section>
+
+  <!-- 04 IN PRODUCTION -->
+  <section class="chapter" id="stage-4" data-ch="5" aria-labelledby="st4-title">
+    <div class="wrap">
+      <article class="chapter-card reveal">
+        <p class="ch-kicker"><span class="n">04</span>In production</p>
+        <h2 id="st4-title" class="ch-title">On the floor — <span class="soft">and on everyone's screen.</span></h2>
+        <p class="ch-lede">Sales, accounts and the owner see the same status as the floor. The details your shop tracks — heat no., grade, drawing revision — live on the order as custom fields.</p>
+        <dl class="ch-rows">
+          <div><dt>Your team</dt><dd>Moves it to In production when work starts.</dd></div>
+          <div><dt>ShapedOps</dt><dd>Updates the board for everyone and sends the stage update.</dd></div>
+          <div><dt>Your client</dt><dd>Sees "In production" on their tracking link — no call needed.</dd></div>
+        </dl>
+      </article>
+    </div>
+  </section>
+
+  <!-- 05 QC & DISPATCH -->
+  <section class="chapter" id="stage-5" data-ch="6" aria-labelledby="st5-title">
+    <div class="wrap">
+      <article class="chapter-card reveal">
+        <p class="ch-kicker"><span class="n">05</span>QC &amp; dispatch</p>
+        <h2 id="st5-title" class="ch-title">Checked, loaded, <span class="soft">announced.</span></h2>
+        <p class="ch-lede">Inspection done and the truck booked. Transporter, vehicle and LR numbers sit on the order, and the dispatch update goes out the moment the stage changes.</p>
+        <dl class="ch-rows">
+          <div><dt>Your team</dt><dd>Moves it to QC &amp; dispatch and adds the transport details.</dd></div>
+          <div><dt>ShapedOps</dt><dd>Sends the dispatch update on WhatsApp.</dd></div>
+          <div><dt>Your client</dt><dd>Knows it's on the way before they think to ask.</dd></div>
+        </dl>
+      </article>
+    </div>
+  </section>
+
+  <!-- 06 INVOICED -->
+  <section class="chapter" id="stage-6" data-ch="7" aria-labelledby="st6-title">
+    <div class="wrap">
+      <article class="chapter-card reveal">
+        <p class="ch-kicker"><span class="n">06</span>Invoiced <span class="ch-doc">+ Invoice PDF</span></p>
+        <h2 id="st6-title" class="ch-title">Invoice out, <span class="soft">payment link attached.</span></h2>
+        <p class="ch-lede">The invoice is generated from the order — no retyping rates or quantities — with a Razorpay payment link. If it goes overdue, reminders go out at 30, 60 and 90 days.</p>
+        <dl class="ch-rows">
+          <div><dt>Your team</dt><dd>Moves it to Invoiced.</dd></div>
+          <div><dt>ShapedOps</dt><dd>Generates the invoice with a pay link and schedules overdue reminders.</dd></div>
+          <div><dt>Your client</dt><dd>Pays online from the invoice or their tracking link.</dd></div>
+        </dl>
+      </article>
+    </div>
+  </section>
+
+  <!-- 07 PAYMENT COLLECTED -->
+  <section class="chapter" id="stage-7" data-ch="8" aria-labelledby="st7-title">
+    <div class="wrap">
+      <article class="chapter-card reveal">
+        <p class="ch-kicker"><span class="n">07</span>Payment collected <span class="ch-doc">+ Receipt PDF</span></p>
+        <h2 id="st7-title" class="ch-title">Paid. Receipt issued. <span class="soft">Order closed.</span></h2>
+        <p class="ch-lede">When the payment is collected, the receipt is generated, the order closes and it counts toward this month's closed revenue in your analytics.</p>
+        <dl class="ch-rows">
+          <div><dt>Your team</dt><dd>Moves it to Payment collected.</dd></div>
+          <div><dt>ShapedOps</dt><dd>Issues the receipt, closes the order and updates revenue.</dd></div>
+          <div><dt>Your client</dt><dd>Downloads the receipt from their tracking link.</dd></div>
+        </dl>
+      </article>
+    </div>
+  </section>
+
+  <!-- OUTRO -->
+  <section class="chapter chapter-outro" data-ch="9" aria-labelledby="outro-title">
+    <div class="wrap">
+      <article class="chapter-card reveal">
+        <p class="ch-kicker"><span class="n">✓</span>One line</p>
+        <h2 id="outro-title" class="ch-title">Seven stages. Four documents. <span class="soft">Nothing retyped, nobody chased.</span></h2>
+        <p class="ch-lede">That was one order. Every order moves the same way — and the stages, documents and messages are shaped around your business during setup.</p>
+        <div class="chips ch-chips">
+          <span class="chip">Quotation</span><span class="chip">Agreement</span><span class="chip">Invoice</span><span class="chip">Payment receipt</span>
+          <span class="chip">Completion certificates</span><span class="chip">NDAs &amp; retainer agreements</span>
+        </div>
+        <p class="ch-note">Sample order and documents shown. All on your letterhead, filed against the order, downloadable by your client.</p>
+        <div class="hero-ctas">
+          <a class="btn" href="#access">Book a discovery call <span class="arr" aria-hidden="true">→</span></a>
+          <a class="btn btn-ghost" href="#clients">See your client's side</a>
+        </div>
+      </article>
+    </div>
+  </section>
+</div>
+
+<!-- ===================================================== 02 CLIENTS -->
+<section class="section defer-render" id="clients" data-ch="10" aria-labelledby="clients-title">
   <div class="wrap">
-    <div class="sec-label"><span class="n">04</span><span class="rule"></span><span class="tag">Your client's side</span></div>
+    <div class="sec-label"><span class="n">02</span><span class="rule"></span><span class="tag">Your client's side</span></div>
     <div class="client-grid">
       <div class="client-copy">
         <h2 id="clients-title" class="split">Your client stops calling. <span class="soft">They already know.</span></h2>
@@ -472,16 +387,16 @@
   </div>
 </section>
 
-<!-- ======================================================= 05 SPECS -->
-<section class="section defer-render" id="features" aria-labelledby="specs-title">
+<!-- ======================================================= 03 SPECS -->
+<section class="section defer-render" id="features" data-ch="11" aria-labelledby="specs-title">
   <div class="wrap">
-    <div class="sec-label"><span class="n">05</span><span class="rule"></span><span class="tag">Around the order</span></div>
+    <div class="sec-label"><span class="n">03</span><span class="rule"></span><span class="tag">Around the order</span></div>
     <div class="section-head">
       <h2 id="specs-title" class="split">Everything around the order, <span class="soft">handled too.</span></h2>
       <p class="lede reveal">The back-office work that usually lives in someone's notebook — collections, the morning check-in, onboarding old data, who brought which deal in.</p>
     </div>
 
-    <div class="specs" tabindex="0" aria-label="Features">
+    <div class="specs" id="specs-row" tabindex="0" aria-label="Features">
       <div class="spec">
         <span class="n">01</span>
         <div class="reveal"><h3>Payments chased on a schedule</h3><p>Invoices your clients can pay online, and a WhatsApp reminder at 30, 60 and 90 days overdue — one per milestone, never a daily nag.</p><a class="link-arrow" href="/payment-reminders">How payment reminders work <span aria-hidden="true">→</span></a></div>
@@ -572,13 +487,18 @@
         </div>
       </div>
     </div>
+    <div class="specs-nav">
+      <span class="mono specs-count" aria-hidden="true">6 features</span>
+      <button class="specs-btn" type="button" data-specs="-1" aria-controls="specs-row" aria-label="Previous features" disabled><span aria-hidden="true">←</span></button>
+      <button class="specs-btn" type="button" data-specs="1" aria-controls="specs-row" aria-label="Next features"><span aria-hidden="true">→</span></button>
+    </div>
   </div>
 </section>
 
-<!-- =================================================== 06 INDUSTRIES -->
-<section class="section defer-render" id="industries" aria-labelledby="ind-title" style="padding-top:0">
+<!-- =================================================== 04 INDUSTRIES -->
+<section class="section defer-render" id="industries" data-ch="12" aria-labelledby="ind-title">
   <div class="wrap">
-    <div class="sec-label"><span class="n">06</span><span class="rule"></span><span class="tag">Industries &amp; stages</span></div>
+    <div class="sec-label"><span class="n">04</span><span class="rule"></span><span class="tag">Industries &amp; stages</span></div>
     <div class="section-head">
       <h2 id="ind-title" class="split">Starts from a template. <span class="soft">Ends up sounding like you.</span></h2>
       <p class="lede reveal">ShapedOps ships with stage templates for the way different businesses move an order. During setup we rename stages, choose which documents each one issues, and add the fields you track.</p>
@@ -629,10 +549,10 @@
   </div>
 </section>
 
-<!-- ================================================ 07 IMPLEMENTATION -->
-<section class="section defer-render" id="pricing" aria-labelledby="impl-title" style="padding-top:0">
+<!-- ================================================ 05 IMPLEMENTATION -->
+<section class="section defer-render" id="getting-started" data-ch="13" aria-labelledby="impl-title">
   <div class="wrap">
-    <div class="sec-label"><span class="n">07</span><span class="rule"></span><span class="tag">Getting started &amp; pricing</span></div>
+    <div class="sec-label"><span class="n">05</span><span class="rule"></span><span class="tag">Getting started</span></div>
     <div class="section-head">
       <h2 id="impl-title" class="split">Implemented with you, <span class="soft">not handed over as a login.</span></h2>
       <p class="lede reveal">We set ShapedOps up around your process with you — your stages, your letterhead, your data — and stay on to keep it running.</p>
@@ -644,11 +564,17 @@
       <div class="step4 reveal d2"><span class="n">03</span><h3>Setup around your process</h3><p>Stages, letterhead, WhatsApp and Razorpay connected, and your existing Excel data imported.</p></div>
       <div class="step4 reveal d3"><span class="n">04</span><h3>Go live</h3><p>Your team is walked through it, and maintenance keeps it running as you add people, locations and modules.</p></div>
     </div>
+  </div>
+</section>
 
+<!-- ====================================================== 06 PRICING -->
+<section class="section defer-render" id="pricing" data-ch="14" aria-labelledby="price-title">
+  <div class="wrap">
+    <div class="sec-label"><span class="n">06</span><span class="rule"></span><span class="tag">Pricing</span></div>
     <div class="pricing reveal">
       <div>
         <p class="kicker">Pricing</p>
-        <h3>Priced like an implementation — not a per-seat subscription.</h3>
+        <h2 id="price-title" class="h3">Priced like an implementation — not a per-seat subscription.</h2>
         <p class="body-muted" style="max-width:48ch;margin-bottom:28px">A one-time implementation fee and a monthly maintenance fee, scoped to your business. You get the fit of custom software without starting from scratch — and a fixed quote before you commit to anything.</p>
         <a class="btn" href="#access" data-open-tab="quote">Get a quote <span class="arr" aria-hidden="true">→</span></a>
       </div>
@@ -662,10 +588,10 @@
   </div>
 </section>
 
-<!-- ====================================================== 08 WHO -->
-<section class="section defer-render" aria-labelledby="who-title" style="padding-top:0">
+<!-- ====================================================== 06 WHO -->
+<section class="section defer-render" aria-labelledby="who-title" data-ch="15">
   <div class="wrap">
-    <div class="sec-label"><span class="n">08</span><span class="rule"></span><span class="tag">Who builds it</span></div>
+    <div class="sec-label"><span class="n">07</span><span class="rule"></span><span class="tag">Who builds it</span></div>
     <div class="founder">
       <div>
         <h2 id="who-title" class="split">Built by a small team in <span class="soft">Ahmedabad.</span></h2>
@@ -684,10 +610,10 @@
   </div>
 </section>
 
-<!-- ======================================================== 09 FAQ -->
-<section class="section defer-render" id="faq" aria-labelledby="faq-title" style="padding-top:0">
+<!-- ======================================================== 07 FAQ -->
+<section class="section defer-render" id="faq" data-ch="16" aria-labelledby="faq-title">
   <div class="wrap">
-    <div class="sec-label"><span class="n">09</span><span class="rule"></span><span class="tag">Questions</span></div>
+    <div class="sec-label"><span class="n">08</span><span class="rule"></span><span class="tag">Questions</span></div>
     <div class="section-head">
       <h2 id="faq-title" class="split">Questions owners ask us.</h2>
       <p class="lede reveal">Something not covered here? Message us on WhatsApp at +91 90998 67128.</p>
@@ -705,10 +631,10 @@
   </div>
 </section>
 
-<!-- ======================================================== 10 CTA -->
-<section class="section defer-render" id="access" aria-labelledby="cta-title" style="padding-top:0">
+<!-- ======================================================== 08 CTA -->
+<section class="section defer-render" id="access" data-ch="17" aria-labelledby="cta-title">
   <div class="wrap">
-    <div class="sec-label"><span class="n">10</span><span class="rule"></span><span class="tag">Start</span></div>
+    <div class="sec-label"><span class="n">09</span><span class="rule"></span><span class="tag">Start</span></div>
     <div class="cta-grid">
       <div>
         <h2 id="cta-title" class="split">Tell us how your orders <span class="mark">run today.</span></h2>
