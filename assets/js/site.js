@@ -14,8 +14,6 @@
   function $(sel, ctx) { return (ctx || document).querySelector(sel); }
   function $$(sel, ctx) { return Array.prototype.slice.call((ctx || document).querySelectorAll(sel)); }
   function clamp(v, a, b) { return Math.min(b, Math.max(a, v)); }
-  function lerp(a, b, t) { return a + (b - a) * t; }
-  function easeInOut(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
   function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
   // cheap check on a section's own box (never its skipped contents)
   function nearView(el) { var r = el.getBoundingClientRect(); return r.bottom > -innerHeight && r.top < innerHeight * 2; }
@@ -151,81 +149,31 @@
     });
   }
 
-  function stickyProgress(r) {
-    return clamp(-r.top / Math.max(1, r.height - innerHeight), 0, 1);
-  }
-  // narrow screens: nothing is pinned, so play the scene while its stage
-  // travels from the bottom of the viewport up to just above centre
-  function stageProgress(r) {
-    var vh = innerHeight;
-    var start = vh * 0.72, end = vh * 0.3 - r.height / 2;
-    return clamp((start - r.top) / Math.max(1, start - end), 0, 1);
-  }
   function q4(v) { return Math.round(v * 2000) / 2000; }
 
-  // 01 — scattered artifacts collapse into one order card
-  var scatter = $(".scatter");
-  if (scatter) {
-    var scatterStage = $(".scatter-stage", scatter);
-    var stageW = 625;
-    var pieces = $$(".piece", scatterStage).map(function (el, i) {
-      var f = el.dataset.from.split(",").map(Number);
-      var t = el.dataset.to.split(",").map(Number);
-      el.style.zIndex = el.hasAttribute("data-card") ? 20 : String(i + 1);
-      return { el: el, from: f, to: t, card: el.hasAttribute("data-card") };
-    });
+  // home — the journey's stage rail marks the chapter at the middle of the
+  // screen, and only shows while the chapters (not the hero) are on screen
+  var journey = $("#journey");
+  if (journey) {
+    var chapters = $$("[data-ch]", journey);
+    var railLinks = $$("[data-rail]", journey);
     scenes.push({
       measure: function () {
-        stageW = scatterStage.offsetWidth || stageW;
-        if (reduce) return 1;
-        return q4(wide.matches ? stickyProgress(scatter.getBoundingClientRect()) : stageProgress(scatterStage.getBoundingClientRect()));
+        var mid = innerHeight / 2;
+        var r = journey.getBoundingClientRect();
+        if (r.top > mid || r.bottom < mid) return -1;
+        for (var i = chapters.length - 1; i >= 0; i--) {
+          if (chapters[i].getBoundingClientRect().top <= mid) return Number(chapters[i].dataset.ch);
+        }
+        return 0;
       },
-      apply: function (p) {
-        // pull the scattered layout in to fit the stage, so no piece starts
-        // over the copy column (desktop) or off the screen (phones)
-        var fx = wide.matches ? Math.min(1, stageW / 625) : 0.62, fy = wide.matches ? 1 : 0.85;
-        var fxLeft = wide.matches ? fx * 0.6 : fx;   // the copy column sits to the left
-        var m = easeInOut(clamp(p / 0.55, 0, 1));
-        var q = clamp((p - 0.48) / 0.26, 0, 1);
-        var c = easeOut(clamp((p - 0.45) / 0.3, 0, 1));
-        pieces.forEach(function (pc) {
-          var k = pc.card ? c : m;
-          var x = lerp(pc.from[0] * (pc.from[0] < 0 ? fxLeft : fx), pc.to[0], k), y = lerp(pc.from[1] * fy, pc.to[1], k), z = lerp(pc.from[2], pc.to[2], k);
-          var rx = lerp(pc.from[3], pc.to[3], k), ry = lerp(pc.from[4], pc.to[4], k), rz = lerp(pc.from[5], pc.to[5], k);
-          var s = 1, o = 1;
-          if (pc.card) { o = c; }
-          else { s = 1 - 0.14 * m - 0.06 * q; z -= 90 * q; o = 1 - 0.55 * q; }
-          pc.el.style.transform = "translate3d(" + x.toFixed(1) + "px," + y.toFixed(1) + "px," + z.toFixed(1) + "px) rotateX(" + rx.toFixed(2) + "deg) rotateY(" + ry.toFixed(2) + "deg) rotateZ(" + rz.toFixed(2) + "deg) scale(" + s.toFixed(3) + ")";
-          pc.el.style.opacity = o.toFixed(3);
-        });
-        scatter.classList.toggle("is-after", p > 0.55);
-      }
-    });
-  }
-
-  // 03 — documents lift off the desk and fan out
-  var docs = $(".docs");
-  if (docs) {
-    var sheets = $$(".doc-sheet", docs);
-    var docsStage = $(".docs-stage", docs);
-    scenes.push({
-      measure: function () {
-        if (reduce) return 1;
-        return q4(wide.matches ? stickyProgress(docs.getBoundingClientRect()) : stageProgress(docsStage.getBoundingClientRect()));
-      },
-      apply: function (p) {
-        var desktop = wide.matches;
-        var spread = desktop ? [-420, -140, 140, 420] : [-68, -23, 23, 68];
-        sheets.forEach(function (el, i) {
-          var k = easeInOut(clamp((p - i * 0.07) / 0.52, 0, 1));
-          var flat = { x: -30 + i * 7, y: 70 - i * 4, z: i * 3, rx: 66, ry: 0, rz: -27 + i * 2 };
-          var fan = desktop
-            ? { x: spread[i], y: 0, z: i === 1 || i === 2 ? 36 : 0, rx: 5, ry: [16, 6, -6, -16][i], rz: [-3, -1, 1, 3][i] }
-            : { x: spread[i], y: [14, 2, 2, 14][i], z: i * 14, rx: 4, ry: 0, rz: [-9, -3, 3, 9][i] };
-          el.style.transform =
-            "translate3d(" + lerp(flat.x, fan.x, k).toFixed(1) + "px," + lerp(flat.y, fan.y, k).toFixed(1) + "px," + lerp(flat.z, fan.z, k).toFixed(1) + "px)" +
-            " rotateX(" + lerp(flat.rx, fan.rx, k).toFixed(2) + "deg) rotateY(" + lerp(flat.ry, fan.ry, k).toFixed(2) + "deg) rotateZ(" + lerp(flat.rz, fan.rz, k).toFixed(2) + "deg)";
-          el.style.setProperty("--tag", clamp((k - 0.85) / 0.15, 0, 1).toFixed(2));
+      apply: function (ch) {
+        document.documentElement.classList.toggle("in-journey", ch >= 1);
+        railLinks.forEach(function (a) {
+          var n = Number(a.dataset.rail);
+          a.classList.toggle("on", n === ch);
+          a.classList.toggle("done", n < ch);
+          if (n === ch) a.setAttribute("aria-current", "step"); else a.removeAttribute("aria-current");
         });
       }
     });
@@ -266,127 +214,6 @@
     runScenes();
     addEventListener("scroll", requestScenes, { passive: true });
     addEventListener("resize", function () { scenes.forEach(function (s) { s.last = undefined; }); requestScenes(); });
-  }
-
-  /* ------------------------------------------------ 02 order flow story */
-  var app = $("#flow-app");
-  if (app) {
-    var STAGE_NAMES = ["Enquiry", "Quote sent", "PO received", "In production", "QC & dispatch", "Invoiced", "Payment collected"];
-    // default WhatsApp templates, word for word from the product
-    function stageMsg(stage) { return "Hi Mehul, quick update — your order/project status has moved to: " + stage + ". Let us know if you have any questions!"; }
-    var CONFIRM = "Hi Mehul, thank you for your order! We've received it and will be in touch shortly with next steps.";
-
-    var ROWS = {
-      quote: { ic: "", t: "Quotation.pdf", s: "Generated at Quote sent", st: "generated" },
-      agree: { ic: "", t: "Agreement.pdf", s: "Generated at PO received", st: "generated" },
-      link: { ic: "link", t: "Client tracking link", s: "Shared with Mehul Patel", st: "live" },
-      inv: { ic: "", t: "Invoice 2026/118.pdf", s: "Generated at Invoiced", st: "generated" },
-      pay: { ic: "pay", t: "Payment link · ₹4,08,280", s: "Due 30 Sep 2026", st: "pending", cls: "pend" },
-      payPaid: { key: "pay", ic: "pay", t: "Payment link · ₹4,08,280", s: "Paid online", st: "paid" },
-      rcpt: { ic: "", t: "Payment receipt.pdf", s: "Generated at Payment collected", st: "generated" },
-      m_q: { ic: "wa", t: "Stage update", s: "moved to: Quote Sent", st: "✓✓" },
-      m_conf: { ic: "wa", t: "Order confirmation", s: "thank you for your order!", st: "✓✓" },
-      m_prod: { ic: "wa", t: "Stage update", s: "moved to: In Production", st: "✓✓" },
-      m_qc: { ic: "wa", t: "Stage update", s: "moved to: QC & Dispatch", st: "✓✓" },
-      m_inv: { ic: "wa", t: "Stage update", s: "moved to: Invoiced", st: "✓✓" },
-      m_paid: { ic: "wa", t: "Stage update", s: "moved to: Payment Collected", st: "✓✓" }
-    };
-    var STEPS = [
-      { docs: [], msgs: [], toast: null },
-      { docs: ["quote"], msgs: ["m_q"], toast: stageMsg("Quote Sent") },
-      { docs: ["quote", "agree"], msgs: ["m_q", "m_conf"], toast: CONFIRM },
-      { docs: ["quote", "agree", "link"], msgs: ["m_q", "m_conf", "m_prod"], toast: stageMsg("In Production") },
-      { docs: ["quote", "agree", "link"], msgs: ["m_q", "m_conf", "m_prod", "m_qc"], toast: stageMsg("QC & Dispatch") },
-      { docs: ["quote", "agree", "link", "inv", "pay"], msgs: ["m_q", "m_conf", "m_prod", "m_qc", "m_inv"], toast: stageMsg("Invoiced") },
-      { docs: ["quote", "agree", "link", "inv", "payPaid", "rcpt"], msgs: ["m_q", "m_conf", "m_prod", "m_qc", "m_inv", "m_paid"], toast: stageMsg("Payment Collected") }
-    ];
-
-    var segs = $$(".rail-track .seg", app);
-    var labels = $$(".rail-labels span", app);
-    var pill = $("[data-pill]", app);
-    var count = $("[data-count]", app);
-    var docsList = $('[data-list="docs"]', app);
-    var msgsList = $('[data-list="msgs"]', app);
-    var toast = $("[data-toast]", app);
-    var toastText = $("[data-toast-text]", app);
-    var toastTimer = null;
-    var current = -1;
-
-    function makeRow(key, def) {
-      var row = document.createElement("div");
-      row.className = "row";
-      row.dataset.key = key;
-      row.innerHTML = '<span class="ic ' + def.ic + '"></span><span class="tt"></span><span class="st"></span>';
-      fillRow(row, def);
-      return row;
-    }
-    function fillRow(row, def) {
-      var tt = row.querySelector(".tt");
-      tt.textContent = def.t;
-      var sm = document.createElement("small");
-      sm.textContent = def.s;
-      tt.appendChild(sm);
-      var st = row.querySelector(".st");
-      st.textContent = def.st;
-      st.className = "st" + (def.cls ? " " + def.cls : "");
-    }
-    function syncList(list, ids) {
-      var wanted = ids.map(function (id) { return { key: ROWS[id].key || id, def: ROWS[id] }; });
-      var keys = wanted.map(function (w) { return w.key; });
-      $$(".row", list).forEach(function (row) { if (keys.indexOf(row.dataset.key) === -1) row.remove(); });
-      wanted.forEach(function (w) {
-        var existing = list.querySelector('.row[data-key="' + w.key + '"]');
-        if (existing) fillRow(existing, w.def);
-        else list.insertBefore(makeRow(w.key, w.def), list.firstChild);
-      });
-      var empty = list.querySelector(".panel-empty");
-      if (!ids.length && !empty) {
-        empty = document.createElement("div");
-        empty.className = "panel-empty";
-        empty.textContent = list === docsList ? "Nothing generated yet — the quotation is issued at Quote sent." : "No updates sent yet.";
-        list.appendChild(empty);
-      } else if (ids.length && empty) {
-        empty.remove();
-      }
-    }
-    function setStep(i) {
-      if (i === current) return;
-      var forward = i > current;
-      current = i;
-      var s = STEPS[i];
-      segs.forEach(function (seg, n) { seg.classList.toggle("done", n <= i); });
-      labels.forEach(function (l, n) { l.classList.toggle("cur", n === i); l.classList.toggle("done", n < i); });
-      pill.textContent = STAGE_NAMES[i];
-      syncList(docsList, s.docs);
-      syncList(msgsList, s.msgs);
-      count.textContent = s.msgs.length + " sent";
-      $$(".flow-step").forEach(function (el, n) { el.classList.toggle("active", n === i); });
-      clearTimeout(toastTimer);
-      if (s.toast && forward && !reduce) {
-        toast.classList.remove("show");
-        toastText.textContent = s.toast;
-        requestAnimationFrame(function () { toast.classList.add("show"); });
-        toastTimer = setTimeout(function () { toast.classList.remove("show"); }, 3600);
-      } else {
-        toast.classList.remove("show");
-      }
-    }
-    setStep(0);
-
-    var steps = $$(".flow-step");
-    if ("IntersectionObserver" in window) {
-      var stepIO = null;
-      var buildStepObserver = function () {
-        if (stepIO) stepIO.disconnect();
-        var margin = wide.matches ? "-48% 0px -48% 0px" : "-72% 0px -26% 0px";
-        stepIO = new IntersectionObserver(function (entries) {
-          entries.forEach(function (e) { if (e.isIntersecting) setStep(Number(e.target.dataset.step)); });
-        }, { rootMargin: margin, threshold: 0 });
-        steps.forEach(function (el) { stepIO.observe(el); });
-      };
-      buildStepObserver();
-      wide.addEventListener("change", buildStepObserver);
-    }
   }
 
   /* ------------------------------------------------- 04 phone sequence */

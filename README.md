@@ -6,12 +6,12 @@ The public marketing site for [ShapedOps](https://www.shapedops.com), built by A
 
 Static HTML, CSS and JavaScript — no build step, no framework, no npm install.
 
-- `index.html` — homepage. Hero with a Three.js order line, then scroll-driven sections: scattered paperwork collapsing into one order, a live order-flow story, documents fanning out, the client's WhatsApp/portal view, features, industry templates, pricing approach, FAQ and the lead forms.
+- `index.html` — homepage. The top of the page is one scroll-driven 3D journey: a Three.js order line stays pinned while the hero and ten chapters scroll over it (today's scattered paperwork, then each of the seven stages, then an outro), and the camera follows sample order ORD-2041 station by station as documents print and WhatsApp updates rise. Each chapter is real HTML text explaining what your team, ShapedOps and your client each see. After the journey: the client's WhatsApp/portal view, features, industry templates, pricing approach, FAQ and the lead forms.
 - `manufacturers/index.html` — landing page for manufacturers and foundries (job-card hero, today-vs-ShapedOps comparison, the seven manufacturing stages, documents and custom fields, FAQ).
 - `404.html` — served by Vercel for unknown paths.
 - `assets/css/site.css` — the shared design system for all pages.
-- `assets/js/site.js` — shared interactions: header, reveals, scroll-driven scenes, the order-flow story, tabs, the job card and the lead forms. Every block checks that its elements exist, so the same file runs on every page.
-- `assets/js/line3d.js` — the homepage 3D conveyor (ES module). Three.js is loaded from jsDelivr through the import map in `index.html`; nothing is vendored.
+- `assets/js/site.js` — shared interactions: header, reveals, scroll-driven scenes, the journey's stage rail, tabs, the job card and the lead forms. Every block checks that its elements exist, so the same file runs on every page.
+- `assets/js/line3d.js` — the homepage 3D journey (ES module). Camera keyframes are one per `[data-ch]` section, rebuilt per breakpoint. Three.js is loaded from jsDelivr through the import map in `index.html`; nothing is vendored.
 - `llms.txt`, `robots.txt`, `sitemap.xml` — crawler and AI-assistant metadata. Structured data (Organization, SoftwareApplication, FAQPage, BreadcrumbList) lives in each page's JSON-LD.
 
 ## Deploying
@@ -26,9 +26,9 @@ Both forms ("Early access" and "Get a quote") POST JSON to `https://shapedops.as
 
 ## Motion and accessibility
 
-- `prefers-reduced-motion` is respected everywhere: scroll scenes render their end state, the 3D line renders one still frame, and the job card shows all stages stamped.
+- `prefers-reduced-motion` is respected everywhere: scroll scenes render their end state, the 3D camera cuts straight to each chapter's station instead of gliding, and the job card shows all stages stamped.
 - Without JavaScript (or if `site.js` fails to load within 4 seconds) all content is visible; reveals only apply under the `.js` class.
-- If WebGL is unavailable, the hero falls back to the drafting-grid background.
+- If WebGL is unavailable, the pinned stage is hidden: the hero falls back to the drafting-grid background and the chapters read as plain cards.
 - Smooth scrolling is only turned on after load, so deep links such as `/#pricing` jump straight to the section.
 
 ## Performance rules
