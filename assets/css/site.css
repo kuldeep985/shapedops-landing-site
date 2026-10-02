@@ -246,14 +246,13 @@ p { margin: 0; }
 .menu-open { overflow: hidden; }
 
 /* ------------------------------------------------------------- journey */
-/* One 3D scene is pinned behind the hero and every chapter after it; the
-   camera follows the scroll. The hero is pulled up over the stage (rather
-   than giving the stage a negative margin) so the stage keeps its full
-   height for sticky positioning and is released exactly at the journey end. */
+/* One 3D scene sits behind the whole homepage; the camera follows the
+   scroll. Through the journey it is the subject; on the pages after it, the
+   same line stays behind them, dimmed, so the site reads as one place. */
 
 .journey { position: relative; }
 .journey-stage {
-  position: sticky; top: 0; z-index: 0;
+  position: fixed; left: 0; right: 0; top: 0; z-index: -1;
   height: 100vh; height: 100lvh;
   pointer-events: none; overflow: hidden;
 }
@@ -262,9 +261,47 @@ p { margin: 0; }
   opacity: 0; transition: opacity 1.4s ease;
 }
 .journey-canvas.ready { opacity: 1; }
-.journey > .hero { margin-top: -100vh; margin-top: -100lvh; }
+.past-journey .journey-canvas.ready { opacity: 0.3; }
 .no-webgl .journey-stage { display: none; }
-.no-webgl .journey > .hero { margin-top: 0; }
+
+/* ---------------------------------------------------------------- pages */
+/* The homepage reads as a stack of screens. On laptops and up every section
+   after the journey is sized to one screen, and site.js glides to the
+   nearest page edge when a scroll stops close to one. (CSS scroll-snap is
+   not used: with screen-tall pages it pulls short scrolls back, which feels
+   stuck.) Pages carry their own header space, so anchors land at their top. */
+html:has(#journey) { scroll-padding-top: 0; }
+@media (min-width: 901px) and (min-height: 640px) {
+  main > .section {
+    min-height: 100vh; min-height: 100svh;
+    display: flex; align-items: center;
+    padding: calc(var(--header-h) + 24px) 0 32px;
+  }
+  main > .section > .wrap { width: 100%; }
+  main > .section .section-head { margin-bottom: clamp(22px, 4vh, 44px); }
+  main > .section .sec-label { margin-bottom: clamp(16px, 3vh, 28px); }
+  /* questions in two columns so all eight fit on the page */
+  .faq { max-width: none; display: grid; grid-template-columns: 1fr 1fr; column-gap: 48px; align-items: start; border-top: 1px solid var(--line-2); }
+  .faq details:first-of-type { border-top: 0; }
+  .faq .ans { padding-right: 16px; font-size: 15px; }
+  .spec { row-gap: 12px; padding: 20px 22px; }
+  .spec h3 { font-size: clamp(19px, 1.6vw, 23px); margin-bottom: 8px; }
+  .spec p { font-size: 15px; line-height: 1.5; }
+  .spec .n { display: none; }
+  .spec .link-arrow { margin-top: 10px; }
+  .spec-vis { min-height: 110px; }
+  #features { padding-top: calc(var(--header-h) + 12px); padding-bottom: 16px; }
+  #features .sec-label { margin-bottom: clamp(12px, 2vh, 24px); }
+  #features .section-head { margin-bottom: clamp(16px, 3vh, 32px); }
+  .specs-nav { margin-top: 12px; }
+  .specs-btn { width: 40px; height: 40px; }
+  .phone-scene { min-height: min(640px, calc(100svh - var(--header-h) - 80px)); }
+  .step4 { padding-top: 20px; }
+  .step4 h3 { margin: 12px 0 8px; }
+  .ind-foot { margin-top: clamp(24px, 4vh, 44px); }
+  .cta-grid { align-items: center; }
+  .field textarea { min-height: 72px; }
+}
 
 /* ---------------------------------------------------------------- hero */
 
@@ -547,16 +584,29 @@ p { margin: 0; }
 
 /* ----------------------------------------------------------- spec list */
 
-.specs { display: grid; grid-template-columns: 1fr 1fr; column-gap: clamp(32px, 5vw, 72px); border-top: 1px solid var(--line-2); }
+/* one sideways row of cards, so the section stays one screen tall: three
+   in view on wide screens, two on tablets, and on phones one with the next
+   peeking in. The arrows (site.js) page through it with a mouse. */
+.specs {
+  display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory;
+  scrollbar-width: none; overscroll-behavior-x: contain; padding-bottom: 4px;
+}
+.specs::-webkit-scrollbar { display: none; }
 .spec {
-  display: grid; grid-template-columns: 44px 1fr; column-gap: 16px; row-gap: 24px;
-  padding: clamp(28px, 3.4vw, 44px) 0; border-bottom: 1px solid var(--line); align-content: start;
+  flex: 0 0 calc((100% - 40px) / 3); scroll-snap-align: start;
+  display: grid; grid-template-columns: 1fr; row-gap: 20px; align-content: start;
+  border: 1px solid var(--line-2); border-radius: 16px; padding: 26px 24px; background: var(--ink-1);
 }
-.spec-vis { grid-column: 2; }
-@media (min-width: 1181px) {
-  .specs { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 1180px) { .spec { flex-basis: calc((100% - 20px) / 2); } }
+.specs-nav { display: flex; align-items: center; justify-content: flex-end; gap: 10px; margin-top: 18px; }
+.specs-count { margin-right: auto; color: var(--faint); }
+.specs-btn {
+  width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--line-2); background: var(--ink-1);
+  color: var(--text); font-size: 18px; cursor: pointer; transition: border-color 0.2s ease, background 0.2s ease, opacity 0.2s ease;
 }
-.spec .n { font-family: var(--f-mono); font-size: 13px; color: var(--lime); align-self: start; padding-top: 6px; }
+.specs-btn:hover:not(:disabled) { border-color: var(--lime); }
+.specs-btn:disabled { opacity: 0.35; cursor: default; }
+.spec .n { font-family: var(--f-mono); font-size: 13px; color: var(--lime); align-self: start; }
 .spec h3 { font-size: clamp(22px, 2vw, 28px); margin-bottom: 12px; }
 .spec p { color: var(--muted); max-width: 46ch; }
 .spec-vis { min-height: 150px; display: grid; align-items: center; }
@@ -675,12 +725,11 @@ p { margin: 0; }
 .step4 p { color: var(--muted); font-size: 15px; }
 
 .pricing {
-  margin-top: clamp(64px, 8vw, 110px);
   display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(28px, 4vw, 64px);
   border: 1px solid var(--line-2); border-radius: 20px; padding: clamp(28px, 4vw, 52px);
   background: linear-gradient(135deg, rgba(168,255,0,0.045), transparent 45%), var(--ink-1);
 }
-.pricing h3 { font-size: clamp(26px, 2.8vw, 38px); font-stretch: 114%; margin: 16px 0 16px; }
+.pricing h2, .pricing h3 { font-size: clamp(26px, 2.8vw, 38px); font-stretch: 114%; margin: 16px 0 16px; }
 .pricing ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; align-content: start; }
 .pricing li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 15px; color: var(--muted); }
 .pricing li:first-child { border-top: 1px solid var(--line); }
@@ -988,7 +1037,6 @@ p { margin: 0; }
 
 @media (max-width: 1080px) {
   .nav a.nav-hide-md { display: none; }
-  .spec { grid-template-columns: 44px 1fr; }
   .foot-grid { grid-template-columns: 1fr 1fr; }
 }
 
@@ -1003,19 +1051,11 @@ p { margin: 0; }
   .section-head { grid-template-columns: 1fr; }
   .section-head .lede { justify-self: start; }
 
-  /* features become a swipeable row; the next card peeks in to show there's more */
-  .specs {
-    display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory;
-    margin: 0 calc(-1 * var(--gutter)); padding: 0 var(--gutter) 8px; scroll-padding-left: var(--gutter);
-    border-top: 0; scrollbar-width: none; overscroll-behavior-x: contain;
-  }
-  .specs::-webkit-scrollbar { display: none; }
-  .spec {
-    flex: 0 0 84%; scroll-snap-align: start; grid-template-columns: 1fr;
-    border: 1px solid var(--line-2); border-radius: 16px; padding: 22px 20px; background: var(--ink-1);
-  }
-  .spec .n { padding: 0; }
-  .spec-vis { grid-column: 1; min-height: 0; }
+  /* features: one card with the next peeking in; swiping replaces the arrows */
+  .specs { gap: 14px; margin: 0 calc(-1 * var(--gutter)); padding: 0 var(--gutter) 8px; scroll-padding-left: var(--gutter); }
+  .spec { flex-basis: 84%; padding: 22px 20px; }
+  .spec-vis { min-height: 0; }
+  .specs-nav { display: none; }
   .client-grid { grid-template-columns: 1fr; }
   .phone-scene { min-height: 560px; }
   .phone { transform: scale(0.88) rotateX(var(--rx)) rotateY(var(--ry)); }

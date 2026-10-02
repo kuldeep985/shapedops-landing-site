@@ -330,7 +330,7 @@
 </div>
 
 <!-- ===================================================== 02 CLIENTS -->
-<section class="section defer-render" id="clients" aria-labelledby="clients-title">
+<section class="section defer-render" id="clients" data-ch="10" aria-labelledby="clients-title">
   <div class="wrap">
     <div class="sec-label"><span class="n">02</span><span class="rule"></span><span class="tag">Your client's side</span></div>
     <div class="client-grid">
@@ -388,7 +388,7 @@
 </section>
 
 <!-- ======================================================= 03 SPECS -->
-<section class="section defer-render" id="features" aria-labelledby="specs-title">
+<section class="section defer-render" id="features" data-ch="11" aria-labelledby="specs-title">
   <div class="wrap">
     <div class="sec-label"><span class="n">03</span><span class="rule"></span><span class="tag">Around the order</span></div>
     <div class="section-head">
@@ -396,7 +396,7 @@
       <p class="lede reveal">The back-office work that usually lives in someone's notebook — collections, the morning check-in, onboarding old data, who brought which deal in.</p>
     </div>
 
-    <div class="specs" tabindex="0" aria-label="Features">
+    <div class="specs" id="specs-row" tabindex="0" aria-label="Features">
       <div class="spec">
         <span class="n">01</span>
         <div class="reveal"><h3>Payments chased on a schedule</h3><p>Invoices your clients can pay online, and a WhatsApp reminder at 30, 60 and 90 days overdue — one per milestone, never a daily nag.</p><a class="link-arrow" href="/payment-reminders">How payment reminders work <span aria-hidden="true">→</span></a></div>
@@ -487,11 +487,16 @@
         </div>
       </div>
     </div>
+    <div class="specs-nav">
+      <span class="mono specs-count" aria-hidden="true">6 features</span>
+      <button class="specs-btn" type="button" data-specs="-1" aria-controls="specs-row" aria-label="Previous features" disabled><span aria-hidden="true">←</span></button>
+      <button class="specs-btn" type="button" data-specs="1" aria-controls="specs-row" aria-label="Next features"><span aria-hidden="true">→</span></button>
+    </div>
   </div>
 </section>
 
 <!-- =================================================== 04 INDUSTRIES -->
-<section class="section defer-render" id="industries" aria-labelledby="ind-title" style="padding-top:0">
+<section class="section defer-render" id="industries" data-ch="12" aria-labelledby="ind-title">
   <div class="wrap">
     <div class="sec-label"><span class="n">04</span><span class="rule"></span><span class="tag">Industries &amp; stages</span></div>
     <div class="section-head">
@@ -545,9 +550,9 @@
 </section>
 
 <!-- ================================================ 05 IMPLEMENTATION -->
-<section class="section defer-render" id="pricing" aria-labelledby="impl-title" style="padding-top:0">
+<section class="section defer-render" id="getting-started" data-ch="13" aria-labelledby="impl-title">
   <div class="wrap">
-    <div class="sec-label"><span class="n">05</span><span class="rule"></span><span class="tag">Getting started &amp; pricing</span></div>
+    <div class="sec-label"><span class="n">05</span><span class="rule"></span><span class="tag">Getting started</span></div>
     <div class="section-head">
       <h2 id="impl-title" class="split">Implemented with you, <span class="soft">not handed over as a login.</span></h2>
       <p class="lede reveal">We set ShapedOps up around your process with you — your stages, your letterhead, your data — and stay on to keep it running.</p>
@@ -559,11 +564,17 @@
       <div class="step4 reveal d2"><span class="n">03</span><h3>Setup around your process</h3><p>Stages, letterhead, WhatsApp and Razorpay connected, and your existing Excel data imported.</p></div>
       <div class="step4 reveal d3"><span class="n">04</span><h3>Go live</h3><p>Your team is walked through it, and maintenance keeps it running as you add people, locations and modules.</p></div>
     </div>
+  </div>
+</section>
 
+<!-- ====================================================== 06 PRICING -->
+<section class="section defer-render" id="pricing" data-ch="14" aria-labelledby="price-title">
+  <div class="wrap">
+    <div class="sec-label"><span class="n">06</span><span class="rule"></span><span class="tag">Pricing</span></div>
     <div class="pricing reveal">
       <div>
         <p class="kicker">Pricing</p>
-        <h3>Priced like an implementation — not a per-seat subscription.</h3>
+        <h2 id="price-title" class="h3">Priced like an implementation — not a per-seat subscription.</h2>
         <p class="body-muted" style="max-width:48ch;margin-bottom:28px">A one-time implementation fee and a monthly maintenance fee, scoped to your business. You get the fit of custom software without starting from scratch — and a fixed quote before you commit to anything.</p>
         <a class="btn" href="#access" data-open-tab="quote">Get a quote <span class="arr" aria-hidden="true">→</span></a>
       </div>
@@ -578,9 +589,9 @@
 </section>
 
 <!-- ====================================================== 06 WHO -->
-<section class="section defer-render" aria-labelledby="who-title" style="padding-top:0">
+<section class="section defer-render" aria-labelledby="who-title" data-ch="15">
   <div class="wrap">
-    <div class="sec-label"><span class="n">06</span><span class="rule"></span><span class="tag">Who builds it</span></div>
+    <div class="sec-label"><span class="n">07</span><span class="rule"></span><span class="tag">Who builds it</span></div>
     <div class="founder">
       <div>
         <h2 id="who-title" class="split">Built by a small team in <span class="soft">Ahmedabad.</span></h2>
@@ -600,9 +611,9 @@
 </section>
 
 <!-- ======================================================== 07 FAQ -->
-<section class="section defer-render" id="faq" aria-labelledby="faq-title" style="padding-top:0">
+<section class="section defer-render" id="faq" data-ch="16" aria-labelledby="faq-title">
   <div class="wrap">
-    <div class="sec-label"><span class="n">07</span><span class="rule"></span><span class="tag">Questions</span></div>
+    <div class="sec-label"><span class="n">08</span><span class="rule"></span><span class="tag">Questions</span></div>
     <div class="section-head">
       <h2 id="faq-title" class="split">Questions owners ask us.</h2>
       <p class="lede reveal">Something not covered here? Message us on WhatsApp at +91 90998 67128.</p>
@@ -621,9 +632,9 @@
 </section>
 
 <!-- ======================================================== 08 CTA -->
-<section class="section defer-render" id="access" aria-labelledby="cta-title" style="padding-top:0">
+<section class="section defer-render" id="access" data-ch="17" aria-labelledby="cta-title">
   <div class="wrap">
-    <div class="sec-label"><span class="n">08</span><span class="rule"></span><span class="tag">Start</span></div>
+    <div class="sec-label"><span class="n">09</span><span class="rule"></span><span class="tag">Start</span></div>
     <div class="cta-grid">
       <div>
         <h2 id="cta-title" class="split">Tell us how your orders <span class="mark">run today.</span></h2>

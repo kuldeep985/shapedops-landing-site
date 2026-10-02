@@ -152,7 +152,8 @@
   function q4(v) { return Math.round(v * 2000) / 2000; }
 
   // home — the journey's stage rail marks the chapter at the middle of the
-  // screen, and only shows while the chapters (not the hero) are on screen
+  // screen, and only shows while the chapters (not the hero) are on screen.
+  // Past the journey the 3D line stays behind the page, dimmed (site.css).
   var journey = $("#journey");
   if (journey) {
     var chapters = $$("[data-ch]", journey);
@@ -161,7 +162,8 @@
       measure: function () {
         var mid = innerHeight / 2;
         var r = journey.getBoundingClientRect();
-        if (r.top > mid || r.bottom < mid) return -1;
+        if (r.bottom < mid) return -2;
+        if (r.top > mid) return -1;
         for (var i = chapters.length - 1; i >= 0; i--) {
           if (chapters[i].getBoundingClientRect().top <= mid) return Number(chapters[i].dataset.ch);
         }
@@ -169,6 +171,7 @@
       },
       apply: function (ch) {
         document.documentElement.classList.toggle("in-journey", ch >= 1);
+        document.documentElement.classList.toggle("past-journey", ch === -2);
         railLinks.forEach(function (a) {
           var n = Number(a.dataset.rail);
           a.classList.toggle("on", n === ch);
@@ -214,6 +217,59 @@
     runScenes();
     addEventListener("scroll", requestScenes, { passive: true });
     addEventListener("resize", function () { scenes.forEach(function (s) { s.last = undefined; }); requestScenes(); });
+  }
+
+  /* -------------------------------------------- home: settle on pages */
+  // When a scroll stops within a fifth of a screen of a page edge, glide the
+  // rest of the way, so the homepage reads as screens rather than one long
+  // strip. It never acts mid-scroll, while the scrollbar is being dragged, on
+  // phones (pages there are taller than the screen) or with reduced motion.
+  if ($("#journey") && !reduce) {
+    var pages = $$(".hero, .chapter, main > .section");
+    var bigScreen = matchMedia("(min-width: 901px) and (min-height: 640px)");
+    var pointerDown = false, settleTimer = 0, settling = false;
+    addEventListener("pointerdown", function () { pointerDown = true; }, { passive: true });
+    addEventListener("pointerup", function () { pointerDown = false; }, { passive: true });
+    var settle = function () {
+      if (!bigScreen.matches || pointerDown || settling || document.body.classList.contains("menu-open")) return;
+      var vh = innerHeight, best = null;
+      pages.forEach(function (p) {
+        var top = p.getBoundingClientRect().top;
+        if (Math.abs(top) < vh * 0.2 && (best === null || Math.abs(top) < Math.abs(best))) best = top;
+      });
+      if (best === null || Math.abs(best) < 2) return;
+      settling = true;
+      scrollTo({ top: scrollY + best, behavior: "smooth" });
+      setTimeout(function () { settling = false; }, 700);
+    };
+    addEventListener("scroll", function () {
+      clearTimeout(settleTimer);
+      if (!settling) settleTimer = setTimeout(settle, 140);
+    }, { passive: true });
+  }
+
+  /* ------------------------------------------- features: sideways row */
+  var specsRow = $("#specs-row");
+  if (specsRow) {
+    var specBtns = $$("[data-specs]");
+    var syncSpecBtns = function () {
+      var max = specsRow.scrollWidth - specsRow.clientWidth - 2;
+      specBtns.forEach(function (b) { b.disabled = b.dataset.specs < 0 ? specsRow.scrollLeft <= 2 : specsRow.scrollLeft >= max; });
+    };
+    specBtns.forEach(function (b) {
+      b.addEventListener("click", function () {
+        var card = specsRow.firstElementChild;
+        var step = card ? card.getBoundingClientRect().width + parseFloat(getComputedStyle(specsRow).columnGap || 0) : specsRow.clientWidth;
+        specsRow.scrollBy({ left: Number(b.dataset.specs) * step, behavior: reduce ? "auto" : "smooth" });
+      });
+    });
+    specsRow.addEventListener("scroll", function () { requestAnimationFrame(syncSpecBtns); }, { passive: true });
+    addEventListener("resize", syncSpecBtns);
+    // measured once the row comes near, not at load: the features section skips
+    // layout until then (content-visibility), and reading its size would force it
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (entries, obs) { if (entries[0].isIntersecting) { syncSpecBtns(); obs.disconnect(); } }).observe(specsRow);
+    }
   }
 
   /* ------------------------------------------------- 04 phone sequence */

@@ -638,12 +638,14 @@ async function main() {
   setFocusTag(false);
 
   // ---- scroll → journey coordinate
-  // Sections tagged data-ch="0..N" (hero, today, stages, outro). g = index +
+  // Sections tagged data-ch="0..N" (hero, today, stages, outro, then the
+  // pages after the journey, where the line is a dimmed backdrop). g = index +
   // progress of the section under the middle of the viewport; each section is
   // "settled" when its middle crosses the middle of the screen (g = n + 0.5).
-  const sections = [...journey.querySelectorAll("[data-ch]")].sort((a, b) => a.dataset.ch - b.dataset.ch);
+  const sections = [...document.querySelectorAll("[data-ch]")].sort((a, b) => a.dataset.ch - b.dataset.ch);
   const LAST = sections.length - 1;
   const STAGE0 = 2; // data-ch of the first stage (Enquiry)
+  const OUTRO = 9;  // data-ch of the journey's last chapter
   let tops = [], heights = [];
   function measure() {
     const y = scrollY;
@@ -653,7 +655,7 @@ async function main() {
   measure();
   let sy = scrollY;
   addEventListener("scroll", () => { sy = scrollY; requestFrame(); }, { passive: true });
-  if ("ResizeObserver" in window) new ResizeObserver(() => { measure(); requestFrame(); }).observe(journey);
+  if ("ResizeObserver" in window) new ResizeObserver(() => { measure(); requestFrame(); }).observe(document.body);
   function journeyG() {
     const mid = sy + innerHeight / 2;
     for (let j = LAST; j >= 0; j--) {
@@ -700,6 +702,8 @@ async function main() {
     const H = KF[0];
     KF.push(mobile ? kf(H.pos.toArray(), H.tgt.toArray(), H.fov + 4, 0, 0.2)
       : stacked() ? kf(H.pos.toArray(), H.tgt.toArray(), H.fov + 2, -0.16, 0) : H);
+    // 10+ · the pages after the journey hold the outro view (site.css dims it),
+    // so scrolling through them never re-renders the scene
     while (KF.length < sections.length) KF.push(KF[KF.length - 1]);
     measure();
   }
@@ -788,7 +792,7 @@ async function main() {
     focus.position.set(focusX, cy, 0);
     focus.scale.setScalar(0.4 + 0.6 * form);
     ring.material.opacity = 0.85 * form;
-    setFocusTag(a >= LAST - 1.4);
+    setFocusTag(a >= OUTRO - 1.4);
 
     // the paperwork: drifting in front of station 1, then folding into the order
     const showToday = clamp01((g - 0.85) / 0.3);
@@ -898,20 +902,24 @@ async function main() {
   // ---- rendering: continuous while the hero animates or the paperwork floats,
   // otherwise only when scroll or the pointer actually changed something
   ready = true;
-  new IntersectionObserver((entries) => { visible = entries[0].isIntersecting; requestFrame(); }, { threshold: 0 }).observe(journey);
+  new IntersectionObserver((entries) => { visible = entries[0].isIntersecting; requestFrame(); }, { threshold: 0 }).observe(document.body);
   addEventListener("resize", () => { layout(); requestFrame(); });
   addEventListener("load", () => { measure(); requestFrame(); });
 
   // Phones render at 30fps so the page itself keeps the frame budget. Elsewhere:
-  // if frames run long, first render fewer pixels, then drop to 30fps.
+  // if frames run long (while the hero animates, or while scrolling moves the
+  // camera), first render fewer pixels — down to 0.75x on desktop — then drop
+  // the hero to 30fps.
+  let renderedLast = false;
   function adapt(dt) {
     sampleSum += dt; samples++;
     if (samples < 45) return;
     const avg = sampleSum / samples;
     sampleSum = 0; samples = 0;
     if (avg <= 1 / 45) return;
-    if (dpr > 1) {
-      dpr = Math.max(1, +(dpr - 0.25).toFixed(2));
+    const floor = mobile ? 1 : 0.75;
+    if (dpr > floor) {
+      dpr = Math.max(floor, +(dpr - 0.25).toFixed(2));
       renderer.setPixelRatio(dpr);
       layout();
     } else if (!halfRate) {
@@ -927,10 +935,11 @@ async function main() {
     frameQueued = false;
     if (!visible || document.hidden) return;
     const dt = Math.min(0.05, clock.getDelta());
-    const g = journeyG();
+    // past the journey the view is fixed, so nothing changes to render
+    const g = Math.min(journeyG(), OUTRO + 1);
     const animating = !reduce && (state.inHero || state.today);
     const pointerMoving = Math.abs(pointer.x - pointer.sx) + Math.abs(pointer.y - pointer.sy) > 0.002;
-    if (!animating && !pointerMoving && Math.abs(g - lastG) < 1e-5) return;
+    if (!animating && !pointerMoving && Math.abs(g - lastG) < 1e-5) { renderedLast = false; return; }
     if (halfRate && animating) {
       acc += dt;
       skip = !skip;
@@ -938,7 +947,8 @@ async function main() {
     }
     const frameDt = halfRate && animating ? Math.min(0.1, acc) : dt;
     acc = 0;
-    if (!halfRate && animating) adapt(dt);
+    if (animating ? !halfRate : renderedLast) adapt(dt);
+    renderedLast = true;
     lastG = g;
     state = apply(g, frameDt);
     renderer.render(scene, camera);
