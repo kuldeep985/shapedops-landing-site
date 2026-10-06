@@ -1,6 +1,6 @@
 # ShapedOps
 
-> ShapedOps is an order-to-cash system for manufacturers, foundries, machine shops, fabricators and trading businesses in India. It tracks every order from enquiry to payment through configurable stages, generates quotations, agreements, invoices and receipts on the business's letterhead at the right stage, sends WhatsApp updates to clients at every stage, and gives every client a tracking link. It is built and run by Ashlyticss in Ahmedabad, Gujarat.
+> ShapedOps is an order-to-cash system for manufacturers, foundries, machine shops, fabricators and trading businesses worldwide. It tracks every order from enquiry to payment through configurable stages, generates quotations, agreements, invoices and receipts on the business's letterhead at the right stage, sends WhatsApp updates to clients at every stage, and gives every client a tracking link. It is built and run by Ashlyticss in Ahmedabad, Gujarat.
 
 ## What it does
 
@@ -21,7 +21,7 @@
 
 ## Who it's for
 
-Small and mid-size manufacturers, foundries, machine shops, fabricators, component manufacturers, traders, exporters, and freight and logistics businesses, anywhere in India.
+Small and mid-size manufacturers, foundries, machine shops, fabricators, component manufacturers, traders, exporters, and freight and logistics businesses, anywhere in the world. Setup, training and support happen online.
 
 ## Pricing
 
