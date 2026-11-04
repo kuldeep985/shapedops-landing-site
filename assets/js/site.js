@@ -464,7 +464,7 @@
         status.textContent = kind === "early_access" ? "You're on the list — we'll be in touch within 48 hours." : "Got it — we'll follow up shortly to set up a call.";
         status.classList.add("ok");
       }).catch(function () {
-        status.textContent = "Something went wrong. Please try again, or email ashlyticss@gmail.com directly.";
+        status.textContent = "Something went wrong. Please try again, or email hello@ashlyticss.com directly.";
         status.classList.add("err");
       }).then(function () {
         submitBtn.disabled = false;
